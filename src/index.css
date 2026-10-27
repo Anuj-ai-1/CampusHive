@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-red: #F63F3A;
+  --c-orange: #FFA42E;
+  --c-light: #EEEEEE;
+  --c-dark: #363636;
+  --c-teal: #17AAAA;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #363636;
+    background-color: #EEEEEE;
+    background-image: none;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  *:focus-visible {
+    outline: 2px solid #17AAAA;
+    outline-offset: 2px;
+  }
+
+  select option {
+    background-color: #FFFFFF;
+    color: #363636;
+  }
+}
+
+/* Disable any backdrop-blur / glassmorphism utilities globally */
+*,
+::before,
+::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+@layer utilities {
+  .glass-panel {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(54, 54, 54, 0.18);
+    box-shadow: none;
+  }
+
+  .glass-panel-subtle {
+    background-color: #EEEEEE;
+    border: 1px solid rgba(54, 54, 54, 0.18);
+  }
+
+  .glass-sidebar {
+    background-color: #363636;
+    border-right: 2px solid #17AAAA;
+  }
+
+  .glass-topbar {
+    background-color: #363636;
+    border-bottom: 2px solid #FFA42E;
+  }
+
+  .glass-input {
+    background-color: #EEEEEE;
+    border: 1px solid rgba(54, 54, 54, 0.3);
+    color: #363636;
+    box-shadow: none;
+  }
+
+  .glass-input::placeholder {
+    color: rgba(54, 54, 54, 0.55);
+  }
+
+  .glass-input:focus {
+    background-color: #FFFFFF;
+    border-color: #17AAAA;
+  }
+}
+
+/* Remap legacy Tailwind utility colors across all pages to the 5-color scheme:
+   #F63F3A (Coral Red), #FFA42E (Amber Orange), #EEEEEE (Light Gray), #363636 (Charcoal), #17AAAA (Teal) */
+.text-slate-900,
+.text-slate-800,
+.text-slate-700,
+.text-\[\#111827\],
+.text-\[\#0F172A\] {
+  color: #363636 !important;
+}
+
+.text-slate-600,
+.text-slate-500,
+.text-slate-400,
+.text-\[\#6B7280\] {
+  color: rgba(54, 54, 54, 0.72) !important;
+}
+
+.text-\[\#4F46E5\],
+.text-\[\#4338CA\],
+.text-indigo-600,
+.text-indigo-700,
+.text-indigo-800,
+.hover\:text-\[\#4F46E5\]:hover,
+.hover\:text-\[\#4338CA\]:hover,
+.group:hover .group-hover\:text-\[\#4F46E5\] {
+  color: #17AAAA !important;
+}
+
+.bg-\[\#4F46E5\],
+.bg-indigo-600 {
+  background-color: #17AAAA !important;
+  color: #EEEEEE !important;
+}
+
+.bg-indigo-50,
+.bg-indigo-50\/85,
+.bg-indigo-50\/80,
+.bg-indigo-50\/75,
+.bg-indigo-50\/70,
+.bg-indigo-50\/30,
+.bg-indigo-50\/20,
+.bg-emerald-50,
+.bg-emerald-50\/80,
+.bg-teal-50 {
+  background-color: rgba(23, 170, 170, 0.14) !important;
+}
+
+.text-emerald-700,
+.text-emerald-800,
+.text-emerald-600 {
+  color: #17AAAA !important;
+}
+
+.border-indigo-200,
+.border-indigo-200\/80,
+.border-indigo-200\/70,
+.border-indigo-200\/60,
+.border-emerald-200,
+.border-emerald-200\/80 {
+  border-color: #17AAAA !important;
+}
+
+.bg-amber-50,
+.bg-amber-50\/90,
+.bg-amber-50\/80,
+.bg-amber-50\/70,
+.bg-orange-50 {
+  background-color: rgba(255, 164, 46, 0.2) !important;
+}
+
+.text-amber-900,
+.text-amber-800,
+.text-amber-700,
+.text-amber-600 {
+  color: #363636 !important;
+}
+
+.border-amber-200,
+.border-amber-200\/80,
+.border-amber-300 {
+  border-color: #FFA42E !important;
+}
+
+.bg-red-50,
+.bg-red-50\/80,
+.bg-rose-50,
+.bg-rose-50\/80 {
+  background-color: rgba(246, 63, 58, 0.14) !important;
+}
+
+.text-red-700,
+.text-red-600,
+.text-rose-700,
+.text-rose-600 {
+  color: #F63F3A !important;
+}
+
+.border-red-200,
+.border-red-200\/80,
+.border-rose-200 {
+  border-color: #F63F3A !important;
+}
+
+.bg-white\/90,
+.bg-white\/85,
+.bg-white\/80,
+.bg-white\/75,
+.bg-white\/70,
+.bg-white\/65,
+.bg-white\/60,
+.bg-white\/50,
+.bg-white\/45,
+.bg-white\/40 {
+  background-color: #FFFFFF !important;
+}
+
+.bg-\[\#F9FAFB\],
+.bg-\[\#F9FAFB\]\/70,
+.bg-\[\#F9FAFB\]\/60,
+.bg-\[\#F9FAFB\]\/50,
+.bg-\[\#F9FAFB\]\/40 {
+  background-color: #EEEEEE !important;
+}
+
+.hover\:bg-white:hover,
+.hover\:bg-white\/90:hover,
+.hover\:bg-white\/85:hover,
+.hover\:bg-white\/75:hover,
+.hover\:bg-white\/70:hover,
+.hover\:bg-white\/65:hover,
+.hover\:bg-white\/60:hover,
+.hover\:bg-white\/50:hover,
+.hover\:bg-\[\#F9FAFB\]:hover {
+  background-color: #EEEEEE !important;
+}
+
+.border-slate-200,
+.border-slate-200\/80,
+.border-slate-200\/70,
+.border-slate-200\/60,
+.border-slate-200\/50,
+.border-\[\#E5E7EB\],
+.border-white\/90,
+.border-white\/80,
+.border-white\/70 {
+  border-color: rgba(54, 54, 54, 0.16) !important;
+}
+
+.divide-slate-200\/60 > :not([hidden]) ~ :not([hidden]),
+.divide-slate-200\/50 > :not([hidden]) ~ :not([hidden]),
+.divide-\[\#E5E7EB\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(54, 54, 54, 0.14) !important;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EEEEEE;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #363636;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #17AAAA;
+}
