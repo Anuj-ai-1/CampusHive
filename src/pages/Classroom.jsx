@@ -196,8 +196,8 @@ export function Classroom({
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="w-48">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 w-full lg:w-auto">
+              <div className="col-span-2 sm:col-span-1 sm:w-48">
                 <Select
                   id="classroom-branch-select"
                   aria-label="Select Branch"
@@ -206,7 +206,7 @@ export function Classroom({
                   onChange={(e) => setSelectedBranch(e.target.value)}
                 />
               </div>
-              <div className="w-36">
+              <div className="col-span-2 sm:col-span-1 sm:w-36">
                 <Select
                   id="classroom-div-select"
                   aria-label="Select Division"
@@ -221,6 +221,7 @@ export function Classroom({
                   variant="secondary"
                   size="sm"
                   onClick={handleSyncToMyProfile}
+                  className="col-span-2 sm:col-span-1"
                 >
                   Set as My Default Class
                 </Button>

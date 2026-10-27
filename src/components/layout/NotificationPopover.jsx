@@ -37,7 +37,7 @@ export function NotificationPopover({
       ref={ref}
       role="dialog"
       aria-label="Notifications"
-      className="absolute right-0 mt-2 w-80 sm:w-96 bg-white/85 backdrop-blur-2xl border border-white/90 ring-1 ring-slate-200/70 rounded-2xl shadow-xl z-40 overflow-hidden"
+      className="fixed sm:absolute inset-x-3 sm:inset-x-auto top-16 sm:top-auto sm:right-0 sm:mt-2 w-auto sm:w-96 bg-white border-2 border-[#363636] rounded-2xl shadow-2xl z-50 overflow-hidden"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200/60 bg-white/50">
         <div className="flex items-center gap-2">

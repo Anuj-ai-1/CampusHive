@@ -40,7 +40,7 @@ export function ProfileMenu({
       ref={ref}
       role="menu"
       aria-label="Account menu"
-      className="absolute right-0 mt-2 w-64 bg-white/85 backdrop-blur-2xl border border-white/90 ring-1 ring-slate-200/70 rounded-2xl shadow-xl z-40 overflow-hidden"
+      className="fixed sm:absolute right-3 sm:right-0 top-16 sm:top-auto sm:mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-white border-2 border-[#363636] rounded-2xl shadow-2xl z-50 overflow-hidden"
     >
       <div className="px-4 py-3 border-b border-slate-200/60 bg-white/50">
         <div className="flex items-center gap-1.5">

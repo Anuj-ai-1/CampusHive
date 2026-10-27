@@ -114,27 +114,27 @@ export function Home({
     <div className="space-y-8">
       {/* A. Solid Minimalist Welcome Hero Banner with Branch + Division Pill */}
       <Card
-        padding="p-6 sm:p-7"
+        padding="p-4 sm:p-7"
         className="relative overflow-hidden border-t-4 border-t-[#F63F3A]"
       >
         <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-[#363636]/75 mb-2">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-medium text-[#363636]/75 mb-2">
               <Badge variant="primary" dot>
                 USTU · {userProfile.yearShort || '3rd Year'} · {userBranch} ·{' '}
                 {userDiv} ({userProfile.labBatch || 'Batch A1'})
               </Badge>
               {userProfile.isCR && <Badge variant="dark">Class Rep (CR)</Badge>}
               <Badge variant="warning">60% Practical NEP Track</Badge>
-              <span>·</span>
+              <span className="hidden sm:inline">·</span>
               <span className="font-semibold text-[#363636]">
                 Roll {userProfile.rollNo || 'USTU-CS-3A-08'}
               </span>
             </div>
-            <h1 className="text-2xl sm:text-[28px] font-bold tracking-tight text-[#363636]">
+            <h1 className="text-xl sm:text-[28px] font-bold tracking-tight text-[#363636]">
               Good morning, {userProfile.shortName}
             </h1>
-            <p className="text-sm text-[#363636]/80 mt-1">
+            <p className="text-xs sm:text-sm text-[#363636]/80 mt-1">
               Universal SkillTech University ·{' '}
               <strong className="text-[#F63F3A]">
                 Learn + Work + Network = Placement
@@ -143,12 +143,13 @@ export function Home({
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-center">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full sm:w-auto self-start sm:self-center">
             <Button
               variant="secondary"
               size="md"
               icon={GraduationCap}
               onClick={() => onNavigate('classroom')}
+              className="w-full sm:w-auto justify-center"
             >
               My {userBranch} {userDiv} Hub
             </Button>
@@ -157,6 +158,7 @@ export function Home({
               size="md"
               iconRight={ArrowRight}
               onClick={() => onNavigate('events')}
+              className="w-full sm:w-auto justify-center"
             >
               Explore events
             </Button>
@@ -166,7 +168,7 @@ export function Home({
 
       {/* B. Quick Statistics */}
       <section aria-label="Quick campus statistics">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <StatCard
             icon={CalendarDays}
             label="Upcoming Events"

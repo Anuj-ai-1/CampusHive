@@ -15,7 +15,7 @@ export function Tabs({ tabs, activeTab, onChange, className = '' }) {
             type="button"
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg whitespace-nowrap transition-all duration-150 ${
+            className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-semibold rounded-lg whitespace-nowrap shrink-0 transition-all duration-150 ${
               isActive
                 ? 'bg-[#17AAAA] text-[#EEEEEE]'
                 : 'text-[#EEEEEE]/80 hover:text-[#FFA42E]'
@@ -24,7 +24,7 @@ export function Tabs({ tabs, activeTab, onChange, className = '' }) {
             {tab.label}
             {typeof tab.count === 'number' && (
               <span
-                className={`px-1.5 py-0.2 rounded-full text-[11px] font-bold ${
+                className={`px-1.5 py-0.2 rounded-full text-[10px] sm:text-[11px] font-bold ${
                   isActive
                     ? 'bg-[#FFA42E] text-[#363636]'
                     : 'bg-[#EEEEEE]/15 text-[#EEEEEE]'

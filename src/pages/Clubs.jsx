@@ -266,6 +266,7 @@ export function Clubs({
   // Inside Full-Screen Club Workspace: Sub-Tab ('chat' | 'overview' | 'projects')
   const [clubWorkspaceTab, setClubWorkspaceTab] = useState('chat');
   const [activeChannel, setActiveChannel] = useState('general');
+  const [mobileChannelsOpen, setMobileChannelsOpen] = useState(false);
   const [chatInput, setChatInput] = useState('');
   const [replyToMsg, setReplyToMsg] = useState(null);
   const [showLinkInput, setShowLinkInput] = useState(false);
@@ -765,11 +766,11 @@ export function Clubs({
         subtitle="Assign leadership roles (Leader, Vice Leader, Secretary) and initial members. Your request will notify the Admin for official approval."
         maxWidth="max-w-2xl"
         footer={
-          <div className="flex items-center justify-between w-full">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 w-full">
             <span className="text-xs text-[#363636]/75">
               Requires Admin permission before public campus listing
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-end gap-2">
               <Button
                 variant="secondary"
                 size="sm"
@@ -1000,55 +1001,80 @@ export function Clubs({
       {/* FULL-SCREEN CLUB CHATROOM & COMMUNITY WORKSPACE */}
       {activeModalClub && (
         <div
-          className="fixed inset-0 z-50 w-screen h-screen bg-[#EEEEEE] text-[#363636] flex flex-col overflow-hidden"
+          className="fixed inset-0 z-50 w-screen h-[100dvh] bg-[#EEEEEE] text-[#363636] flex flex-col overflow-hidden"
           role="dialog"
           aria-modal="true"
           aria-label={`${activeModalClub.name} Full-Screen Workspace`}
         >
           {/* Full-Screen Top Navigation Header */}
-          <header className="h-14 px-4 sm:px-6 bg-[#363636] border-b-2 border-[#FFA42E] flex items-center justify-between gap-3 shrink-0">
-            <div className="flex items-center gap-3 min-w-0">
-              <Button
-                variant="primary"
-                size="sm"
-                icon={ArrowLeft}
-                onClick={onCloseClubModal}
-              >
-                Back to Clubs
-              </Button>
+          <header className="px-3 py-2.5 sm:px-6 sm:py-0 sm:h-14 bg-[#363636] border-b-2 border-[#FFA42E] flex flex-col md:flex-row md:items-center md:justify-between gap-2 shrink-0">
+            <div className="flex items-center justify-between gap-2 min-w-0">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <Button
+                  variant="primary"
+                  size="xs"
+                  icon={ArrowLeft}
+                  onClick={onCloseClubModal}
+                >
+                  <span className="hidden sm:inline">Back to Clubs</span>
+                  <span className="sm:hidden">Back</span>
+                </Button>
 
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <h2 className="text-sm sm:text-base font-bold text-[#EEEEEE] truncate">
-                    {activeModalClub.name}
-                  </h2>
-                  <Badge variant="warning" className="hidden sm:inline-flex">
-                    {activeModalClub.category}
-                  </Badge>
-                  <Badge variant="primary" className="hidden md:inline-flex">
-                    {activeModalClub.memberCount} Members
-                  </Badge>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-xs sm:text-base font-bold text-[#EEEEEE] truncate">
+                      {activeModalClub.name}
+                    </h2>
+                    <Badge variant="warning" className="hidden sm:inline-flex">
+                      {activeModalClub.category}
+                    </Badge>
+                    <Badge variant="primary" className="hidden lg:inline-flex">
+                      {activeModalClub.memberCount} Members
+                    </Badge>
+                  </div>
+                  <p className="text-[11px] text-[#FFA42E] font-medium truncate hidden sm:block">
+                    {activeModalClub.meetingSchedule}
+                  </p>
                 </div>
-                <p className="text-[11px] text-[#FFA42E] font-medium truncate hidden sm:block">
-                  {activeModalClub.meetingSchedule}
-                </p>
+              </div>
+
+              {/* Mobile-only right actions on top row */}
+              <div className="flex md:hidden items-center gap-1.5 shrink-0">
+                {activeModalClub.approvalStatus !== 'Pending Approval' &&
+                  activeModalClub.membershipState !== 'Joined' && (
+                    <Button
+                      variant="danger"
+                      size="xs"
+                      onClick={() => onJoinClub(activeModalClub.id)}
+                    >
+                      Join
+                    </Button>
+                  )}
+                <button
+                  type="button"
+                  onClick={onCloseClubModal}
+                  aria-label="Exit Full Screen"
+                  className="p-1.5 rounded-lg bg-[#F63F3A] hover:bg-[#FFA42E] text-[#EEEEEE] hover:text-[#363636] transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center justify-between md:justify-end gap-2 overflow-x-auto">
               <Tabs
                 tabs={[
                   {
                     id: 'chat',
-                    label: 'Full-Screen Chat & DMs',
+                    label: 'Chat & DMs',
                     count: clubMessages.length,
                   },
                   {
                     id: 'overview',
-                    label: 'Roster & Leadership',
+                    label: 'Roster & Roles',
                     count: activeModalClub.members?.length || 0,
                   },
-                  { id: 'projects', label: 'Projects & Sprints' },
+                  { id: 'projects', label: 'Projects' },
                 ]}
                 activeTab={clubWorkspaceTab}
                 onChange={setClubWorkspaceTab}
@@ -1058,10 +1084,10 @@ export function Clubs({
                 activeModalClub.approvalStatus === 'Pending Approval' && (
                   <Button
                     variant="danger"
-                    size="sm"
+                    size="xs"
                     onClick={() => onApproveClub(activeModalClub.id)}
                   >
-                    Approve Club
+                    Approve
                   </Button>
                 )}
 
@@ -1071,6 +1097,7 @@ export function Clubs({
                     variant="danger"
                     size="sm"
                     onClick={() => onJoinClub(activeModalClub.id)}
+                    className="hidden md:inline-flex"
                   >
                     Join Club
                   </Button>
@@ -1080,7 +1107,7 @@ export function Clubs({
                 type="button"
                 onClick={onCloseClubModal}
                 aria-label="Exit Full Screen"
-                className="p-2 rounded-lg bg-[#F63F3A] hover:bg-[#FFA42E] text-[#EEEEEE] hover:text-[#363636] transition-colors"
+                className="hidden md:inline-flex p-2 rounded-lg bg-[#F63F3A] hover:bg-[#FFA42E] text-[#EEEEEE] hover:text-[#363636] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1089,10 +1116,37 @@ export function Clubs({
 
           {/* FULL-SCREEN BODY */}
           {clubWorkspaceTab === 'chat' ? (
-            <div className="flex-1 flex min-h-0 overflow-hidden">
-              {/* LEFT SIDEBAR: CHANNELS & DIRECT MESSAGE THREADS */}
-              <aside className="w-64 sm:w-72 bg-[#363636] border-r-2 border-[#17AAAA] flex flex-col justify-between shrink-0 overflow-y-auto">
+            <div className="flex-1 flex min-h-0 overflow-hidden relative">
+              {/* Mobile Backdrop when Channel/DM Drawer is open */}
+              {mobileChannelsOpen && (
+                <div
+                  className="fixed inset-0 z-30 bg-[#363636]/75 md:hidden"
+                  onClick={() => setMobileChannelsOpen(false)}
+                />
+              )}
+
+              {/* LEFT SIDEBAR: CHANNELS & DIRECT MESSAGE THREADS (Responsive Drawer on Mobile, Fixed Sidebar on md+) */}
+              <aside
+                className={`${
+                  mobileChannelsOpen
+                    ? 'fixed inset-y-0 left-0 z-40 flex w-72 max-w-[85vw]'
+                    : 'hidden md:flex md:w-64 lg:w-72'
+                } bg-[#363636] border-r-2 border-[#17AAAA] flex-col justify-between shrink-0 overflow-y-auto`}
+              >
                 <div className="p-3.5 space-y-5">
+                  <div className="flex md:hidden items-center justify-between pb-2 border-b border-[#EEEEEE]/15">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#FFA42E]">
+                      Channels & Direct Messages
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setMobileChannelsOpen(false)}
+                      className="p-1 rounded bg-[#F63F3A] text-[#EEEEEE]"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
                   {/* Switch Active Club Quickly */}
                   <div>
                     <label
@@ -1141,6 +1195,7 @@ export function Clubs({
                             onClick={() => {
                               setActiveChannel(ch.id);
                               setReplyToMsg(null);
+                              setMobileChannelsOpen(false);
                             }}
                             className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                               active
@@ -1192,6 +1247,7 @@ export function Clubs({
                               onClick={() => {
                                 setActiveChannel(dmKey);
                                 setReplyToMsg(null);
+                                setMobileChannelsOpen(false);
                               }}
                               className="flex items-center gap-2.5 min-w-0 flex-1 text-left"
                             >
@@ -1260,20 +1316,53 @@ export function Clubs({
 
               {/* CENTER MAIN FULL-HEIGHT CHAT STREAM */}
               <div className="flex-1 flex flex-col bg-[#EEEEEE] min-w-0">
+                {/* Mobile Quick Channel & DM Switcher Bar */}
+                <div className="flex md:hidden items-center gap-1.5 px-3 py-2 bg-[#363636] border-b border-[#17AAAA] overflow-x-auto shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setMobileChannelsOpen(true)}
+                    className="px-2.5 py-1 rounded-lg bg-[#FFA42E] text-[#363636] text-[11px] font-bold shrink-0 flex items-center gap-1"
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    <span>Channels & DMs</span>
+                  </button>
+                  {CHAT_CHANNELS.map((ch) => {
+                    const active = activeChannel === ch.id;
+                    return (
+                      <button
+                        key={ch.id}
+                        type="button"
+                        onClick={() => {
+                          setActiveChannel(ch.id);
+                          setReplyToMsg(null);
+                        }}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold whitespace-nowrap shrink-0 flex items-center gap-1 ${
+                          active
+                            ? 'bg-[#17AAAA] text-[#EEEEEE]'
+                            : 'bg-[#EEEEEE]/15 text-[#EEEEEE]'
+                        }`}
+                      >
+                        <Hash className="w-3 h-3" />
+                        <span>{ch.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
                 {/* Active Channel / DM Sub-Header */}
-                <div className="h-12 px-5 bg-white border-b border-[#363636]/20 flex items-center justify-between gap-3 shrink-0">
+                <div className="h-11 sm:h-12 px-3 sm:px-5 bg-white border-b border-[#363636]/20 flex items-center justify-between gap-2 shrink-0">
                   <div className="flex items-center gap-2 min-w-0">
                     {isDmChannel ? (
                       <MessageSquare className="w-4 h-4 text-[#F63F3A] shrink-0" />
                     ) : (
                       <Hash className="w-4 h-4 text-[#17AAAA] shrink-0" />
                     )}
-                    <h3 className="text-sm font-bold text-[#363636] truncate">
+                    <h3 className="text-xs sm:text-sm font-bold text-[#363636] truncate">
                       {isDmChannel
-                        ? `Direct Conversation with ${activeDmPeerName}`
+                        ? `DM: ${activeDmPeerName}`
                         : activeChannelMeta?.label || activeChannel}
                     </h3>
-                    <span className="hidden md:inline text-xs text-[#363636]/75 truncate">
+                    <span className="hidden lg:inline text-xs text-[#363636]/75 truncate">
                       —{' '}
                       {isDmChannel
                         ? 'Click View Profile to inspect academic details & skills'
@@ -1293,18 +1382,19 @@ export function Clubs({
                         )
                       }
                     >
-                      View Student Profile
+                      <span className="hidden sm:inline">View Student Profile</span>
+                      <span className="sm:hidden">Profile</span>
                     </Button>
                   )}
                 </div>
 
                 {/* Pinned Message Banner */}
                 {pinnedInChannel.length > 0 && (
-                  <div className="px-5 py-2 bg-[#FFA42E] border-b border-[#363636]/20 flex items-center justify-between gap-2 text-xs shrink-0">
-                    <div className="flex items-center gap-2 truncate">
+                  <div className="px-3 sm:px-5 py-1.5 sm:py-2 bg-[#FFA42E] border-b border-[#363636]/20 flex items-center justify-between gap-2 text-xs shrink-0">
+                    <div className="flex items-center gap-1.5 sm:gap-2 truncate">
                       <Pin className="w-3.5 h-3.5 text-[#363636] shrink-0" />
-                      <span className="font-bold text-[#363636]">
-                        Pinned in Channel:
+                      <span className="font-bold text-[#363636] shrink-0">
+                        Pinned:
                       </span>
                       <span className="text-[#363636] font-medium truncate">
                         {pinnedInChannel[0].text}
@@ -1314,9 +1404,9 @@ export function Clubs({
                 )}
 
                 {/* Full-Height Scrollable Messages Area */}
-                <div className="flex-1 overflow-y-auto p-5 space-y-3.5">
+                <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-3">
                   {channelMessages.length === 0 ? (
-                    <div className="h-full flex flex-col items-center justify-center text-center space-y-2">
+                    <div className="h-full flex flex-col items-center justify-center text-center space-y-2 p-4">
                       <MessageSquare className="w-10 h-10 text-[#17AAAA]" />
                       <p className="text-sm font-bold text-[#363636]">
                         {isDmChannel
@@ -1324,7 +1414,7 @@ export function Clubs({
                           : `Welcome to #${activeChannel}`}
                       </p>
                       <p className="text-xs text-[#363636]/75 max-w-md">
-                        Send the first message below or click on any member&apos;s
+                        Send the first message below or tap on any member&apos;s
                         name to view their student profile.
                       </p>
                     </div>
@@ -1337,14 +1427,14 @@ export function Clubs({
                       return (
                         <div
                           key={msg.id}
-                          className={`p-4 rounded-xl border-2 space-y-2 max-w-4xl ${
+                          className={`p-3 sm:p-4 rounded-xl border-2 space-y-2 max-w-4xl ${
                             isMine
                               ? 'bg-white border-[#17AAAA] ml-auto'
                               : 'bg-white border-[#363636]/20'
                           }`}
                         >
                           {msg.replyTo && (
-                            <div className="px-3 py-1.5 rounded bg-[#EEEEEE] border-l-4 border-[#F63F3A] text-xs text-[#363636]/80 truncate">
+                            <div className="px-2.5 py-1.5 rounded bg-[#EEEEEE] border-l-4 border-[#F63F3A] text-xs text-[#363636]/80 truncate">
                               Replying to{' '}
                               <strong className="text-[#363636]">
                                 {msg.replyTo.senderName}
@@ -1353,8 +1443,8 @@ export function Clubs({
                             </div>
                           )}
 
-                          <div className="flex items-center justify-between gap-2">
-                            <div className="flex flex-wrap items-center gap-2">
+                          <div className="flex flex-wrap items-center justify-between gap-1.5">
+                            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 min-w-0">
                               <button
                                 type="button"
                                 onClick={() =>
@@ -1363,12 +1453,12 @@ export function Clubs({
                                     msg.senderRole
                                   )
                                 }
-                                className="text-xs sm:text-sm font-bold text-[#363636] hover:text-[#17AAAA] hover:underline flex items-center gap-2"
+                                className="text-xs sm:text-sm font-bold text-[#363636] hover:text-[#17AAAA] hover:underline flex items-center gap-2 text-left min-w-0"
                               >
-                                <span className="w-7 h-7 rounded-full bg-[#363636] text-[#FFA42E] flex items-center justify-center text-xs font-bold">
+                                <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#363636] text-[#FFA42E] flex items-center justify-center text-[11px] sm:text-xs font-bold shrink-0">
                                   {msg.senderName.slice(0, 2).toUpperCase()}
                                 </span>
-                                <span>{msg.senderName}</span>
+                                <span className="truncate">{msg.senderName}</span>
                               </button>
                               <Badge variant="primary">{msg.senderRole}</Badge>
                               {msg.pinned && (
@@ -1378,41 +1468,41 @@ export function Clubs({
                                 </span>
                               )}
                             </div>
-                            <span className="text-xs font-medium text-[#363636]/70">
+                            <span className="text-[11px] font-medium text-[#363636]/70">
                               {msg.time}
                             </span>
                           </div>
 
-                          <p className="text-sm text-[#363636] leading-relaxed pl-9">
+                          <p className="text-xs sm:text-sm text-[#363636] leading-relaxed sm:pl-9 break-words">
                             {msg.text}
                           </p>
 
                           {msg.linkUrl && (
-                            <div className="pl-9 pt-1">
+                            <div className="sm:pl-9 pt-1">
                               <a
                                 href={msg.linkUrl}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#363636] text-xs font-semibold text-[#FFA42E] hover:text-[#17AAAA]"
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#363636] text-xs font-semibold text-[#FFA42E] hover:text-[#17AAAA] max-w-full"
                               >
-                                <Link2 className="w-3.5 h-3.5" />
-                                <span className="truncate max-w-md">
+                                <Link2 className="w-3.5 h-3.5 shrink-0" />
+                                <span className="truncate">
                                   {msg.linkUrl}
                                 </span>
                               </a>
                             </div>
                           )}
 
-                          <div className="flex flex-wrap items-center justify-between gap-2 pl-9 pt-1.5">
+                          <div className="flex flex-wrap items-center justify-between gap-2 sm:pl-9 pt-1.5">
                             <div className="flex items-center gap-1.5">
                               <button
                                 type="button"
                                 onClick={() =>
                                   handleReactMessage(msg.id, 'likes')
                                 }
-                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#EEEEEE] hover:bg-[#17AAAA] hover:text-[#EEEEEE] border border-[#363636]/20 text-xs font-semibold text-[#363636] transition-colors"
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#EEEEEE] hover:bg-[#17AAAA] hover:text-[#EEEEEE] border border-[#363636]/20 text-xs font-semibold text-[#363636] transition-colors"
                               >
-                                <ThumbsUp className="w-3.5 h-3.5 text-[#17AAAA]" />
+                                <ThumbsUp className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#17AAAA]" />
                                 <span>{msg.likes || 0}</span>
                               </button>
                               <button
@@ -1420,9 +1510,9 @@ export function Clubs({
                                 onClick={() =>
                                   handleReactMessage(msg.id, 'fires')
                                 }
-                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#EEEEEE] hover:bg-[#FFA42E] border border-[#363636]/20 text-xs font-semibold text-[#363636] transition-colors"
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#EEEEEE] hover:bg-[#FFA42E] border border-[#363636]/20 text-xs font-semibold text-[#363636] transition-colors"
                               >
-                                <Flame className="w-3.5 h-3.5 text-[#F63F3A]" />
+                                <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F63F3A]" />
                                 <span>{msg.fires || 0}</span>
                               </button>
                               <button
@@ -1430,14 +1520,14 @@ export function Clubs({
                                 onClick={() =>
                                   handleReactMessage(msg.id, 'rockets')
                                 }
-                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#EEEEEE] hover:bg-[#F63F3A] hover:text-[#EEEEEE] border border-[#363636]/20 text-xs font-semibold text-[#363636] transition-colors"
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#EEEEEE] hover:bg-[#F63F3A] hover:text-[#EEEEEE] border border-[#363636]/20 text-xs font-semibold text-[#363636] transition-colors"
                               >
-                                <Rocket className="w-3.5 h-3.5 text-[#FFA42E]" />
+                                <Rocket className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FFA42E]" />
                                 <span>{msg.rockets || 0}</span>
                               </button>
                             </div>
 
-                            <div className="flex items-center gap-3 text-xs font-semibold">
+                            <div className="flex flex-wrap items-center gap-2.5 text-[11px] sm:text-xs font-semibold">
                               <button
                                 type="button"
                                 onClick={() => setReplyToMsg(msg)}
@@ -1465,7 +1555,7 @@ export function Clubs({
                                 className="text-[#363636] hover:text-[#17AAAA] flex items-center gap-1"
                               >
                                 <Eye className="w-3.5 h-3.5" />
-                                View Profile
+                                Profile
                               </button>
                               {isMine && (
                                 <button
@@ -1486,9 +1576,9 @@ export function Clubs({
                 </div>
 
                 {/* Bottom Full-Width Composer */}
-                <div className="p-4 bg-white border-t-2 border-[#17AAAA] space-y-2 shrink-0">
+                <div className="p-2.5 sm:p-4 bg-white border-t-2 border-[#17AAAA] space-y-2 shrink-0">
                   {replyToMsg && (
-                    <div className="px-3.5 py-2 rounded-lg bg-[#EEEEEE] border-l-4 border-[#17AAAA] flex items-center justify-between text-xs">
+                    <div className="px-3 py-1.5 rounded-lg bg-[#EEEEEE] border-l-4 border-[#17AAAA] flex items-center justify-between text-xs">
                       <span className="text-[#363636] truncate">
                         Replying to{' '}
                         <strong className="text-[#17AAAA]">
@@ -1512,8 +1602,8 @@ export function Clubs({
                         type="url"
                         value={attachmentUrl}
                         onChange={(e) => setAttachmentUrl(e.target.value)}
-                        placeholder="Paste GitHub repo, Figma, or project link (https://...)"
-                        className="flex-1 h-9 px-3.5 text-xs rounded-lg glass-input"
+                        placeholder="Paste GitHub repo or project link (https://...)"
+                        className="flex-1 h-9 px-3 text-xs rounded-lg glass-input min-w-0"
                       />
                       <button
                         type="button"
@@ -1521,7 +1611,7 @@ export function Clubs({
                           setShowLinkInput(false);
                           setAttachmentUrl('');
                         }}
-                        className="text-xs font-semibold text-[#F63F3A] hover:text-[#363636] px-2"
+                        className="text-xs font-semibold text-[#F63F3A] hover:text-[#363636] px-2 shrink-0"
                       >
                         Cancel
                       </button>
@@ -1530,13 +1620,13 @@ export function Clubs({
 
                   <form
                     onSubmit={handleSendChatMessage}
-                    className="flex items-center gap-2.5"
+                    className="flex items-center gap-1.5 sm:gap-2.5"
                   >
                     <button
                       type="button"
                       onClick={() => setShowLinkInput((prev) => !prev)}
                       title="Attach GitHub / Project Link"
-                      className={`h-10 px-3 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                      className={`h-10 px-2.5 sm:px-3 rounded-lg border text-xs font-semibold flex items-center gap-1.5 shrink-0 transition-colors ${
                         showLinkInput
                           ? 'bg-[#FFA42E] border-[#FFA42E] text-[#363636]'
                           : 'bg-[#363636] border-[#363636] text-[#EEEEEE] hover:bg-[#17AAAA] hover:border-[#17AAAA]'
@@ -1555,9 +1645,9 @@ export function Clubs({
                           ? `Message ${activeDmPeerName}...`
                           : `Message #${
                               activeChannelMeta?.label || activeChannel
-                            } as ${userProfile.shortName}...`
+                            }...`
                       }
-                      className="flex-1 h-10 px-4 text-sm rounded-lg glass-input focus:outline-none"
+                      className="flex-1 min-w-0 h-10 px-3 sm:px-4 text-xs sm:text-sm rounded-lg glass-input focus:outline-none"
                     />
 
                     <Button
@@ -1565,8 +1655,10 @@ export function Clubs({
                       variant="primary"
                       size="md"
                       icon={Send}
+                      className="shrink-0"
                     >
-                      Send Message
+                      <span className="hidden sm:inline">Send Message</span>
+                      <span className="sm:hidden">Send</span>
                     </Button>
                   </form>
                 </div>

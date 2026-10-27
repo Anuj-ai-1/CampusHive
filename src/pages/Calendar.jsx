@@ -781,8 +781,8 @@ export function Calendar({
             </div>
 
             {/* Right: Semester Selector Pills (Sem 1 to Sem 8) */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#FFA42E] mr-1 flex items-center gap-1">
+            <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 sm:pb-0 sm:flex-wrap">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#FFA42E] mr-1 flex items-center gap-1 shrink-0">
                 <GraduationCap className="w-3.5 h-3.5" />
                 Semester:
               </span>
@@ -794,7 +794,7 @@ export function Calendar({
                     key={sem.id}
                     type="button"
                     onClick={() => setSelectedSemester(sem.id)}
-                    className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 shrink-0 ${
                       active
                         ? 'bg-[#F63F3A] text-[#EEEEEE]'
                         : 'bg-[#EEEEEE]/15 text-[#EEEEEE] hover:bg-[#17AAAA]'
@@ -816,10 +816,10 @@ export function Calendar({
           </div>
 
           {/* Interactive Month & Date Navigator Bar (Works across all 3 views!) */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-white border border-[#363636]/20">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 px-3 sm:px-4 py-3 rounded-2xl bg-white border border-[#363636]/20">
             {/* Month Quick Pills */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#F63F3A] mr-1 flex items-center gap-1">
+            <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 sm:pb-0 sm:flex-wrap">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#F63F3A] mr-1 flex items-center gap-1 shrink-0">
                 <CalendarDays className="w-3.5 h-3.5" />
                 Month:
               </span>
@@ -827,7 +827,7 @@ export function Calendar({
                 <button
                   type="button"
                   onClick={() => setSelectedMonthFilter('ALL')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all shrink-0 ${
                     selectedMonthFilter === 'ALL'
                       ? 'bg-[#363636] text-[#EEEEEE]'
                       : 'bg-[#EEEEEE] text-[#363636] hover:bg-[#FFA42E]'
@@ -852,7 +852,7 @@ export function Calendar({
                         setSelectedMonthFilter(m.key);
                       }
                     }}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all shrink-0 ${
                       isActive
                         ? 'bg-[#17AAAA] text-[#EEEEEE]'
                         : 'bg-[#EEEEEE] text-[#363636] hover:bg-[#FFA42E]'
@@ -1378,7 +1378,7 @@ export function Calendar({
                 cell.blank ? (
                   <div
                     key={cell.key}
-                    className="min-h-[96px] sm:min-h-[116px] bg-[#EEEEEE]/60 p-1.5"
+                    className="min-h-[64px] sm:min-h-[116px] bg-[#EEEEEE]/60 p-1 sm:p-1.5"
                   />
                 ) : (
                   <div
@@ -1392,15 +1392,15 @@ export function Calendar({
                         setSelectedDate(cell.dateStr);
                       }
                     }}
-                    className={`min-h-[96px] sm:min-h-[116px] p-1.5 sm:p-2 transition-all cursor-pointer text-left ${
+                    className={`min-h-[64px] sm:min-h-[116px] p-1 sm:p-2 transition-all cursor-pointer text-left ${
                       selectedDate === cell.dateStr
                         ? 'bg-[#FFA42E]/20 ring-2 ring-inset ring-[#F63F3A]'
                         : 'bg-white hover:bg-[#EEEEEE]/70'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-0.5 mb-1">
                       <span
-                        className={`text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center ${
+                        className={`text-[11px] sm:text-xs font-bold w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center ${
                           selectedDate === cell.dateStr
                             ? 'bg-[#F63F3A] text-[#EEEEEE]'
                             : cell.dateStr === '2026-10-27'
@@ -1412,13 +1412,34 @@ export function Calendar({
                       </span>
 
                       {cell.activities.length > 0 && (
-                        <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-[#363636] text-[#FFA42E]">
+                        <span className="text-[9px] sm:text-[10px] font-bold px-1 sm:px-1.5 py-0.2 rounded-full bg-[#363636] text-[#FFA42E] self-start sm:self-auto">
                           {cell.activities.length}
                         </span>
                       )}
                     </div>
 
-                    <div className="space-y-1">
+                    {/* Mobile compact color dots */}
+                    {cell.activities.length > 0 && (
+                      <div className="flex sm:hidden flex-wrap gap-1 mt-1">
+                        {cell.activities.slice(0, 4).map((act) => (
+                          <span
+                            key={act.id}
+                            className={`w-2 h-2 rounded-full ${
+                              act.type === 'semester' ||
+                              act.type === 'exam-paper'
+                                ? 'bg-[#F63F3A]'
+                                : act.type === 'event' ||
+                                  act.type === 'volunteer'
+                                ? 'bg-[#FFA42E]'
+                                : 'bg-[#17AAAA]'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Desktop/Tablet activity pills */}
+                    <div className="hidden sm:block space-y-1">
                       {cell.activities.slice(0, 3).map((act) => (
                         <div
                           key={act.id}
@@ -1440,7 +1461,7 @@ export function Calendar({
                       ))}
                       {cell.activities.length > 3 && (
                         <p className="text-[10px] font-bold text-[#F63F3A] pl-1">
-                          +{cell.activities.length - 3} more on this day
+                          +{cell.activities.length - 3} more
                         </p>
                       )}
                     </div>

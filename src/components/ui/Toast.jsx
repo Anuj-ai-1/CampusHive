@@ -8,7 +8,7 @@ export function Toast({ toasts, onDismiss }) {
     <div
       aria-live="polite"
       aria-atomic="true"
-      className="fixed bottom-16 md:bottom-5 right-4 z-[70] flex flex-col gap-2 max-w-sm w-full pointer-events-none"
+      className="fixed bottom-16 lg:bottom-5 inset-x-3 sm:inset-x-auto sm:right-4 z-[70] flex flex-col gap-2 sm:max-w-sm sm:w-full pointer-events-none"
     >
       {toasts.map((t) => {
         const Icon =

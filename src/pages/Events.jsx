@@ -312,12 +312,12 @@ export function Events({
         maxWidth="max-w-2xl"
         footer={
           activeModalEvent && (
-            <div className="flex items-center justify-between w-full">
+            <div className="flex flex-wrap items-center justify-between gap-2 w-full">
               <Button variant="secondary" size="sm" onClick={onCloseEventModal}>
                 Close
               </Button>
               {activeModalEvent.isRegistered ? (
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <Button
                     variant="danger"
                     size="sm"
@@ -443,8 +443,8 @@ export function Events({
                 </select>
               </div>
 
-              <div className="rounded-xl border border-slate-200/70 bg-white/60 overflow-hidden">
-                <table className="w-full text-left border-collapse text-xs">
+              <div className="rounded-xl border border-slate-200/70 bg-white/60 overflow-x-auto">
+                <table className="w-full min-w-[420px] text-left border-collapse text-xs">
                   <thead>
                     <tr className="border-b border-slate-200/60 bg-white/50 text-[11px] font-semibold uppercase text-slate-500">
                       <th className="py-2 px-3">Roll No</th>
