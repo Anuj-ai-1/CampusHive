@@ -37,9 +37,9 @@ export function Profile({
     rollNo: userProfile.rollNo || 'CS-3A-08',
     department: userProfile.department,
     year: userProfile.year,
-    bio: userProfile.bio,
-    location: userProfile.location,
-    interestsText: userProfile.interests.join(', '),
+    bio: userProfile?.bio || '',
+    location: userProfile?.location || '',
+    interestsText: (userProfile?.interests || []).join(', '),
   });
 
   const registeredEvents = events.filter((e) => e.isRegistered);
@@ -56,9 +56,9 @@ export function Profile({
       rollNo: userProfile.rollNo || 'CS-3A-08',
       department: userProfile.department,
       year: userProfile.year,
-      bio: userProfile.bio,
-      location: userProfile.location,
-      interestsText: userProfile.interests.join(', '),
+      bio: userProfile?.bio || '',
+      location: userProfile?.location || '',
+      interestsText: (userProfile?.interests || []).join(', '),
     });
     setEditModalOpen(true);
   };
@@ -111,7 +111,9 @@ export function Profile({
       <Card padding="p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-start gap-5">
           <div className="w-16 h-16 rounded-2xl bg-indigo-50/80 backdrop-blur-md border border-indigo-200/80 shadow-sm flex items-center justify-center text-xl font-bold text-[#17AAAA] shrink-0">
-            {userProfile.shortName.slice(0, 2).toUpperCase()}
+            {(userProfile?.shortName || userProfile?.name || 'UH')
+              .slice(0, 2)
+              .toUpperCase()}
           </div>
 
           <div className="flex-1 min-w-0">
@@ -154,7 +156,7 @@ export function Profile({
                 Declared Interests
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {userProfile.interests.map((interest) => (
+                {(userProfile?.interests || []).map((interest) => (
                   <Badge key={interest} variant="neutral">
                     {interest}
                   </Badge>
@@ -321,7 +323,7 @@ export function Profile({
           </div>
 
           <div className="space-y-3">
-            {userProfile.achievements.map((ach) => (
+            {(userProfile?.achievements || []).map((ach) => (
               <div
                 key={ach.id}
                 className="p-3.5 rounded-xl glass-panel-subtle"

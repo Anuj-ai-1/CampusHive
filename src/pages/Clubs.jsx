@@ -278,9 +278,9 @@ export function Clubs({
 
   // Create Club Proposal Modal State
   const [createClubOpen, setCreateClubOpen] = useState(false);
-  const myDefaultLabel = `${userProfile.name} (${
-    userProfile.year.split(' ')[0]
-  } Year ${userProfile.branchCode || 'CSE'})`;
+  const myDefaultLabel = `${userProfile?.name || 'Anuj Sharma'} (${
+    (userProfile?.year || '3rd Year').split(' ')[0]
+  } Year ${userProfile?.branchCode || 'CSE'})`;
 
   const [clubForm, setClubForm] = useState({
     name: '',

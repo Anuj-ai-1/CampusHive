@@ -40,7 +40,7 @@ export function Topbar({
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const unreadCount = notifications.filter((n) => n.unread).length;
+  const unreadCount = (notifications || []).filter((n) => n.unread).length;
   const activePerson = role === 'admin' ? adminProfile : userProfile;
 
   const handleSearchKeyDown = (e) => {
@@ -150,10 +150,12 @@ export function Topbar({
             className="flex items-center gap-2 p-1 rounded-lg hover:bg-[#EEEEEE]/15 transition-all"
           >
             <div className="w-7 h-7 rounded-full bg-[#FFA42E] flex items-center justify-center text-xs font-bold text-[#363636]">
-              {activePerson.shortName.slice(0, 2).toUpperCase()}
+              {(activePerson?.shortName || activePerson?.name || 'UH')
+                .slice(0, 2)
+                .toUpperCase()}
             </div>
             <span className="hidden sm:inline text-xs font-semibold text-[#EEEEEE]">
-              {activePerson.shortName}
+              {activePerson?.shortName || 'User'}
             </span>
           </button>
 

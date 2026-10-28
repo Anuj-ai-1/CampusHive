@@ -369,7 +369,9 @@ export function Home({
             <p className="text-xs text-[#363636]/75 mt-0.5">
               Curated based on your branch ({userBranch}) and interests in{' '}
               <span className="text-[#17AAAA] font-semibold">
-                {userProfile.interests.slice(0, 3).join(', ')}
+                {(userProfile?.interests || ['AI & ML', 'Cloud', 'Hackathons'])
+                  .slice(0, 3)
+                  .join(', ')}
               </span>
             </p>
           </div>

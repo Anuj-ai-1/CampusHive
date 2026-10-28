@@ -166,11 +166,13 @@ export function Sidebar({
       <div className="p-3 border-t border-[#EEEEEE]/15 bg-[#363636] space-y-2">
         <div className="flex items-center gap-2.5 px-1.5 py-1">
           <div className="w-8 h-8 rounded-full bg-[#FFA42E] flex items-center justify-center text-xs font-bold text-[#363636] shrink-0">
-            {currentPerson.shortName.slice(0, 2).toUpperCase()}
+            {(currentPerson?.shortName || currentPerson?.name || 'UH')
+              .slice(0, 2)
+              .toUpperCase()}
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-xs font-semibold text-[#EEEEEE] truncate">
-              {currentPerson.name}
+              {currentPerson?.name || 'UniHive User'}
             </p>
             <p className="text-[11px] text-[#17AAAA] font-medium truncate">
               {role === 'admin'
