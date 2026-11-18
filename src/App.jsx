@@ -1,17 +1,10 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   INITIAL_USER_PROFILE,
   ADMIN_PROFILE,
-  INITIAL_ANNOUNCEMENTS,
-  INITIAL_EVENTS,
-  INITIAL_CLUBS,
-  INITIAL_VOLUNTEER_ROLES,
-  INITIAL_TASKS,
-  INITIAL_FEEDBACK,
-  INITIAL_NOTIFICATIONS,
   INITIAL_SEMESTER_CALENDAR,
 } from './data/mockData';
-import { useLocalStorageState } from './hooks/useLocalStorageState';
+import { api, getAuthToken, setAuthToken, subscribeToRealtime } from './services/api';
 import { AppLayout } from './components/layout/AppLayout';
 import { Toast } from './components/ui/Toast';
 import { Login } from './pages/Login';
@@ -26,51 +19,23 @@ import { Profile } from './pages/Profile';
 import { AdminDashboard } from './pages/AdminDashboard';
 
 export default function App() {
-  // Authentication session: null (logged out) | 'student' | 'admin'
-  const [authSession, setAuthSession] = useLocalStorageState(
-    'campusone_auth_session_v2',
-    null
-  );
+  const [authSession, setAuthSession] = useState(null); // null | 'student' | 'admin'
+  const [booting, setBooting] = useState(Boolean(getAuthToken()));
   const [activePage, setActivePage] = useState('home');
   const [globalSearch, setGlobalSearch] = useState('');
+  const [pendingPublicClubsCount, setPendingPublicClubsCount] = useState(0);
 
-  // Shared persistent state across all UniHive × USTU views
-  const [userProfile, setUserProfile] = useLocalStorageState(
-    'unihive_ustu_profile_v4',
-    INITIAL_USER_PROFILE
-  );
-  const [events, setEvents] = useLocalStorageState(
-    'unihive_ustu_events_v4',
-    INITIAL_EVENTS
-  );
-  const [clubs, setClubs] = useLocalStorageState(
-    'unihive_ustu_clubs_v4',
-    INITIAL_CLUBS
-  );
-  const [volunteerRoles, setVolunteerRoles] = useLocalStorageState(
-    'unihive_ustu_volunteer_roles_v4',
-    INITIAL_VOLUNTEER_ROLES
-  );
-  const [tasks, setTasks] = useLocalStorageState(
-    'unihive_ustu_tasks_v4',
-    INITIAL_TASKS
-  );
-  const [announcements, setAnnouncements] = useLocalStorageState(
-    'unihive_ustu_announcements_v4',
-    INITIAL_ANNOUNCEMENTS
-  );
-  const [feedbackList, setFeedbackList] = useLocalStorageState(
-    'unihive_ustu_feedback_v4',
-    INITIAL_FEEDBACK
-  );
-  const [notifications, setNotifications] = useLocalStorageState(
-    'unihive_ustu_notifications_v4',
-    INITIAL_NOTIFICATIONS
-  );
-  const [semesterCalendar, setSemesterCalendar] = useLocalStorageState(
-    'unihive_ustu_semester_calendar_v4',
-    INITIAL_SEMESTER_CALENDAR
-  );
+  // Hydrated live state from SQLite Backend
+  const [userProfile, setUserProfile] = useState(INITIAL_USER_PROFILE);
+  const [adminProfile, setAdminProfile] = useState(ADMIN_PROFILE);
+  const [events, setEvents] = useState([]);
+  const [clubs, setClubs] = useState([]);
+  const [volunteerRoles, setVolunteerRoles] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
+  const [feedbackList, setFeedbackList] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [semesterCalendar, setSemesterCalendar] = useState(INITIAL_SEMESTER_CALENDAR);
 
   // Cross-page detail modals
   const [selectedEventForModal, setSelectedEventForModal] = useState(null);
@@ -91,29 +56,112 @@ export default function App() {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
+  const applyBootstrap = useCallback((data) => {
+    if (!data) return;
+    if (data.userProfile) setUserProfile(data.userProfile);
+    if (data.adminProfile) setAdminProfile(data.adminProfile);
+    if (Array.isArray(data.events)) setEvents(data.events);
+    if (Array.isArray(data.clubs)) setClubs(data.clubs);
+    if (Array.isArray(data.volunteerRoles)) setVolunteerRoles(data.volunteerRoles);
+    if (Array.isArray(data.tasks)) setTasks(data.tasks);
+    if (Array.isArray(data.announcements)) setAnnouncements(data.announcements);
+    if (Array.isArray(data.feedbackList)) setFeedbackList(data.feedbackList);
+    if (Array.isArray(data.notifications)) setNotifications(data.notifications);
+    if (Array.isArray(data.semesterCalendar)) setSemesterCalendar(data.semesterCalendar);
+  }, []);
+
+  const refreshBootstrap = useCallback(async () => {
+    if (!getAuthToken()) return null;
+    const data = await api.bootstrap();
+    applyBootstrap(data);
+    return data;
+  }, [applyBootstrap]);
+
+  // Restore authenticated session on initial mount
+  useEffect(() => {
+    const token = getAuthToken();
+    if (!token) {
+      api
+        .publicSummary()
+        .then((res) => setPendingPublicClubsCount(res.pendingClubsCount || 0))
+        .catch(() => {});
+      setBooting(false);
+      return;
+    }
+
+    refreshBootstrap()
+      .then((data) => {
+        if (data?.currentUser) {
+          const role = data.currentUser.role;
+          setAuthSession(role);
+          setActivePage(role === 'admin' ? 'admin' : 'home');
+        } else {
+          setAuthToken(null);
+          setAuthSession(null);
+        }
+      })
+      .catch(() => {
+        setAuthToken(null);
+        setAuthSession(null);
+      })
+      .finally(() => setBooting(false));
+  }, [refreshBootstrap]);
+
+  // Real-time Server-Sent Events subscription across tabs
+  useEffect(() => {
+    if (!authSession) return undefined;
+    const unsubscribe = subscribeToRealtime(() => {
+      refreshBootstrap().catch(() => {});
+    });
+    return unsubscribe;
+  }, [authSession, refreshBootstrap]);
+
+  const runAction = async (fn, successTitle, successDesc, type = 'success') => {
+    try {
+      const result = await fn();
+      await refreshBootstrap();
+      if (successTitle) {
+        addToast(
+          successTitle,
+          typeof successDesc === 'function' ? successDesc(result) : successDesc,
+          type
+        );
+      }
+      return result;
+    } catch (err) {
+      addToast('Action Failed', err.message || 'Please try again.', 'error');
+      return null;
+    }
+  };
+
   // Login & Logout handlers
-  const handleLogin = (selectedRole) => {
-    setAuthSession(selectedRole);
-    if (selectedRole === 'admin') {
-      setActivePage('admin');
+  const handleAuthSuccess = async (res) => {
+    setAuthToken(res.token);
+    try {
+      const data = await refreshBootstrap();
+      const role = data?.currentUser?.role || res.role || 'student';
+      setAuthSession(role);
+      setActivePage(role === 'admin' ? 'admin' : 'home');
       addToast(
-        'Signed in to Admin Portal',
-        `Welcome back, ${ADMIN_PROFILE.name}.`,
-        'info'
+        role === 'admin' ? 'Signed in to Admin Portal' : 'Signed in to Student Portal',
+        `Welcome back, ${data?.currentUser?.name || res.user?.name}.`,
+        role === 'admin' ? 'info' : 'success'
       );
-    } else {
-      setActivePage('home');
-      addToast(
-        'Signed in to Student Portal',
-        `Welcome back, ${userProfile.name}.`
-      );
+    } catch (err) {
+      setAuthToken(null);
+      addToast('Sign In Error', err.message, 'error');
     }
   };
 
   const handleLogout = () => {
+    setAuthToken(null);
     setAuthSession(null);
     setSelectedEventForModal(null);
     setSelectedClubForModal(null);
+    api
+      .publicSummary()
+      .then((res) => setPendingPublicClubsCount(res.pendingClubsCount || 0))
+      .catch(() => {});
     addToast(
       'Signed Out',
       'You have been logged out. Select Student or Admin portal to sign in.',
@@ -125,19 +173,8 @@ export default function App() {
   const handleRegisterEvent = (eventId) => {
     const target = events.find((e) => e.id === eventId);
     if (!target || target.isRegistered) return;
-
-    setEvents((prev) =>
-      prev.map((evt) =>
-        evt.id === eventId
-          ? {
-              ...evt,
-              isRegistered: true,
-              registeredCount: Math.min(evt.capacity, evt.registeredCount + 1),
-            }
-          : evt
-      )
-    );
-    addToast(
+    runAction(
+      () => api.registerEvent(eventId),
       'Registration Confirmed',
       `You are registered for "${target.title}" on ${target.date}.`
     );
@@ -147,185 +184,76 @@ export default function App() {
   const handleCancelRegistration = (eventId) => {
     const target = events.find((e) => e.id === eventId);
     if (!target || !target.isRegistered) return;
-
-    setEvents((prev) =>
-      prev.map((evt) =>
-        evt.id === eventId
-          ? {
-              ...evt,
-              isRegistered: false,
-              registeredCount: Math.max(0, evt.registeredCount - 1),
-            }
-          : evt
-      )
-    );
-    addToast(
+    runAction(
+      () => api.cancelEventRegistration(eventId),
       'Registration Cancelled',
       `Your seat for "${target.title}" has been released.`,
       'info'
     );
   };
 
-  // Create New Event (Admin/Organizer)
+  // Create New Event (Admin)
   const handleCreateEvent = (form) => {
-    const dateObj = form.date || '2026-11-20';
-    const monthShort = dateObj.startsWith('2026-10') ? 'OCT' : 'NOV';
-    const dayNumber = dateObj.slice(-2);
-
-    const newEvent = {
-      id: `evt-${Date.now()}`,
-      title: form.title.trim(),
-      shortDescription: form.shortDescription.trim(),
-      fullDescription: form.shortDescription.trim(),
-      category: form.category,
-      date: dateObj,
-      monthShort,
-      dayNumber,
-      startTime: form.startTime || '03:00 PM',
-      endTime: '05:00 PM',
-      duration: form.duration || '2 hours',
-      venue: form.venue.trim(),
-      organizer: form.organizer.trim() || 'Student Council',
-      capacity: parseInt(form.capacity, 10) || 100,
-      registeredCount: 1,
-      isRegistered: true,
-      approvalStatus: 'Published',
-      eligibility: form.eligibility || 'Open to all enrolled students.',
-      tags: [form.category, 'UniHive'],
-    };
-
-    setEvents((prev) => [newEvent, ...prev]);
-    addToast(
+    runAction(
+      () => api.createEvent(form),
       'Event Published',
-      `"${newEvent.title}" is now live across the student directory and calendar.`
+      `"${form.title.trim()}" is now saved in SQLite and live across UniHive.`
     );
   };
 
   // Student Creates a New Club Proposal -> Sends Notification to Admin for Permission
   const handleCreateClubProposal = (clubForm) => {
-    const officersList = [
-      {
-        id: `m-lead-${Date.now()}`,
-        name: clubForm.leadName,
-        role: 'Leader / President',
-        email: 'leader@westfield.edu',
-      },
-      {
-        id: `m-vlead-${Date.now()}`,
-        name: clubForm.viceLeadName,
-        role: 'Vice Leader',
-        email: 'viceleader@westfield.edu',
-      },
-    ];
-
-    if (clubForm.secretaryName) {
-      officersList.push({
-        id: `m-sec-${Date.now()}`,
-        name: clubForm.secretaryName,
-        role: 'Secretary',
-        email: 'secretary@westfield.edu',
-      });
-    }
-
-    // Deduplicate any initial members that match officers
-    const extraMembers = (clubForm.initialMembers || []).filter(
-      (m) => !officersList.some((o) => o.name === m.name)
-    );
-    const fullRoster = [...officersList, ...extraMembers];
-
-    const newClub = {
-      id: `clb-${Date.now()}`,
-      name: clubForm.name,
-      shortDescription: clubForm.shortDescription,
-      fullDescription: clubForm.shortDescription,
-      category: clubForm.category,
-      memberCount: fullRoster.length,
-      leadName: clubForm.leadName,
-      viceLeadName: clubForm.viceLeadName,
-      secretaryName: clubForm.secretaryName,
-      createdBy: userProfile.id,
-      createdByName: userProfile.name,
-      approvalStatus: 'Pending Approval',
-      meetingSchedule: clubForm.meetingSchedule,
-      membershipState: 'Joined',
-      requiresApproval: Boolean(clubForm.requiresApproval),
-      members: fullRoster,
-      activities: [
-        'Weekly Core Team & Member Meetups',
-        'Hands-on Campus Workshops & Projects',
-        'Inter-department Collaborative Sprints',
-      ],
-    };
-
-    setClubs((prev) => [newClub, ...prev]);
-
-    // Push instant Notification to Admin
-    const adminNotif = {
-      id: `notif-admin-${Date.now()}`,
-      recipientRole: 'admin',
-      title: 'New Club Creation Permission Request',
-      message: `${userProfile.name} proposed "${newClub.name}" (Leader: ${newClub.leadName}, Vice Leader: ${newClub.viceLeadName}). Grant permission to publish.`,
-      time: 'Just now',
-      unread: true,
-      targetTab: 'admin',
-    };
-
-    setNotifications((prev) => [adminNotif, ...prev]);
-
-    addToast(
+    runAction(
+      () => api.createClub(clubForm),
       'Club Proposal Sent to Admin',
-      `"${newClub.name}" has been created and notified to the Admin for permission.`
+      `"${clubForm.name}" has been saved and notified to the Admin for permission.`
     );
   };
 
   // Update Club Roster / Leadership Roles
-  const handleUpdateClubHierarchy = (clubId, updates) => {
-    setClubs((prev) =>
-      prev.map((club) => (club.id === clubId ? { ...club, ...updates } : club))
-    );
-    addToast(
+  const handleUpdateClubHierarchy = (clubId, payload) => {
+    runAction(
+      () => api.updateClubHierarchy(clubId, payload),
       'Club Roster Updated',
-      'Leadership roles and member list have been updated.'
+      'Leadership roles and member list have been persisted to the database.'
+    );
+  };
+
+  // Club Chat & DMs
+  const handleSendClubMessage = (clubId, payload) => {
+    return runAction(() => api.sendClubMessage(clubId, payload));
+  };
+
+  const handleUpdateClubMessage = (clubId, msgId, payload) => {
+    return runAction(() => api.updateClubMessage(clubId, msgId, payload));
+  };
+
+  const handleDeleteClubMessage = (clubId, msgId) => {
+    return runAction(
+      () => api.deleteClubMessage(clubId, msgId),
+      'Message Deleted',
+      '',
+      'info'
     );
   };
 
   // Admin Grants Permission to Student-Created Club
   const handleApproveClub = (clubId) => {
     const target = clubs.find((c) => c.id === clubId);
-    if (!target) return;
-
-    setClubs((prev) =>
-      prev.map((c) =>
-        c.id === clubId ? { ...c, approvalStatus: 'Approved' } : c
-      )
-    );
-
-    const studentNotif = {
-      id: `notif-stu-club-${Date.now()}`,
-      recipientRole: 'student',
-      title: 'Club Permission Granted by Admin!',
-      message: `Admin approved your club "${target.name}". It is now officially live across UniHive.`,
-      time: 'Just now',
-      unread: true,
-      targetTab: 'clubs',
-    };
-    setNotifications((prev) => [studentNotif, ...prev]);
-
-    addToast(
+    runAction(
+      () => api.approveClub(clubId),
       'Club Permission Granted',
-      `"${target.name}" is now officially approved and open to all students.`
+      `"${target?.name || 'Club'}" is now officially approved and open to all students.`
     );
   };
 
   // Admin Rejects Club Request
   const handleRejectClub = (clubId) => {
     const target = clubs.find((c) => c.id === clubId);
-    if (!target) return;
-
-    setClubs((prev) => prev.filter((c) => c.id !== clubId));
-    addToast(
+    runAction(
+      () => api.rejectClub(clubId),
       'Club Proposal Rejected',
-      `"${target.name}" was declined and removed from the permission queue.`,
+      `"${target?.name || 'Club'}" was declined and removed from the permission queue.`,
       'info'
     );
   };
@@ -333,82 +261,35 @@ export default function App() {
   // Join or Apply to Club
   const handleJoinClub = (clubId) => {
     const target = clubs.find((c) => c.id === clubId);
-    if (
-      !target ||
-      target.membershipState === 'Joined' ||
-      target.membershipState === 'Pending Approval'
-    ) {
+    if (!target || target.membershipState === 'Joined' || target.membershipState === 'Pending Approval') {
       return;
     }
-
-    const nextState = target.requiresApproval ? 'Pending Approval' : 'Joined';
-    setClubs((prev) =>
-      prev.map((club) =>
-        club.id === clubId
-          ? {
-              ...club,
-              membershipState: nextState,
-              memberCount:
-                nextState === 'Joined'
-                  ? club.memberCount + 1
-                  : club.memberCount,
-            }
-          : club
-      )
+    runAction(
+      () => api.joinClub(clubId),
+      target.requiresApproval ? 'Membership Application Sent' : 'Joined Community',
+      target.requiresApproval
+        ? `Your application to ${target.name} has been sent to the club lead.`
+        : `Welcome to ${target.name}!`
     );
-
-    if (nextState === 'Joined') {
-      addToast(
-        'Joined Community',
-        `Welcome to ${target.name}! Weekly meetup details added to your profile.`
-      );
-    } else {
-      addToast(
-        'Membership Application Sent',
-        `Your application to ${target.name} has been sent to the club lead.`
-      );
-    }
   };
 
   // Leave Club
   const handleLeaveClub = (clubId) => {
     const target = clubs.find((c) => c.id === clubId);
-    if (!target) return;
-
-    setClubs((prev) =>
-      prev.map((club) =>
-        club.id === clubId
-          ? {
-              ...club,
-              membershipState: club.requiresApproval
-                ? 'Approval Required'
-                : 'Open',
-              memberCount: Math.max(0, club.memberCount - 1),
-            }
-          : club
-      )
+    runAction(
+      () => api.leaveClub(clubId),
+      'Membership Updated',
+      `You have left ${target?.name || 'the club'}.`,
+      'info'
     );
-    addToast('Membership Updated', `You have left ${target.name}.`, 'info');
   };
 
   // Apply for Volunteer Role
   const handleApplyVolunteer = (roleId) => {
     const target = volunteerRoles.find((r) => r.id === roleId);
     if (!target || target.status !== 'Open') return;
-
-    setVolunteerRoles((prev) =>
-      prev.map((r) =>
-        r.id === roleId
-          ? {
-              ...r,
-              status: 'Applied',
-              filledCount: Math.min(r.requiredCount, r.filledCount + 1),
-            }
-          : r
-      )
-    );
-
-    addToast(
+    runAction(
+      () => api.applyVolunteer(roleId),
       'Volunteer Application Submitted',
       `Applied for "${target.title}" (${target.eventTitle}).`
     );
@@ -418,15 +299,9 @@ export default function App() {
   const handleToggleTask = (taskId) => {
     const target = tasks.find((t) => t.id === taskId);
     if (!target) return;
-
     const nextCompleted = !target.completed;
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === taskId ? { ...t, completed: nextCompleted } : t
-      )
-    );
-
-    addToast(
+    runAction(
+      () => api.toggleTask(taskId),
       nextCompleted ? 'Task Completed' : 'Task Reopened',
       target.title,
       nextCompleted ? 'success' : 'info'
@@ -434,61 +309,30 @@ export default function App() {
   };
 
   // Submit Feedback
-  const handleSubmitFeedback = ({
-    category,
-    subject,
-    description,
-    relatedEvent,
-  }) => {
-    const randomNum = Math.floor(8900 + Math.random() * 999);
-    const refId = `CMP-2026-${randomNum}`;
-    const today = '2026-10-27';
-
-    const newEntry = {
-      id: `fdb-${Date.now()}`,
-      referenceId: refId,
-      category,
-      subject,
-      description,
-      relatedEvent,
-      submittedDate: today,
-      updatedDate: today,
-      status: 'Open',
-      adminResponse:
-        'Logged via UniHive portal. Assigned to the respective campus coordinator for initial review.',
-    };
-
-    setFeedbackList((prev) => [newEntry, ...prev]);
-    addToast(
-      `Feedback Submitted (${refId})`,
-      'Your submission has been recorded and can be tracked below.'
+  const handleSubmitFeedback = (payload) => {
+    runAction(
+      () => api.submitFeedback(payload),
+      'Feedback Submitted',
+      (res) => `Ticket ${res?.referenceId || ''} recorded in SQLite database.`
     );
   };
 
   // Admin: Approve or Reject Event
   const handleApproveEvent = (eventId) => {
     const target = events.find((e) => e.id === eventId);
-    if (!target) return;
-
-    setEvents((prev) =>
-      prev.map((e) =>
-        e.id === eventId ? { ...e, approvalStatus: 'Published' } : e
-      )
-    );
-    addToast(
+    runAction(
+      () => api.approveEvent(eventId),
       'Event Proposal Approved',
-      `"${target.title}" is now published to the student Events directory.`
+      `"${target?.title || 'Event'}" is now published to the student Events directory.`
     );
   };
 
   const handleRejectEvent = (eventId) => {
     const target = events.find((e) => e.id === eventId);
-    if (!target) return;
-
-    setEvents((prev) => prev.filter((e) => e.id !== eventId));
-    addToast(
+    runAction(
+      () => api.rejectEvent(eventId),
       'Event Proposal Returned',
-      `"${target.title}" was removed from the publication queue.`,
+      `"${target?.title || 'Event'}" was removed from the publication queue.`,
       'info'
     );
   };
@@ -496,70 +340,39 @@ export default function App() {
   // Admin: Update Feedback Status
   const handleUpdateFeedbackStatus = (feedbackId, nextStatus) => {
     const target = feedbackList.find((f) => f.id === feedbackId);
-    if (!target) return;
-
-    setFeedbackList((prev) =>
-      prev.map((f) =>
-        f.id === feedbackId
-          ? {
-              ...f,
-              status: nextStatus,
-              updatedDate: '2026-10-27',
-              adminResponse:
-                nextStatus === 'Resolved'
-                  ? 'Verified and resolved by Campus Operations Administration on Oct 27, 2026.'
-                  : 'Assigned to department supervisor; resolution in progress.',
-            }
-          : f
-      )
-    );
-    addToast(
-      `Ticket ${target.referenceId} Updated`,
+    runAction(
+      () => api.updateFeedbackStatus(feedbackId, nextStatus),
+      `Ticket ${target?.referenceId || ''} Updated`,
       `Status changed to "${nextStatus}".`
     );
   };
 
   // Profile Update
   const handleUpdateProfile = (updatedProfile) => {
-    setUserProfile(updatedProfile);
-    addToast('Profile Updated', 'Your student profile changes have been saved.');
+    runAction(
+      () => api.updateProfile(updatedProfile),
+      'Profile Updated',
+      'Your student profile changes have been saved to SQLite.'
+    );
   };
 
   // Post Division / Branch Announcement (CR / Admin)
   const handlePostDivisionAnnouncement = (newNotice) => {
-    const entry = {
-      id: `ann-div-${Date.now()}`,
-      title: newNotice.title,
-      source: newNotice.source,
-      authorRole: newNotice.authorRole,
-      date: '2026-10-27',
-      relativeTime: 'Just now',
-      category: newNotice.category,
-      targetBranch: newNotice.targetBranch,
-      targetDivision: newNotice.targetDivision,
-      pinned: true,
-      summary: newNotice.summary,
-      content: newNotice.content,
-    };
-    setAnnouncements((prev) => [entry, ...prev]);
-    addToast(
+    runAction(
+      () => api.postAnnouncement(newNotice),
       'Targeted Notice Published',
       `Posted to ${newNotice.targetBranch} ${
-        newNotice.targetDivision === 'ALL'
-          ? 'All Divisions'
-          : newNotice.targetDivision
+        newNotice.targetDivision === 'ALL' ? 'All Divisions' : newNotice.targetDivision
       }.`
     );
   };
 
   // Add New Milestone to Branch & Semester Academic Calendar
   const handleAddSemesterItem = (newMilestone) => {
-    setSemesterCalendar((prev) => [newMilestone, ...prev]);
-    addToast(
+    runAction(
+      () => api.addCalendarMilestone(newMilestone),
       'Semester Calendar Updated',
-      `"${newMilestone.title}" added for ${
-        newMilestone.branch === 'ALL' ? 'All Branches' : newMilestone.branch
-      } (${newMilestone.semester}).`
+      `"${newMilestone.title}" added for ${newMilestone.branch} (${newMilestone.semester}).`
     );
   };
 
@@ -572,29 +385,15 @@ export default function App() {
   }, [notifications, authSession]);
 
   const handleMarkAllNotificationsRead = () => {
-    setNotifications((prev) =>
-      prev.map((n) =>
-        !n.recipientRole || n.recipientRole === authSession
-          ? { ...n, unread: false }
-          : n
-      )
-    );
+    runAction(() => api.markAllNotificationsRead());
   };
 
   // Reset Demo Data
   const handleResetDemoData = () => {
-    setUserProfile(INITIAL_USER_PROFILE);
-    setEvents(INITIAL_EVENTS);
-    setClubs(INITIAL_CLUBS);
-    setVolunteerRoles(INITIAL_VOLUNTEER_ROLES);
-    setTasks(INITIAL_TASKS);
-    setAnnouncements(INITIAL_ANNOUNCEMENTS);
-    setFeedbackList(INITIAL_FEEDBACK);
-    setNotifications(INITIAL_NOTIFICATIONS);
-    setSemesterCalendar(INITIAL_SEMESTER_CALENDAR);
-    addToast(
-      'Demo State Reset',
-      'All events, clubs, tasks, and feedback have been restored to initial defaults.',
+    runAction(
+      () => api.resetDemoData(),
+      'Database Reset',
+      'All SQLite tables have been restored to initial defaults.',
       'info'
     );
   };
@@ -623,13 +422,28 @@ export default function App() {
     events.filter((e) => e.approvalStatus === 'Pending Approval').length +
     feedbackList.filter((f) => f.status !== 'Resolved').length;
 
+  if (booting) {
+    return (
+      <div className="min-h-screen bg-[#EEEEEE] flex items-center justify-center p-4">
+        <div className="bg-white border-2 border-[#363636] border-t-4 border-t-[#17AAAA] rounded-xl px-6 py-5 text-center shadow-lg">
+          <p className="text-sm font-bold text-[#363636]">
+            Connecting to UniHive SQLite Backend...
+          </p>
+          <p className="text-xs text-[#17AAAA] mt-1 font-medium">
+            Syncing campus workspace &amp; live session
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Render Login Portal if not authenticated
   if (!authSession) {
     return (
       <>
         <Login
-          onLogin={handleLogin}
-          pendingClubRequestsCount={pendingClubsCount}
+          onAuthSuccess={handleAuthSuccess}
+          pendingClubRequestsCount={pendingPublicClubsCount}
         />
         <Toast toasts={toasts} onDismiss={dismissToast} />
       </>
@@ -651,7 +465,7 @@ export default function App() {
         onMarkAllNotificationsRead={handleMarkAllNotificationsRead}
         onResetDemoData={handleResetDemoData}
         userProfile={userProfile}
-        adminProfile={ADMIN_PROFILE}
+        adminProfile={adminProfile}
         pendingApprovalsCount={pendingApprovalsCount}
       >
         {activePage === 'home' && (
@@ -706,6 +520,9 @@ export default function App() {
             onLeaveClub={handleLeaveClub}
             onCreateClubProposal={handleCreateClubProposal}
             onUpdateClubHierarchy={handleUpdateClubHierarchy}
+            onSendClubMessage={handleSendClubMessage}
+            onUpdateClubMessage={handleUpdateClubMessage}
+            onDeleteClubMessage={handleDeleteClubMessage}
             onApproveClub={handleApproveClub}
             onRejectClub={handleRejectClub}
             selectedClubForModal={selectedClubForModal}

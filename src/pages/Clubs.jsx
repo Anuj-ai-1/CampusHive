@@ -253,6 +253,9 @@ export function Clubs({
   onLeaveClub,
   onCreateClubProposal,
   onUpdateClubHierarchy,
+  onSendClubMessage,
+  onUpdateClubMessage,
+  onDeleteClubMessage,
   onApproveClub,
   onRejectClub,
   selectedClubForModal,
@@ -402,47 +405,26 @@ export function Clubs({
     return Array.from(map.values());
   }, [activeModalClub]);
 
-  const handleSendChatMessage = (e) => {
+  const handleSendChatMessage = async (e) => {
     e.preventDefault();
     if (!activeModalClub || !chatInput.trim()) return;
 
-    const myMemberEntry = (activeModalClub.members || []).find((m) =>
-      m.name.toLowerCase().includes(userProfile.shortName.toLowerCase())
-    );
-    const senderRoleLabel =
-      role === 'admin'
-        ? 'USTU Admin / Pro-VC'
-        : myMemberEntry?.role || 'Club Member';
+    const replyTo = replyToMsg
+      ? {
+          senderName: replyToMsg.senderName,
+          text: replyToMsg.text.slice(0, 90),
+        }
+      : null;
 
-    const newMsg = {
-      id: `msg-${Date.now()}`,
-      channel: activeChannel,
-      senderName:
-        role === 'admin'
-          ? 'Dr. Anil Raina (Pro-VC)'
-          : `${userProfile.name} (${userProfile.yearShort || '3rd Year'} ${
-              userProfile.branchCode || 'CSE'
-            })`,
-      senderRole: senderRoleLabel,
-      time: 'Just now',
-      text: chatInput.trim(),
-      replyTo: replyToMsg
-        ? {
-            senderName: replyToMsg.senderName,
-            text: replyToMsg.text.slice(0, 90),
-          }
-        : null,
-      linkUrl: attachmentUrl.trim() || null,
-      pinned: false,
-      likes: 1,
-      fires: 0,
-      rockets: 0,
-    };
+    if (onSendClubMessage) {
+      await onSendClubMessage(activeModalClub.id, {
+        channel: activeChannel,
+        text: chatInput.trim(),
+        replyTo,
+        linkUrl: attachmentUrl.trim() || null,
+      });
+    }
 
-    const nextMessages = [...clubMessages, newMsg];
-    onUpdateClubHierarchy(activeModalClub.id, {
-      chatMessages: nextMessages,
-    });
     setChatInput('');
     setReplyToMsg(null);
     setAttachmentUrl('');
@@ -450,31 +432,18 @@ export function Clubs({
   };
 
   const handleReactMessage = (msgId, field) => {
-    if (!activeModalClub) return;
-    const nextMessages = clubMessages.map((m) =>
-      m.id === msgId ? { ...m, [field]: (m[field] || 0) + 1 } : m
-    );
-    onUpdateClubHierarchy(activeModalClub.id, {
-      chatMessages: nextMessages,
-    });
+    if (!activeModalClub || !onUpdateClubMessage) return;
+    onUpdateClubMessage(activeModalClub.id, msgId, { reactField: field });
   };
 
   const handleTogglePinMessage = (msgId) => {
-    if (!activeModalClub) return;
-    const nextMessages = clubMessages.map((m) =>
-      m.id === msgId ? { ...m, pinned: !m.pinned } : m
-    );
-    onUpdateClubHierarchy(activeModalClub.id, {
-      chatMessages: nextMessages,
-    });
+    if (!activeModalClub || !onUpdateClubMessage) return;
+    onUpdateClubMessage(activeModalClub.id, msgId, { togglePin: true });
   };
 
   const handleDeleteMessage = (msgId) => {
-    if (!activeModalClub) return;
-    const nextMessages = clubMessages.filter((m) => m.id !== msgId);
-    onUpdateClubHierarchy(activeModalClub.id, {
-      chatMessages: nextMessages,
-    });
+    if (!activeModalClub || !onDeleteClubMessage) return;
+    onDeleteClubMessage(activeModalClub.id, msgId);
   };
 
   const handleInspectStudentProfile = (nameStr, roleInClub = 'Member') => {
@@ -487,29 +456,17 @@ export function Clubs({
     setInspectedPeer(profileObj);
   };
 
-  const handleStartDirectChatWithPeer = (peerProfile, initialText = '') => {
+  const handleStartDirectChatWithPeer = async (peerProfile, initialText = '') => {
     if (!peerProfile || !activeModalClub) return;
     const dmKey = `dm:${peerProfile.displayName}`;
     setActiveChannel(dmKey);
     setClubWorkspaceTab('chat');
 
-    if (initialText.trim()) {
-      const dmMsg = {
-        id: `msg-dm-${Date.now()}`,
+    if (initialText.trim() && onSendClubMessage) {
+      await onSendClubMessage(activeModalClub.id, {
         channel: dmKey,
-        senderName: `${userProfile.name} (${
-          userProfile.yearShort || '3rd Year'
-        } ${userProfile.branchCode || 'CSE'})`,
-        senderRole: 'Direct Message',
-        time: 'Just now',
         text: initialText.trim(),
-        pinned: false,
-        likes: 1,
-        fires: 0,
-        rockets: 0,
-      };
-      onUpdateClubHierarchy(activeModalClub.id, {
-        chatMessages: [...clubMessages, dmMsg],
+        senderRoleOverride: 'Direct Message',
       });
     }
     setInspectedPeer(null);
@@ -596,68 +553,33 @@ export function Clubs({
     e.preventDefault();
     if (!activeModalClub || !detailMemberName.trim()) return;
 
-    const currentMembers = activeModalClub.members || [];
-    const newMember = {
-      id: `mem-${Date.now()}`,
+    onUpdateClubHierarchy(activeModalClub.id, {
+      action: 'add',
       name: detailMemberName.trim(),
       role: detailMemberRole,
       email: `${detailMemberName
         .trim()
         .toLowerCase()
         .split(' ')[0]}@ustu.edu.in`,
-    };
-
-    const updatedMembers = [...currentMembers, newMember];
-    const updates = {
-      members: updatedMembers,
-      memberCount: Math.max(
-        activeModalClub.memberCount + 1,
-        updatedMembers.length
-      ),
-    };
-
-    if (detailMemberRole === 'Leader / President') {
-      updates.leadName = detailMemberName.trim();
-    } else if (detailMemberRole === 'Vice Leader') {
-      updates.viceLeadName = detailMemberName.trim();
-    } else if (detailMemberRole === 'Secretary') {
-      updates.secretaryName = detailMemberName.trim();
-    }
-
-    onUpdateClubHierarchy(activeModalClub.id, updates);
+    });
     setDetailMemberName('');
     setDetailMemberRole('Member');
   };
 
   const handleChangeMemberRole = (memberId, nextRole) => {
     if (!activeModalClub) return;
-    const currentMembers = activeModalClub.members || [];
-    const targetMember = currentMembers.find((m) => m.id === memberId);
-    if (!targetMember) return;
-
-    const updatedMembers = currentMembers.map((m) =>
-      m.id === memberId ? { ...m, role: nextRole } : m
-    );
-
-    const updates = { members: updatedMembers };
-    if (nextRole === 'Leader / President') {
-      updates.leadName = targetMember.name;
-    } else if (nextRole === 'Vice Leader') {
-      updates.viceLeadName = targetMember.name;
-    } else if (nextRole === 'Secretary') {
-      updates.secretaryName = targetMember.name;
-    }
-
-    onUpdateClubHierarchy(activeModalClub.id, updates);
+    onUpdateClubHierarchy(activeModalClub.id, {
+      action: 'role',
+      memberId,
+      role: nextRole,
+    });
   };
 
   const handleRemoveMemberFromClub = (memberId) => {
     if (!activeModalClub) return;
-    const currentMembers = activeModalClub.members || [];
-    const updatedMembers = currentMembers.filter((m) => m.id !== memberId);
     onUpdateClubHierarchy(activeModalClub.id, {
-      members: updatedMembers,
-      memberCount: Math.max(1, activeModalClub.memberCount - 1),
+      action: 'remove',
+      memberId,
     });
   };
 

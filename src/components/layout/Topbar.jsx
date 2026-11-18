@@ -6,6 +6,7 @@ import {
   ShieldCheck,
   ChevronRight,
   LogOut,
+  Database,
 } from 'lucide-react';
 import { NotificationPopover } from './NotificationPopover';
 import { ProfileMenu } from './ProfileMenu';
@@ -87,6 +88,15 @@ export function Topbar({
         >
           {role === 'admin' && <ShieldCheck className="w-3 h-3" />}
           {role === 'admin' ? 'Admin Session' : 'Student Session'}
+        </span>
+
+        <span
+          title="Connected to SQLite Backend + Real-Time SSE Sync"
+          className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-[#EEEEEE]/10 text-[#FFA42E] border border-[#FFA42E]/35"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#17AAAA]" />
+          <Database className="w-3 h-3" />
+          Live DB
         </span>
       </div>
 
