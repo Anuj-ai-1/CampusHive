@@ -76,7 +76,7 @@ export function Login({ onAuthSuccess }) {
             UniHive
           </h1>
           <p className="text-xs sm:text-sm font-medium text-[#17AAAA] mt-1.5">
-            Universal SkillTech University · Campus Operating System
+            Universal SkillTech University × UniHive
           </p>
         </div>
 
