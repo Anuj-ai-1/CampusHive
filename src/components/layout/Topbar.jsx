@@ -3,22 +3,19 @@ import {
   Menu,
   Bell,
   Search,
-  ShieldCheck,
   ChevronRight,
-  LogOut,
-  Database,
 } from 'lucide-react';
 import { NotificationPopover } from './NotificationPopover';
 import { ProfileMenu } from './ProfileMenu';
 
 const PAGE_LABELS = {
-  home: 'Home Dashboard',
-  classroom: 'My Branch & Division Classroom',
-  events: 'Events & OD Attendance',
-  clubs: 'Clubs & Communities',
-  volunteering: 'Volunteering & Tasks',
-  feedback: 'Feedback & Grievance',
-  calendar: 'Branch & Semester Calendar',
+  home: 'Home',
+  classroom: 'My Class',
+  events: 'Events & OD',
+  clubs: 'Clubs & Chat',
+  volunteering: 'Volunteering',
+  feedback: 'Feedback',
+  calendar: 'Calendar',
   profile: 'My Profile',
   admin: 'Admin Dashboard',
 };
@@ -74,33 +71,13 @@ export function Topbar({
             UniHive
           </button>
           <ChevronRight className="w-3.5 h-3.5 text-[#FFA42E] hidden sm:inline shrink-0" />
-          <span className="font-bold text-[#EEEEEE] truncate text-sm sm:text-xs">
+          <span className="font-bold text-[#EEEEEE] truncate text-sm">
             {PAGE_LABELS[activePage] || 'Dashboard'}
           </span>
         </nav>
-
-        <span
-          className={`hidden md:inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-bold rounded-full ${
-            role === 'admin'
-              ? 'bg-[#F63F3A] text-[#EEEEEE]'
-              : 'bg-[#17AAAA] text-[#EEEEEE]'
-          }`}
-        >
-          {role === 'admin' && <ShieldCheck className="w-3 h-3" />}
-          {role === 'admin' ? 'Admin Session' : 'Student Session'}
-        </span>
-
-        <span
-          title="Connected to SQLite Backend + Real-Time SSE Sync"
-          className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-[#EEEEEE]/10 text-[#FFA42E] border border-[#FFA42E]/35"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#17AAAA]" />
-          <Database className="w-3 h-3" />
-          Live DB
-        </span>
       </div>
 
-      {/* Right: Quick Search, Notifications, Profile, Logout */}
+      {/* Right: Quick Search, Notifications, Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="relative hidden md:block w-56 lg:w-64">
           <Search
@@ -112,7 +89,7 @@ export function Topbar({
             value={globalSearch}
             onChange={(e) => onGlobalSearchChange(e.target.value)}
             onKeyDown={handleSearchKeyDown}
-            placeholder="Quick find events or clubs..."
+            placeholder="Search events or clubs..."
             aria-label="Quick search across campus"
             className="w-full h-8 pl-8 pr-3 text-xs bg-[#EEEEEE] text-[#363636] placeholder-[#363636]/60 border border-[#17AAAA] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFA42E]"
           />
@@ -157,7 +134,7 @@ export function Topbar({
             }}
             aria-label="Open user menu"
             aria-expanded={profileOpen}
-            className="flex items-center gap-2 p-1 rounded-lg hover:bg-[#EEEEEE]/15 transition-all"
+            className="flex items-center gap-2 p-1 pr-2 rounded-lg hover:bg-[#EEEEEE]/15 transition-all"
           >
             <div className="w-7 h-7 rounded-full bg-[#FFA42E] flex items-center justify-center text-xs font-bold text-[#363636]">
               {(activePerson?.shortName || activePerson?.name || 'UH')
@@ -180,16 +157,6 @@ export function Topbar({
             adminProfile={adminProfile}
           />
         </div>
-
-        <button
-          type="button"
-          onClick={onLogout}
-          title="Sign Out / Switch Portal"
-          className="inline-flex items-center gap-1.5 h-8 px-2.5 text-xs font-semibold rounded-lg bg-[#F63F3A] text-[#EEEEEE] hover:bg-[#FFA42E] hover:text-[#363636] transition-all"
-        >
-          <LogOut className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Sign Out</span>
-        </button>
       </div>
     </header>
   );

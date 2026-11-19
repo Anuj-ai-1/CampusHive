@@ -111,39 +111,29 @@ export function Home({
   ].sort((a, b) => a.date.localeCompare(b.date));
 
   return (
-    <div className="space-y-8">
-      {/* A. Solid Minimalist Welcome Hero Banner with Branch + Division Pill */}
+    <div className="space-y-6">
+      {/* A. Clean, Scannable Welcome Banner */}
       <Card
-        padding="p-4 sm:p-7"
-        className="relative overflow-hidden border-t-4 border-t-[#F63F3A]"
+        padding="p-5 sm:p-6"
+        className="border-t-4 border-t-[#F63F3A]"
       >
-        <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-medium text-[#363636]/75 mb-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex flex-wrap items-center gap-2">
               <Badge variant="primary" dot>
-                USTU · {userProfile.yearShort || '3rd Year'} · {userBranch} ·{' '}
-                {userDiv} ({userProfile.labBatch || 'Batch A1'})
+                {userBranch} · {userDiv}
               </Badge>
-              {userProfile.isCR && <Badge variant="dark">Class Rep (CR)</Badge>}
-              <Badge variant="warning">60% Practical NEP Track</Badge>
-              <span className="hidden sm:inline">·</span>
-              <span className="font-semibold text-[#363636]">
-                Roll {userProfile.rollNo || 'USTU-CS-3A-08'}
-              </span>
+              {userProfile.isCR && <Badge variant="dark">Class Rep</Badge>}
             </div>
-            <h1 className="text-xl sm:text-[28px] font-bold tracking-tight text-[#363636]">
-              Good morning, {userProfile.shortName}
+            <h1 className="text-2xl sm:text-[26px] font-bold tracking-tight text-[#363636] pt-1">
+              Welcome back, {userProfile.shortName}
             </h1>
-            <p className="text-xs sm:text-sm text-[#363636]/80 mt-1">
-              Universal SkillTech University ·{' '}
-              <strong className="text-[#F63F3A]">
-                Learn + Work + Network = Placement
-              </strong>{' '}
-              · {userBranch} {userDiv} Workspace
+            <p className="text-xs sm:text-sm text-[#363636]/75">
+              {userProfile.yearShort || '3rd Year'} · Roll {userProfile.rollNo || 'USTU-CS-3A-08'} · Batch {userProfile.labBatch || 'Batch A1'}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full sm:w-auto self-start sm:self-center">
+          <div className="grid grid-cols-2 sm:flex items-center gap-2.5 w-full sm:w-auto">
             <Button
               variant="secondary"
               size="md"
@@ -151,7 +141,7 @@ export function Home({
               onClick={() => onNavigate('classroom')}
               className="w-full sm:w-auto justify-center"
             >
-              My {userBranch} {userDiv} Hub
+              My Class
             </Button>
             <Button
               variant="primary"
@@ -160,7 +150,7 @@ export function Home({
               onClick={() => onNavigate('events')}
               className="w-full sm:w-auto justify-center"
             >
-              Explore events
+              Browse Events
             </Button>
           </div>
         </div>

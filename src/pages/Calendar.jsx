@@ -243,7 +243,7 @@ export function Calendar({
   }, [userProfile?.year]);
 
   const [selectedSemester, setSelectedSemester] = useState(defaultSem);
-  const [viewMode, setViewMode] = useState('semester'); // 'semester' | 'month' | 'agenda'
+  const [viewMode, setViewMode] = useState('month'); // 'month' | 'semester' | 'agenda'
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [selectedMonthFilter, setSelectedMonthFilter] = useState('ALL'); // 'ALL' or 'YYYY-MM'
   const [searchQuery, setSearchQuery] = useState('');
@@ -721,15 +721,15 @@ export function Calendar({
   return (
     <div className="space-y-6">
       <PageHeader
-        title={`${activeBranch} Branch — Semester Calendar`}
-        subtitle={`Personalized academic calendar, exam datesheet, lab vivas, and daily ${activeBranch} ${userDiv} schedule exclusively for ${activeBranchMeta.name}.`}
+        title={`${activeBranch} Calendar`}
+        subtitle={`Your ${activeBranch} ${userDiv} classes, exams, lab vivas, and campus events in one place.`}
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <Tabs
               tabs={[
-                { id: 'semester', label: 'Semester Blueprint' },
-                { id: 'month', label: 'Interactive Month & Date' },
-                { id: 'agenda', label: 'Daily Agenda' },
+                { id: 'month', label: 'Month Grid' },
+                { id: 'semester', label: 'Exam Datesheet' },
+                { id: 'agenda', label: 'Daily List' },
               ]}
               activeTab={viewMode}
               onChange={setViewMode}
@@ -740,184 +740,57 @@ export function Calendar({
               icon={Plus}
               onClick={() => handleOpenAddModalForDate(selectedDate)}
             >
-              Add Date / Exam
+              Add Date
             </Button>
           </div>
         }
       >
-        {/* Locked Student Branch Identity + Dynamic Semester & Date Controls */}
-        <div className="pt-3 space-y-3">
-          <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#363636] border-l-4 border-l-[#17AAAA]">
-            {/* Left: Locked Student Branch Pill (Admin gets branch selector; Student sees ONLY their own branch) */}
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#17AAAA] text-xs font-bold text-[#EEEEEE]">
-                <Building2 className="w-4 h-4 text-[#EEEEEE]" />
-                <span>
-                  {activeBranchMeta.code} — {activeBranchMeta.name}
-                </span>
-                <span className="px-2 py-0.5 rounded-full bg-[#FFA42E] text-[#363636] text-[10px] font-bold">
-                  {userDiv} · {userProfile?.labBatch || 'Batch A1'}
-                </span>
-              </div>
+        {/* Single Clean Control Bar */}
+        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#363636] border-l-4 border-l-[#17AAAA]">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#17AAAA] text-xs font-bold text-[#EEEEEE]">
+              <Building2 className="w-3.5 h-3.5" />
+              {activeBranchMeta.code} · {userDiv}
+            </span>
 
-              {role === 'admin' && (
-                <div className="flex items-center gap-1 ml-1">
-                  {BRANCHES_LIST.map((b) => (
-                    <button
-                      key={b.code}
-                      type="button"
-                      onClick={() => setAdminBranchFilter(b.code)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        activeBranch === b.code
-                          ? 'bg-[#FFA42E] text-[#363636]'
-                          : 'bg-[#EEEEEE]/15 text-[#EEEEEE] hover:bg-[#17AAAA]'
-                      }`}
-                    >
-                      {b.code}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Right: Semester Selector Pills (Sem 1 to Sem 8) */}
-            <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 sm:pb-0 sm:flex-wrap">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#FFA42E] mr-1 flex items-center gap-1 shrink-0">
-                <GraduationCap className="w-3.5 h-3.5" />
-                Semester:
-              </span>
-              {SEMESTER_METADATA.map((sem) => {
-                const active = selectedSemester === sem.id;
-                const isCurrentStudentSem = defaultSem === sem.id;
-                return (
-                  <button
-                    key={sem.id}
-                    type="button"
-                    onClick={() => setSelectedSemester(sem.id)}
-                    className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 shrink-0 ${
-                      active
-                        ? 'bg-[#F63F3A] text-[#EEEEEE]'
-                        : 'bg-[#EEEEEE]/15 text-[#EEEEEE] hover:bg-[#17AAAA]'
-                    }`}
-                  >
-                    <span>{sem.id}</span>
-                    {isCurrentStudentSem && (
-                      <span
-                        className={`w-1.5 h-1.5 rounded-full ${
-                          active ? 'bg-[#FFA42E]' : 'bg-[#17AAAA]'
-                        }`}
-                        title="Your current semester"
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+            {role === 'admin' && (
+              <select
+                aria-label="Select Branch"
+                value={adminBranchFilter}
+                onChange={(e) => setAdminBranchFilter(e.target.value)}
+                className="h-8 px-2.5 rounded-lg bg-[#EEEEEE] text-[#363636] text-xs font-bold border border-[#FFA42E]"
+              >
+                {BRANCHES_LIST.map((b) => (
+                  <option key={b.code} value={b.code}>
+                    {b.code} — {b.name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
-          {/* Interactive Month & Date Navigator Bar (Works across all 3 views!) */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 px-3 sm:px-4 py-3 rounded-2xl bg-white border border-[#363636]/20">
-            {/* Month Quick Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 sm:pb-0 sm:flex-wrap">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#F63F3A] mr-1 flex items-center gap-1 shrink-0">
-                <CalendarDays className="w-3.5 h-3.5" />
-                Month:
-              </span>
-              {viewMode === 'semester' && (
-                <button
-                  type="button"
-                  onClick={() => setSelectedMonthFilter('ALL')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all shrink-0 ${
-                    selectedMonthFilter === 'ALL'
-                      ? 'bg-[#363636] text-[#EEEEEE]'
-                      : 'bg-[#EEEEEE] text-[#363636] hover:bg-[#FFA42E]'
-                  }`}
-                >
-                  Full Semester
-                </button>
-              )}
-              {semesterMonthsList.map((m) => {
-                const isActive =
-                  viewMode === 'semester'
-                    ? selectedMonthFilter === m.key
-                    : currentMonth === m.key;
-                return (
-                  <button
-                    key={m.key}
-                    type="button"
-                    onClick={() => {
-                      setCurrentMonth(m.key);
-                      setSelectedDate(`${m.key}-01`);
-                      if (viewMode === 'semester') {
-                        setSelectedMonthFilter(m.key);
-                      }
-                    }}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all shrink-0 ${
-                      isActive
-                        ? 'bg-[#17AAAA] text-[#EEEEEE]'
-                        : 'bg-[#EEEEEE] text-[#363636] hover:bg-[#FFA42E]'
-                    }`}
-                  >
-                    {m.short}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <select
+              aria-label="Select Semester"
+              value={selectedSemester}
+              onChange={(e) => setSelectedSemester(e.target.value)}
+              className="h-8 px-3 rounded-lg bg-[#EEEEEE] text-[#363636] text-xs font-bold border border-[#17AAAA]"
+            >
+              {SEMESTER_METADATA.map((sem) => (
+                <option key={sem.id} value={sem.id}>
+                  {sem.label} ({sem.session})
+                </option>
+              ))}
+            </select>
 
-            {/* Direct Date Picker + Prev/Next Month + Today Button */}
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => handleStepMonth(-1)}
-                  title="Previous Month"
-                  className="p-1.5 rounded-lg bg-[#363636] text-[#EEEEEE] hover:bg-[#17AAAA] transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <span className="px-2.5 text-xs font-bold text-[#363636] min-w-[115px] text-center">
-                  {monthMeta.label}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => handleStepMonth(1)}
-                  title="Next Month"
-                  className="p-1.5 rounded-lg bg-[#363636] text-[#EEEEEE] hover:bg-[#17AAAA] transition-colors"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                <label
-                  htmlFor="calendar-jump-date"
-                  className="text-[11px] font-bold text-[#363636]"
-                >
-                  Jump to Date:
-                </label>
-                <input
-                  id="calendar-jump-date"
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => {
-                    handlePickDate(e.target.value);
-                    if (viewMode === 'semester') {
-                      setViewMode('month');
-                    }
-                  }}
-                  className="h-8 px-2.5 text-xs rounded-lg glass-input cursor-pointer"
-                />
-              </div>
-
-              <button
-                type="button"
-                onClick={handleJumpToToday}
-                className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg bg-[#FFA42E] hover:bg-[#F63F3A] text-[#363636] hover:text-[#EEEEEE] text-xs font-bold transition-all"
-              >
-                <RotateCcw className="w-3 h-3" />
-                Today (Oct 27)
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handleJumpToToday}
+              className="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-[#FFA42E] hover:bg-[#F63F3A] text-[#363636] hover:text-[#EEEEEE] text-xs font-bold transition-all"
+            >
+              <RotateCcw className="w-3 h-3" />
+              Today (Oct 27)
+            </button>
           </div>
         </div>
       </PageHeader>

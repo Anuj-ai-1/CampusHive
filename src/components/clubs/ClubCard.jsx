@@ -44,7 +44,7 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
       className="flex flex-col justify-between h-full border-t-4 border-t-[#17AAAA]"
     >
       <div>
-        <div className="flex items-start justify-between gap-2 mb-3">
+        <div className="flex items-center justify-between gap-2 mb-3">
           <Badge variant="neutral">{club.category}</Badge>
           <Badge variant={badge.variant} dot={badge.dot}>
             {badge.text}
@@ -64,72 +64,31 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
           </p>
         </button>
 
-        <div className="mt-4 pt-3 border-t border-[#363636]/15 space-y-1.5 text-xs text-[#363636]/80">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-[#17AAAA]" />
-              <span>
-                {club.members ? club.members.length : club.memberCount} members
-                {club.memberCount > (club.members?.length || 0)
-                  ? ` (${club.memberCount} total)`
-                  : ''}
+        <div className="mt-4 pt-3 border-t border-[#363636]/15 flex items-center justify-between gap-2 text-xs text-[#363636]/80">
+          <span className="flex items-center gap-1.5 font-medium">
+            <Users className="w-3.5 h-3.5 text-[#17AAAA]" />
+            {club.memberCount} members
+          </span>
+          {club.leadName && (
+            <span className="flex items-center gap-1 truncate max-w-[55%]">
+              <Crown className="w-3.5 h-3.5 text-[#FFA42E] shrink-0" />
+              <span className="truncate font-medium">
+                {club.leadName.split('(')[0].trim()}
               </span>
             </span>
-            {club.requiresApproval && !isJoined && !isPendingAdminApproval && (
-              <span className="flex items-center gap-1 text-[11px] font-medium text-[#F63F3A]">
-                <ShieldAlert className="w-3 h-3" />
-                Approval required
-              </span>
-            )}
-          </div>
-
-          {club.leadName && (
-            <p className="text-xs text-[#363636]/80 truncate flex items-center gap-1.5">
-              <Crown className="w-3.5 h-3.5 text-[#FFA42E] shrink-0" />
-              <span className="truncate">
-                Leader:{' '}
-                <span className="text-[#363636] font-semibold">
-                  {club.leadName}
-                </span>
-              </span>
-            </p>
-          )}
-
-          {club.viceLeadName && (
-            <p className="text-xs text-[#363636]/80 truncate flex items-center gap-1.5">
-              <Award className="w-3.5 h-3.5 text-[#17AAAA] shrink-0" />
-              <span className="truncate">
-                Vice Leader:{' '}
-                <span className="text-[#363636] font-semibold">
-                  {club.viceLeadName}
-                </span>
-              </span>
-            </p>
           )}
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-[#363636]/15 flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5">
-          <Button
-            variant="secondary"
-            size="sm"
-            icon={MessageSquare}
-            onClick={() =>
-              onOpenChat ? onOpenChat(club) : onOpenDetails(club)
-            }
-          >
-            Chat ({msgCount})
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onOpenDetails(club)}
-            className="px-2"
-          >
-            Roster
-          </Button>
-        </div>
+      <div className="mt-4 pt-3 border-t border-[#363636]/15 flex items-center justify-between gap-2">
+        <Button
+          variant="primary"
+          size="sm"
+          icon={MessageSquare}
+          onClick={() => (onOpenChat ? onOpenChat(club) : onOpenDetails(club))}
+        >
+          Open Chat
+        </Button>
 
         {isPendingAdminApproval ? (
           <Button
@@ -138,16 +97,16 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
             icon={Clock}
             onClick={() => onOpenDetails(club)}
           >
-            Pending Admin
+            Pending
           </Button>
         ) : isJoined ? (
           <Button
-            variant="success"
+            variant="subtle"
             size="sm"
             icon={UserCheck}
             onClick={() => onOpenDetails(club)}
           >
-            Joined
+            Roster
           </Button>
         ) : isPendingMember ? (
           <Button variant="subtle" size="sm" icon={Clock} disabled>
@@ -155,7 +114,7 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
           </Button>
         ) : (
           <Button
-            variant={requiresApproval ? 'accentSubtle' : 'primary'}
+            variant="secondary"
             size="sm"
             onClick={() => onJoinClub(club.id)}
           >

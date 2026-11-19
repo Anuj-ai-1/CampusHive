@@ -46,25 +46,17 @@ export function EventCard({
             <div>
               <div className="flex flex-wrap items-center gap-1.5">
                 <Badge variant="neutral">{event.category}</Badge>
-                {event.isRegistered && (
+                {event.isRegistered ? (
                   <Badge variant="success" dot>
                     Registered
                   </Badge>
-                )}
-                {event.odEligible && (
-                  <Badge variant="primary">OD Eligible</Badge>
-                )}
-                {event.approvalStatus === 'Pending Approval' && (
-                  <Badge variant="warning" dot>
-                    Pending Approval
-                  </Badge>
+                ) : (
+                  event.odEligible && <Badge variant="primary">OD Eligible</Badge>
                 )}
               </div>
               <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
                 <Building2 className="w-3 h-3 shrink-0" />
-                <span className="truncate">
-                  {event.organizer} · <strong>{branchTag}</strong>
-                </span>
+                <span className="truncate">{event.organizer}</span>
               </p>
             </div>
           </div>

@@ -24,36 +24,27 @@ export function Sidebar({
 }) {
   const studentWorkspaceNav = [
     { id: 'home', label: 'Home', icon: Home },
-    {
-      id: 'classroom',
-      label: `My Division (${userProfile?.branchCode || 'CSE'} ${
-        userProfile?.division || 'Div A'
-      })`,
-      icon: GraduationCap,
-    },
+    { id: 'classroom', label: 'My Class', icon: GraduationCap },
     { id: 'events', label: 'Events & OD', icon: CalendarDays },
-    { id: 'clubs', label: 'Clubs & Communities', icon: Users },
+    { id: 'clubs', label: 'Clubs & Chat', icon: Users },
     { id: 'volunteering', label: 'Volunteering', icon: HeartHandshake },
     { id: 'feedback', label: 'Feedback', icon: MessageSquareText },
-    { id: 'calendar', label: 'Semester Calendar', icon: CalendarIcon },
+    { id: 'calendar', label: 'Calendar', icon: CalendarIcon },
+    { id: 'profile', label: 'Profile', icon: UserCircle },
   ];
 
   const adminWorkspaceNav = [
     {
       id: 'admin',
-      label: 'Admin Dashboard',
+      label: 'Dashboard',
       icon: ShieldCheck,
       badge: pendingApprovalsCount,
     },
-    { id: 'classroom', label: 'Branches & Divisions', icon: GraduationCap },
-    { id: 'clubs', label: 'Clubs & Permissions', icon: Users },
-    { id: 'events', label: 'Events & OD Sheets', icon: CalendarDays },
-    { id: 'feedback', label: 'Grievance Tickets', icon: MessageSquareText },
-    { id: 'calendar', label: 'Semester Calendar', icon: CalendarIcon },
-  ];
-
-  const personalNav = [
-    { id: 'profile', label: 'My Profile', icon: UserCircle },
+    { id: 'classroom', label: 'Classes', icon: GraduationCap },
+    { id: 'clubs', label: 'Clubs & Chat', icon: Users },
+    { id: 'events', label: 'Events & OD', icon: CalendarDays },
+    { id: 'feedback', label: 'Tickets', icon: MessageSquareText },
+    { id: 'calendar', label: 'Calendar', icon: CalendarIcon },
   ];
 
   const currentPerson = role === 'admin' ? adminProfile : userProfile;
@@ -87,10 +78,10 @@ export function Sidebar({
       </div>
 
       {/* Main navigation */}
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
+      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4">
         <div>
-          <p className="px-2.5 mb-1.5 text-[11px] font-bold uppercase tracking-wider text-[#FFA42E]">
-            {role === 'admin' ? 'Administration' : 'Workspace'}
+          <p className="px-2.5 mb-2 text-[11px] font-bold uppercase tracking-wider text-[#FFA42E]">
+            {role === 'admin' ? 'Admin Menu' : 'Menu'}
           </p>
           <nav className="space-y-1" aria-label="Workspace navigation">
             {activeNavList.map((item) => {
@@ -102,7 +93,7 @@ export function Sidebar({
                   type="button"
                   onClick={() => onNavigate(item.id)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`w-full flex items-center justify-between px-2.5 py-2 text-xs font-semibold rounded-lg transition-all duration-150 ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 text-[13px] font-semibold rounded-lg transition-all duration-150 ${
                     isActive
                       ? 'bg-[#17AAAA] text-[#EEEEEE] border border-[#17AAAA]'
                       : 'text-[#EEEEEE]/80 hover:text-[#363636] hover:bg-[#EEEEEE] border border-transparent'
@@ -126,40 +117,6 @@ export function Sidebar({
             })}
           </nav>
         </div>
-
-        {role === 'student' && (
-          <div>
-            <p className="px-2.5 mb-1.5 text-[11px] font-bold uppercase tracking-wider text-[#FFA42E]">
-              Personal
-            </p>
-            <nav className="space-y-1" aria-label="Personal navigation">
-              {personalNav.map((item) => {
-                const Icon = item.icon;
-                const isActive = activePage === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => onNavigate(item.id)}
-                    aria-current={isActive ? 'page' : undefined}
-                    className={`w-full flex items-center gap-2.5 px-2.5 py-2 text-xs font-semibold rounded-lg transition-all duration-150 ${
-                      isActive
-                        ? 'bg-[#17AAAA] text-[#EEEEEE] border border-[#17AAAA]'
-                        : 'text-[#EEEEEE]/80 hover:text-[#363636] hover:bg-[#EEEEEE] border border-transparent'
-                    }`}
-                  >
-                    <Icon
-                      className={`w-4 h-4 shrink-0 ${
-                        isActive ? 'text-[#EEEEEE]' : 'text-[#17AAAA]'
-                      }`}
-                    />
-                    <span className="truncate">{item.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-        )}
       </div>
 
       {/* User Footer + Logout to Login Screen */}
