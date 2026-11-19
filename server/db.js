@@ -61,6 +61,7 @@ export function initSchema() {
       interests_json TEXT DEFAULT '[]',
       achievements_json TEXT DEFAULT '[]',
       role_title TEXT,
+      profile_completed INTEGER DEFAULT 1,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -206,6 +207,7 @@ export function initSchema() {
       id TEXT PRIMARY KEY,
       reference_id TEXT UNIQUE NOT NULL,
       user_id TEXT,
+      submitted_by_name TEXT,
       category TEXT NOT NULL,
       subject TEXT NOT NULL,
       description TEXT NOT NULL,
@@ -774,6 +776,7 @@ export function serializeUser(row) {
     interests: JSON.parse(row.interests_json || '[]'),
     achievements: JSON.parse(row.achievements_json || '[]'),
     roleTitle: row.role_title,
+    profileCompleted: row.profile_completed !== 0,
   };
 }
 
@@ -930,8 +933,8 @@ export function getBootstrapData(userId, role) {
     });
 
   const tasks = db
-    .prepare('SELECT * FROM tasks WHERE user_id = ? OR user_id = ? ORDER BY created_at DESC')
-    .all(userId, INITIAL_USER_PROFILE.id)
+    .prepare('SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC')
+    .all(userId)
     .map((t) => ({
       id: t.id,
       title: t.title,
@@ -947,6 +950,7 @@ export function getBootstrapData(userId, role) {
     .map((f) => ({
       id: f.id,
       referenceId: f.reference_id,
+      submittedByName: f.submitted_by_name || 'Student',
       category: f.category,
       subject: f.subject,
       description: f.description,
@@ -989,10 +993,16 @@ export function getBootstrapData(userId, role) {
       status: c.status,
     }));
 
+  const campusDirectory = db
+    .prepare("SELECT * FROM users WHERE role = 'student' ORDER BY name ASC")
+    .all()
+    .map((u) => serializeUser(u));
+
   return {
     currentUser: serializeUser(userRow),
     userProfile: serializeUser(studentRow),
     adminProfile: serializeUser(adminRow),
+    campusDirectory,
     announcements,
     events,
     clubs,

@@ -17,8 +17,10 @@ export function Volunteering({
   tasks,
   onApplyVolunteer,
   onToggleTask,
+  onCreateTask,
 }) {
   const [roleFilter, setRoleFilter] = useState('all'); // 'all' | 'my-roles'
+  const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const todoTasks = tasks.filter((t) => !t.completed);
   const completedTasks = tasks.filter((t) => t.completed);
@@ -130,6 +132,32 @@ export function Volunteering({
               </div>
               <Badge variant="primary">{todoTasks.length}</Badge>
             </div>
+
+            {onCreateTask && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!newTaskTitle.trim()) return;
+                  onCreateTask({ title: newTaskTitle.trim() });
+                  setNewTaskTitle('');
+                }}
+                className="flex items-center gap-2"
+              >
+                <input
+                  type="text"
+                  value={newTaskTitle}
+                  onChange={(e) => setNewTaskTitle(e.target.value)}
+                  placeholder="Add a personal task..."
+                  className="flex-1 h-8 px-3 text-xs rounded-lg glass-input"
+                />
+                <button
+                  type="submit"
+                  className="h-8 px-3 rounded-lg bg-[#17AAAA] hover:bg-[#363636] text-[#EEEEEE] text-xs font-bold transition-colors shrink-0"
+                >
+                  Add
+                </button>
+              </form>
+            )}
 
             {todoTasks.length === 0 ? (
               <EmptyState

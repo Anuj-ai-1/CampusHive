@@ -29,14 +29,23 @@ export function Profile({
   onOpenClubDetails,
 }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [addAchievementOpen, setAddAchievementOpen] = useState(false);
+  const [achForm, setAchForm] = useState({
+    title: '',
+    issuer: '',
+    date: 'Nov 2026',
+    type: 'Certificate',
+  });
   const [formState, setFormState] = useState({
-    name: userProfile.name,
-    branchCode: userProfile.branchCode || 'CSE',
-    division: userProfile.division || 'Div A',
-    labBatch: userProfile.labBatch || 'Batch A1',
-    rollNo: userProfile.rollNo || 'CS-3A-08',
-    department: userProfile.department,
-    year: userProfile.year,
+    name: userProfile?.name || '',
+    branchCode: userProfile?.branchCode || 'CSE',
+    division: userProfile?.division || 'Div A',
+    labBatch: userProfile?.labBatch || 'Batch A1',
+    rollNo: userProfile?.rollNo || 'CS-3A-08',
+    department: userProfile?.department || '',
+    year: userProfile?.year || '',
+    phone: userProfile?.phone || '',
+    gpa: userProfile?.gpa || '',
     bio: userProfile?.bio || '',
     location: userProfile?.location || '',
     interestsText: (userProfile?.interests || []).join(', '),
@@ -49,13 +58,15 @@ export function Profile({
 
   const handleOpenEdit = () => {
     setFormState({
-      name: userProfile.name,
-      branchCode: userProfile.branchCode || 'CSE',
-      division: userProfile.division || 'Div A',
-      labBatch: userProfile.labBatch || 'Batch A1',
-      rollNo: userProfile.rollNo || 'CS-3A-08',
-      department: userProfile.department,
-      year: userProfile.year,
+      name: userProfile?.name || '',
+      branchCode: userProfile?.branchCode || 'CSE',
+      division: userProfile?.division || 'Div A',
+      labBatch: userProfile?.labBatch || 'Batch A1',
+      rollNo: userProfile?.rollNo || 'CS-3A-08',
+      department: userProfile?.department || '',
+      year: userProfile?.year || '',
+      phone: userProfile?.phone || '',
+      gpa: userProfile?.gpa || '',
       bio: userProfile?.bio || '',
       location: userProfile?.location || '',
       interestsText: (userProfile?.interests || []).join(', '),
@@ -82,12 +93,33 @@ export function Profile({
       rollNo: formState.rollNo,
       department: formState.department.trim() || userProfile.department,
       year: formState.year.trim() || userProfile.year,
+      phone: formState.phone.trim(),
+      gpa: formState.gpa.trim() || userProfile.gpa,
       bio: formState.bio.trim(),
       location: formState.location.trim(),
       interests:
         parsedInterests.length > 0 ? parsedInterests : userProfile.interests,
     });
     setEditModalOpen(false);
+  };
+
+  const handleAddAchievement = (e) => {
+    e.preventDefault();
+    if (!achForm.title.trim() || !achForm.issuer.trim()) return;
+    const nextAch = {
+      id: `ach-${Date.now()}`,
+      title: achForm.title.trim(),
+      issuer: achForm.issuer.trim(),
+      date: achForm.date.trim() || 'Nov 2026',
+      type: achForm.type,
+      credentialId: `USTU-${Math.floor(1000 + Math.random() * 8999)}`,
+    };
+    onUpdateProfile({
+      ...userProfile,
+      achievements: [nextAch, ...(userProfile?.achievements || [])],
+    });
+    setAchForm({ title: '', issuer: '', date: 'Nov 2026', type: 'Certificate' });
+    setAddAchievementOpen(false);
   };
 
   return (
@@ -317,13 +349,25 @@ export function Profile({
             <div className="flex items-center gap-2">
               <Award className="w-4 h-4 text-[#17AAAA]" />
               <h3 className="text-sm font-semibold text-slate-900">
-                Achievements & Verified Certificates
+                Achievements &amp; Certificates
               </h3>
             </div>
+            <Button
+              variant="secondary"
+              size="xs"
+              onClick={() => setAddAchievementOpen(true)}
+            >
+              + Add
+            </Button>
           </div>
 
           <div className="space-y-3">
-            {(userProfile?.achievements || []).map((ach) => (
+            {(userProfile?.achievements || []).length === 0 ? (
+              <p className="text-xs text-slate-500 py-4 text-center">
+                No certificates added yet. Click + Add to showcase your achievements.
+              </p>
+            ) : (
+              (userProfile?.achievements || []).map((ach) => (
               <div
                 key={ach.id}
                 className="p-3.5 rounded-xl glass-panel-subtle"
@@ -341,10 +385,69 @@ export function Profile({
                   Issued by {ach.issuer} · {ach.date}
                 </p>
               </div>
-            ))}
+              ))
+            )}
           </div>
         </Card>
       </div>
+
+      {/* Add Achievement Modal */}
+      <Modal
+        isOpen={addAchievementOpen}
+        onClose={() => setAddAchievementOpen(false)}
+        title="Add Achievement or Certificate"
+        subtitle="Showcase hackathons, certifications, or campus awards on your profile"
+        maxWidth="max-w-md"
+        footer={
+          <>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setAddAchievementOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="primary" size="sm" onClick={handleAddAchievement}>
+              Save Achievement
+            </Button>
+          </>
+        }
+      >
+        <form onSubmit={handleAddAchievement} className="space-y-3.5">
+          <Input
+            id="ach-title"
+            label="Title"
+            required
+            placeholder="e.g., AWS Cloud Practitioner"
+            value={achForm.title}
+            onChange={(e) => setAchForm({ ...achForm, title: e.target.value })}
+          />
+          <Input
+            id="ach-issuer"
+            label="Issued By"
+            required
+            placeholder="e.g., Amazon Web Services"
+            value={achForm.issuer}
+            onChange={(e) => setAchForm({ ...achForm, issuer: e.target.value })}
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <Input
+              id="ach-date"
+              label="Date"
+              placeholder="Nov 2026"
+              value={achForm.date}
+              onChange={(e) => setAchForm({ ...achForm, date: e.target.value })}
+            />
+            <Input
+              id="ach-type"
+              label="Category"
+              placeholder="Certificate / Award"
+              value={achForm.type}
+              onChange={(e) => setAchForm({ ...achForm, type: e.target.value })}
+            />
+          </div>
+        </form>
+      </Modal>
 
       {/* Edit Profile Modal */}
       <Modal

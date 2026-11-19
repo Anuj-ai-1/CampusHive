@@ -223,16 +223,14 @@ export function Events({
         title="Events"
         subtitle="Discover campus events, check branch eligibility, and track Division On-Duty (OD) attendance."
         actions={
-          role === 'admin' && (
-            <Button
-              variant="primary"
-              size="md"
-              icon={Plus}
-              onClick={() => setCreateModalOpen(true)}
-            >
-              Create Event
-            </Button>
-          )
+          <Button
+            variant="primary"
+            size="md"
+            icon={Plus}
+            onClick={() => setCreateModalOpen(true)}
+          >
+            {role === 'admin' ? 'Create Event' : 'Propose Event'}
+          </Button>
         }
       >
         {/* Filter Bar */}

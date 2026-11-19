@@ -162,6 +162,12 @@ export const api = {
       method: 'PATCH',
     }),
 
+  createTask: (payload) =>
+    request('/api/tasks', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
   submitFeedback: (payload) =>
     request('/api/feedback', {
       method: 'POST',

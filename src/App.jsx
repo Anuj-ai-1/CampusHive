@@ -7,6 +7,7 @@ import {
 import { api, getAuthToken, setAuthToken, subscribeToRealtime } from './services/api';
 import { AppLayout } from './components/layout/AppLayout';
 import { Toast } from './components/ui/Toast';
+import { OnboardingWizard } from './components/profile/OnboardingWizard';
 import { Login } from './pages/Login';
 import { Home } from './pages/Home';
 import { Classroom } from './pages/Classroom';
@@ -28,6 +29,7 @@ export default function App() {
   // Hydrated live state from SQLite Backend
   const [userProfile, setUserProfile] = useState(INITIAL_USER_PROFILE);
   const [adminProfile, setAdminProfile] = useState(ADMIN_PROFILE);
+  const [campusDirectory, setCampusDirectory] = useState([]);
   const [events, setEvents] = useState([]);
   const [clubs, setClubs] = useState([]);
   const [volunteerRoles, setVolunteerRoles] = useState([]);
@@ -60,6 +62,7 @@ export default function App() {
     if (!data) return;
     if (data.userProfile) setUserProfile(data.userProfile);
     if (data.adminProfile) setAdminProfile(data.adminProfile);
+    if (Array.isArray(data.campusDirectory)) setCampusDirectory(data.campusDirectory);
     if (Array.isArray(data.events)) setEvents(data.events);
     if (Array.isArray(data.clubs)) setClubs(data.clubs);
     if (Array.isArray(data.volunteerRoles)) setVolunteerRoles(data.volunteerRoles);
@@ -192,12 +195,14 @@ export default function App() {
     );
   };
 
-  // Create New Event (Admin)
+  // Create New Event (Admin publishes immediately, Student submits for approval)
   const handleCreateEvent = (form) => {
     runAction(
       () => api.createEvent(form),
-      'Event Published',
-      `"${form.title.trim()}" is now saved in SQLite and live across UniHive.`
+      authSession === 'admin' ? 'Event Published' : 'Event Proposal Submitted',
+      authSession === 'admin'
+        ? `"${form.title.trim()}" is now live across UniHive.`
+        : `"${form.title.trim()}" has been sent to Admin for approval.`
     );
   };
 
@@ -305,6 +310,14 @@ export default function App() {
       nextCompleted ? 'Task Completed' : 'Task Reopened',
       target.title,
       nextCompleted ? 'success' : 'info'
+    );
+  };
+
+  const handleCreateTask = (payload) => {
+    runAction(
+      () => api.createTask(payload),
+      'Task Added',
+      payload.title
     );
   };
 
@@ -487,6 +500,7 @@ export default function App() {
         {activePage === 'classroom' && (
           <Classroom
             userProfile={userProfile}
+            campusDirectory={campusDirectory}
             onUpdateProfile={handleUpdateProfile}
             announcements={announcements}
             onPostDivisionAnnouncement={handlePostDivisionAnnouncement}
@@ -514,6 +528,7 @@ export default function App() {
           <Clubs
             clubs={clubs}
             userProfile={userProfile}
+            campusDirectory={campusDirectory}
             role={authSession}
             globalSearch={globalSearch}
             onJoinClub={handleJoinClub}
@@ -537,6 +552,7 @@ export default function App() {
             tasks={tasks}
             onApplyVolunteer={handleApplyVolunteer}
             onToggleTask={handleToggleTask}
+            onCreateTask={handleCreateTask}
           />
         )}
 
@@ -580,6 +596,7 @@ export default function App() {
             events={events}
             clubs={clubs}
             feedbackList={feedbackList}
+            campusDirectory={campusDirectory}
             onApproveEvent={handleApproveEvent}
             onRejectEvent={handleRejectEvent}
             onApproveClub={handleApproveClub}
@@ -590,6 +607,14 @@ export default function App() {
           />
         )}
       </AppLayout>
+
+      {authSession === 'student' && userProfile?.profileCompleted === false && (
+        <OnboardingWizard
+          isOpen
+          userProfile={userProfile}
+          onCompleteProfile={handleUpdateProfile}
+        />
+      )}
 
       <Toast toasts={toasts} onDismiss={dismissToast} />
     </>

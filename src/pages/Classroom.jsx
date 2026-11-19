@@ -42,6 +42,7 @@ const DIVISION_OPTIONS = [
 
 export function Classroom({
   userProfile,
+  campusDirectory = [],
   onUpdateProfile,
   announcements,
   onPostDivisionAnnouncement,
@@ -64,9 +65,26 @@ export function Classroom({
   });
   const [noticeError, setNoticeError] = useState('');
 
+  // Merge live SQLite campusDirectory with fallback directory
+  const liveStudentsList = useMemo(() => {
+    if (campusDirectory && campusDirectory.length > 0) {
+      return campusDirectory.map((u) => ({
+        id: u.id,
+        studentName: u.name,
+        rollNo: u.rollNo || 'USTU-STU',
+        branch: u.branchCode || 'CSE',
+        division: u.division || 'Div A',
+        batch: u.labBatch || 'Batch A1',
+        year: u.yearShort || '3rd Year',
+        isCR: Boolean(u.isCR),
+      }));
+    }
+    return CAMPUS_STUDENTS_DIRECTORY;
+  }, [campusDirectory]);
+
   // Classmates in the selected Branch + Division (or all divisions of branch if toggled)
   const divisionStudents = useMemo(() => {
-    return CAMPUS_STUDENTS_DIRECTORY.filter((stu) => {
+    return liveStudentsList.filter((stu) => {
       const matchBranch = stu.branch === selectedBranch;
       const matchDiv =
         selectedDivision === 'ALL' ? true : stu.division === selectedDivision;
@@ -77,16 +95,16 @@ export function Classroom({
         : true;
       return matchBranch && matchDiv && matchSearch;
     });
-  }, [selectedBranch, selectedDivision, classmateSearch]);
+  }, [liveStudentsList, selectedBranch, selectedDivision, classmateSearch]);
 
   const classCRs = useMemo(() => {
-    return CAMPUS_STUDENTS_DIRECTORY.filter(
+    return liveStudentsList.filter(
       (stu) =>
         stu.branch === selectedBranch &&
         stu.division === selectedDivision &&
         stu.isCR
     );
-  }, [selectedBranch, selectedDivision]);
+  }, [liveStudentsList, selectedBranch, selectedDivision]);
 
   const timetableKey = `${selectedBranch}-${selectedDivision}`;
   const timetableSlots =

@@ -83,7 +83,7 @@ export function ProfileMenu({
           className="w-full flex items-center gap-2 px-2.5 py-2 text-xs text-slate-600 hover:text-slate-900 hover:bg-white/70 rounded-lg transition-colors"
         >
           <RotateCcw className="w-3.5 h-3.5" />
-          Reset Demo State
+          Restore Sample Data
         </button>
 
         <button

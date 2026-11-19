@@ -25,6 +25,7 @@ export function AdminDashboard({
   events,
   clubs,
   feedbackList,
+  campusDirectory = [],
   onApproveEvent,
   onRejectEvent,
   onApproveClub,
@@ -76,9 +77,9 @@ export function AdminDashboard({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             icon={Users}
-            label="Total Students"
-            value="4,820"
-            subtext="94% active on UniHive"
+            label="Registered Students"
+            value={String(campusDirectory.length || 14).padStart(2, '0')}
+            subtext="Active accounts in SQLite"
           />
           <StatCard
             icon={CalendarCheck}

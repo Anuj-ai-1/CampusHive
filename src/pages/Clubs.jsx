@@ -156,10 +156,44 @@ function getDefaultClubMessages(club) {
 function buildPeerProfile(
   rawName,
   roleInClub = 'Member',
-  clubName = 'Campus Club'
+  clubName = 'Campus Club',
+  campusDirectory = []
 ) {
   if (!rawName) return null;
   const cleanName = rawName.split('(')[0].trim();
+
+  const liveMatch = (campusDirectory || []).find(
+    (u) => u.name.toLowerCase() === cleanName.toLowerCase()
+  );
+
+  if (liveMatch) {
+    return {
+      studentName: liveMatch.name,
+      displayName: rawName,
+      roleInClub,
+      clubName,
+      branch: liveMatch.branchCode || 'CSE',
+      division: liveMatch.division || 'Div A',
+      year: liveMatch.yearShort || '3rd Year',
+      batch: liveMatch.labBatch || 'Batch A1',
+      rollNo: liveMatch.rollNo || 'USTU-STU',
+      email: liveMatch.email,
+      isCR: Boolean(liveMatch.isCR),
+      gpa: liveMatch.gpa || '8.90 / 10.0',
+      track: liveMatch.ojtStatus || '60% Practical NEP Track',
+      bio:
+        liveMatch.bio ||
+        `${liveMatch.yearShort || '3rd Year'} ${liveMatch.branchCode || 'CSE'} student at USTU.`,
+      skills:
+        liveMatch.interests && liveMatch.interests.length > 0
+          ? liveMatch.interests
+          : ['AI & ML', 'Full-Stack Dev', 'Campus Clubs'],
+      achievements:
+        liveMatch.achievements && liveMatch.achievements.length > 0
+          ? liveMatch.achievements.map((a) => a.title)
+          : [`Active ${roleInClub} — ${clubName}`],
+    };
+  }
 
   const match = CAMPUS_STUDENTS_DIRECTORY.find(
     (s) =>
@@ -247,6 +281,7 @@ function buildPeerProfile(
 export function Clubs({
   clubs,
   userProfile,
+  campusDirectory = [],
   role,
   globalSearch,
   onJoinClub,
@@ -450,7 +485,8 @@ export function Clubs({
     const profileObj = buildPeerProfile(
       nameStr,
       roleInClub,
-      activeModalClub?.name || 'USTU Community'
+      activeModalClub?.name || 'USTU Community',
+      campusDirectory
     );
     setDirectMsgText('');
     setInspectedPeer(profileObj);

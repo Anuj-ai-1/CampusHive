@@ -107,8 +107,8 @@ app.post('/api/auth/register', (req, res) => {
       id, role, name, short_name, email, password_hash, student_id, roll_no,
       department, branch_code, year, year_short, division, lab_batch,
       minor_track, ojt_status, is_cr, class_advisor, class_room, gpa,
-      campus, bio, phone, location, interests_json, achievements_json
-    ) VALUES (?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, '3rd Year (Semester 5)', '3rd Year', ?, 'Batch A1', 'AI & ML (Microsoft)', '60% Practical Track', 0, 'Prof. Raghavendra Kulkarni', 'LH-301', '8.90 / 10.0', 'Universal SkillTech University (USTU)', ?, '+91 98000 00000', 'USTU Campus', ?, '[]')
+      campus, bio, phone, location, interests_json, achievements_json, profile_completed
+    ) VALUES (?, 'student', ?, ?, ?, ?, ?, ?, ?, ?, '3rd Year (Semester 5)', '3rd Year', ?, 'Batch A1', 'AI & ML (Microsoft)', '60% Practical Track', 0, 'Prof. Raghavendra Kulkarni', 'LH-301', '8.90 / 10.0', 'Universal SkillTech University (USTU)', ?, '+91 98000 00000', 'USTU Campus', ?, '[]', 0)
   `).run(
     id,
     cleanName,
@@ -124,6 +124,28 @@ app.post('/api/auth/register', (req, res) => {
     JSON.stringify(['AI & ML', 'Full-Stack Dev', 'Campus Clubs'])
   );
 
+  // Give new student starter onboarding tasks
+  const insertTask = db.prepare(`
+    INSERT INTO tasks (id, user_id, title, event_title, deadline, priority, completed)
+    VALUES (?, ?, ?, ?, ?, ?, 0)
+  `);
+  insertTask.run(
+    `tsk-onb-1-${Date.now()}`,
+    id,
+    'Complete your student profile, bio & campus interests',
+    'UniHive Onboarding',
+    'Today',
+    'High'
+  );
+  insertTask.run(
+    `tsk-onb-2-${Date.now()}`,
+    id,
+    'Join a campus club & say hello in #general-chat',
+    'Clubs & Communities',
+    'This Week',
+    'Medium'
+  );
+
   const userRow = db.prepare('SELECT * FROM users WHERE id = ?').get(id);
   const token = signToken({
     id: userRow.id,
@@ -132,6 +154,7 @@ app.post('/api/auth/register', (req, res) => {
     name: userRow.name,
   });
 
+  broadcastEvent('STATE_SYNC', { entity: 'directory' });
   res.status(201).json({
     token,
     role: userRow.role,
@@ -173,9 +196,13 @@ app.put('/api/profile', requireAuth, (req, res) => {
     rollNo,
     department,
     year,
+    yearShort,
+    phone,
+    gpa,
     bio,
     location,
     interests,
+    achievements,
   } = req.body || {};
 
   const targetUserId = req.user.role === 'student' ? req.user.id : 'usr-student-01';
@@ -184,11 +211,14 @@ app.put('/api/profile', requireAuth, (req, res) => {
 
   const nextName = name?.trim() || existing.name;
   const nextShort = shortName?.trim() || nextName.split(' ')[0] || existing.short_name;
+  const nextYear = year || existing.year;
+  const derivedYearShort = yearShort || (nextYear ? nextYear.split('(')[0].trim() : existing.year_short);
 
   db.prepare(`
     UPDATE users SET
       name = ?, short_name = ?, branch_code = ?, division = ?, lab_batch = ?,
-      roll_no = ?, department = ?, year = ?, bio = ?, location = ?, interests_json = ?
+      roll_no = ?, department = ?, year = ?, year_short = ?, phone = ?, gpa = ?,
+      bio = ?, location = ?, interests_json = ?, achievements_json = ?, profile_completed = 1
     WHERE id = ?
   `).run(
     nextName,
@@ -198,10 +228,14 @@ app.put('/api/profile', requireAuth, (req, res) => {
     labBatch || existing.lab_batch,
     rollNo || existing.roll_no,
     department || existing.department,
-    year || existing.year,
+    nextYear,
+    derivedYearShort,
+    phone !== undefined ? phone : existing.phone,
+    gpa !== undefined ? gpa : existing.gpa,
     bio !== undefined ? bio : existing.bio,
     location !== undefined ? location : existing.location,
     Array.isArray(interests) ? JSON.stringify(interests) : existing.interests_json,
+    Array.isArray(achievements) ? JSON.stringify(achievements) : existing.achievements_json,
     targetUserId
   );
 
@@ -245,7 +279,7 @@ app.post('/api/announcements', requireAuth, (req, res) => {
 
 // ==================== EVENTS & OD ====================
 
-app.post('/api/events', requireAuth, requireAdmin, (req, res) => {
+app.post('/api/events', requireAuth, (req, res) => {
   const { title, shortDescription, category = 'Technical', date = '2026-11-20', startTime = '03:00 PM', duration = '2 hours', venue, organizer = 'Student Council', capacity = 100, targetBranch = 'ALL', eligibility } = req.body || {};
   if (!title?.trim() || !venue?.trim()) {
     return res.status(400).json({ error: 'Event title and venue are required.' });
@@ -256,6 +290,7 @@ app.post('/api/events', requireAuth, requireAdmin, (req, res) => {
   const monthIdx = Math.max(0, Math.min(11, Number(date.slice(5, 7)) - 1));
   const monthShort = monthNames[monthIdx] || 'NOV';
   const dayNumber = date.slice(-2) || '20';
+  const approvalStatus = req.user.role === 'admin' ? 'Published' : 'Pending Approval';
 
   db.prepare(`
     INSERT INTO events (
@@ -263,7 +298,7 @@ app.post('/api/events', requireAuth, requireAdmin, (req, res) => {
       month_short, day_number, start_time, end_time, duration, venue,
       organizer, capacity, registered_count, approval_status, od_eligible,
       eligibility, target_branches_json, tags_json, clash_info_json
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '05:00 PM', ?, ?, ?, ?, 0, 'Published', 1, ?, ?, ?, '{}')
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, '05:00 PM', ?, ?, ?, ?, 0, ?, 1, ?, ?, ?, '{}')
   `).run(
     id,
     title.trim(),
@@ -278,13 +313,24 @@ app.post('/api/events', requireAuth, requireAdmin, (req, res) => {
     venue.trim(),
     organizer.trim(),
     parseInt(capacity, 10) || 100,
+    approvalStatus,
     eligibility || 'Open to all enrolled students.',
     JSON.stringify([targetBranch || 'ALL']),
     JSON.stringify([category, 'UniHive'])
   );
 
+  if (approvalStatus === 'Pending Approval') {
+    db.prepare(`
+      INSERT INTO notifications (id, recipient_role, title, message, time_label, unread, target_tab)
+      VALUES (?, 'admin', 'New Event Proposal', ?, 'Just now', 1, 'admin')
+    `).run(
+      `notif-evt-adm-${Date.now()}`,
+      `${req.user.name} proposed event "${title.trim()}" on ${date} at ${venue.trim()}.`
+    );
+  }
+
   broadcastEvent('STATE_SYNC', { entity: 'events' });
-  res.status(201).json({ id });
+  res.status(201).json({ id, approvalStatus });
 });
 
 app.post('/api/events/:id/register', requireAuth, (req, res) => {
@@ -718,6 +764,18 @@ app.patch('/api/tasks/:id/toggle', requireAuth, (req, res) => {
   res.json({ completed: Boolean(nextCompleted) });
 });
 
+app.post('/api/tasks', requireAuth, (req, res) => {
+  const { title, eventTitle = 'Personal Goal', deadline = 'This Week', priority = 'Medium' } = req.body || {};
+  if (!title?.trim()) return res.status(400).json({ error: 'Task title is required.' });
+  const id = `tsk-${Date.now()}`;
+  db.prepare(`
+    INSERT INTO tasks (id, user_id, title, event_title, deadline, priority, completed)
+    VALUES (?, ?, ?, ?, ?, ?, 0)
+  `).run(id, req.user.id, title.trim(), eventTitle, deadline, priority);
+  broadcastEvent('STATE_SYNC', { entity: 'tasks' });
+  res.status(201).json({ id });
+});
+
 // ==================== FEEDBACK & GRIEVANCES ====================
 
 app.post('/api/feedback', requireAuth, (req, res) => {
@@ -732,13 +790,14 @@ app.post('/api/feedback', requireAuth, (req, res) => {
 
   db.prepare(`
     INSERT INTO feedback_tickets (
-      id, reference_id, user_id, category, subject, description,
+      id, reference_id, user_id, submitted_by_name, category, subject, description,
       related_event, submitted_date, updated_date, status, admin_response
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Open', ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Open', ?)
   `).run(
     id,
     referenceId,
     req.user.id,
+    req.user.name,
     category || 'General Suggestion',
     subject.trim(),
     description.trim(),
