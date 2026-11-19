@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Layers,
-  Lock,
   ArrowRight,
-  Database,
   UserPlus,
   LogIn,
   ShieldCheck,
@@ -24,22 +22,6 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
   const [regDivision, setRegDivision] = useState('Div A');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [backendStatus, setBackendStatus] = useState('checking'); // 'checking' | 'online' | 'offline'
-
-  useEffect(() => {
-    let active = true;
-    api
-      .health()
-      .then(() => {
-        if (active) setBackendStatus('online');
-      })
-      .catch(() => {
-        if (active) setBackendStatus('offline');
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
 
   const handleQuickDemoLogin = async (portalRole) => {
     setError('');
@@ -121,7 +103,7 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
           className="mt-6 border-t-4 border-t-[#17AAAA] shadow-lg"
         >
           {/* Mode Toggle: Sign In vs Create Account */}
-          <div className="flex items-center justify-between gap-2 mb-5 pb-3 border-b border-[#363636]/15">
+          <div className="flex items-center justify-center mb-5 pb-3 border-b border-[#363636]/15">
             <div className="inline-flex rounded-lg bg-[#EEEEEE] p-0.5 border border-[#363636]/20">
               <button
                 type="button"
@@ -129,7 +111,7 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
                   setAuthMode('login');
                   setError('');
                 }}
-                className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
+                className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'login'
                     ? 'bg-[#363636] text-[#EEEEEE]'
                     : 'text-[#363636]/75 hover:text-[#363636]'
@@ -144,7 +126,7 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
                   setAuthMode('register');
                   setError('');
                 }}
-                className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
+                className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'register'
                     ? 'bg-[#17AAAA] text-[#EEEEEE]'
                     : 'text-[#363636]/75 hover:text-[#363636]'
@@ -154,23 +136,6 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
                 Create Account
               </button>
             </div>
-
-            <span
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold ${
-                backendStatus === 'online'
-                  ? 'bg-[#17AAAA]/15 text-[#17AAAA]'
-                  : backendStatus === 'offline'
-                  ? 'bg-[#F63F3A]/15 text-[#F63F3A]'
-                  : 'bg-[#FFA42E]/20 text-[#363636]'
-              }`}
-            >
-              <Database className="w-3 h-3" />
-              {backendStatus === 'online'
-                ? 'Server Online'
-                : backendStatus === 'offline'
-                ? 'Server Offline'
-                : 'Connecting...'}
-            </span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -270,14 +235,6 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
                 )}
               </button>
             </div>
-          </div>
-
-          <div className="mt-4 pt-3 border-t border-[#363636]/10 flex items-center justify-between text-[11px] text-[#363636]/65">
-            <span className="inline-flex items-center gap-1">
-              <Lock className="w-3 h-3 text-[#17AAAA]" />
-              Encrypted Auth &amp; SQLite DB
-            </span>
-            <span>Real-time Campus Sync</span>
           </div>
         </Card>
       </div>
