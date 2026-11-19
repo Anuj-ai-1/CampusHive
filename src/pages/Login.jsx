@@ -4,8 +4,6 @@ import {
   ArrowRight,
   UserPlus,
   LogIn,
-  ShieldCheck,
-  User,
 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
@@ -13,7 +11,7 @@ import { Select } from '../components/ui/Select';
 import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
 
-export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
+export function Login({ onAuthSuccess }) {
   const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,22 +20,6 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
   const [regDivision, setRegDivision] = useState('Div A');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const handleQuickDemoLogin = async (portalRole) => {
-    setError('');
-    setLoading(true);
-    try {
-      const demoEmail =
-        portalRole === 'admin' ? 'pro.vc@ustu.edu.in' : 'anuj.sharma@ustu.edu.in';
-      const demoPass = portalRole === 'admin' ? 'ustuadmin2026' : 'ustu2026';
-      const res = await api.login(demoEmail, demoPass);
-      onAuthSuccess(res);
-    } catch (err) {
-      setError(err.message || 'Quick sign in failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -204,38 +186,6 @@ export function Login({ onAuthSuccess, pendingClubRequestsCount = 0 }) {
                 : 'Sign In to UniHive'}
             </Button>
           </form>
-
-          {/* Subtle Quick Access Bar for Evaluators / Testing */}
-          <div className="mt-5 pt-4 border-t border-[#363636]/15 space-y-2.5">
-            <p className="text-[11px] font-semibold text-[#363636]/70 text-center">
-              Quick 1-Click Access (Existing Accounts)
-            </p>
-            <div className="grid grid-cols-2 gap-2.5">
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => handleQuickDemoLogin('student')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-[#EEEEEE] hover:bg-[#17AAAA] hover:text-[#EEEEEE] border border-[#363636]/20 text-xs font-bold text-[#363636] transition-colors"
-              >
-                <User className="w-3.5 h-3.5" />
-                Student (Anuj)
-              </button>
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => handleQuickDemoLogin('admin')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-[#EEEEEE] hover:bg-[#F63F3A] hover:text-[#EEEEEE] border border-[#363636]/20 text-xs font-bold text-[#363636] transition-colors relative"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                Admin (Pro-VC)
-                {pendingClubRequestsCount > 0 && (
-                  <span className="px-1.5 py-0.2 text-[10px] font-bold bg-[#F63F3A] text-[#EEEEEE] rounded-full">
-                    {pendingClubRequestsCount}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
         </Card>
       </div>
     </div>
