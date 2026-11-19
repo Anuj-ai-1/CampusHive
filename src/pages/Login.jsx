@@ -65,35 +65,35 @@ export function Login({ onAuthSuccess }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#EEEEEE] text-[#363636] flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#EEEEEE] text-[#363636] flex flex-col justify-center py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         {/* Brand Header */}
         <div className="flex flex-col items-center text-center">
-          <div className="w-12 h-12 rounded-2xl bg-[#F63F3A] flex items-center justify-center text-[#EEEEEE] mb-3 shadow-md">
-            <Layers className="w-6 h-6" />
+          <div className="w-14 h-14 rounded-2xl bg-[#F63F3A] flex items-center justify-center text-[#EEEEEE] mb-4 shadow-md">
+            <Layers className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#363636]">
+          <h1 className="text-3xl font-bold tracking-tight text-[#363636]">
             UniHive
           </h1>
-          <p className="text-xs font-medium text-[#17AAAA] mt-1">
+          <p className="text-xs sm:text-sm font-medium text-[#17AAAA] mt-1.5">
             Universal SkillTech University · Campus Operating System
           </p>
         </div>
 
         <Card
-          padding="p-5 sm:p-7"
-          className="mt-6 border-t-4 border-t-[#17AAAA] shadow-lg"
+          padding="px-6 py-9 sm:px-9 sm:py-11"
+          className="mt-8 border-t-4 border-t-[#17AAAA] shadow-lg min-h-[410px] flex flex-col justify-center"
         >
           {/* Mode Toggle: Sign In vs Create Account */}
-          <div className="flex items-center justify-center mb-5 pb-3 border-b border-[#363636]/15">
-            <div className="inline-flex rounded-lg bg-[#EEEEEE] p-0.5 border border-[#363636]/20">
+          <div className="flex items-center justify-center mb-7 pb-5 border-b border-[#363636]/15">
+            <div className="inline-flex rounded-lg bg-[#EEEEEE] p-1 border border-[#363636]/20">
               <button
                 type="button"
                 onClick={() => {
                   setAuthMode('login');
                   setError('');
                 }}
-                className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
+                className={`px-4 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'login'
                     ? 'bg-[#363636] text-[#EEEEEE]'
                     : 'text-[#363636]/75 hover:text-[#363636]'
@@ -108,7 +108,7 @@ export function Login({ onAuthSuccess }) {
                   setAuthMode('register');
                   setError('');
                 }}
-                className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
+                className={`px-4 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'register'
                     ? 'bg-[#17AAAA] text-[#EEEEEE]'
                     : 'text-[#363636]/75 hover:text-[#363636]'
@@ -120,7 +120,7 @@ export function Login({ onAuthSuccess }) {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {authMode === 'register' && (
               <>
                 <Input
@@ -130,14 +130,16 @@ export function Login({ onAuthSuccess }) {
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
                   placeholder="e.g., Riya Deshmukh"
+                  className="[&_input]:h-11"
                 />
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3.5">
                   <Select
                     id="reg-branch"
                     label="Branch"
                     value={regBranch}
                     onChange={(e) => setRegBranch(e.target.value)}
                     options={['CSE', 'IT', 'ECE', 'AIML', 'MECH']}
+                    className="[&_select]:h-11"
                   />
                   <Select
                     id="reg-division"
@@ -145,6 +147,7 @@ export function Login({ onAuthSuccess }) {
                     value={regDivision}
                     onChange={(e) => setRegDivision(e.target.value)}
                     options={['Div A', 'Div B', 'Div C']}
+                    className="[&_select]:h-11"
                   />
                 </div>
               </>
@@ -158,6 +161,7 @@ export function Login({ onAuthSuccess }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@ustu.edu.in"
+              className="[&_input]:h-11"
             />
 
             <Input
@@ -169,22 +173,25 @@ export function Login({ onAuthSuccess }) {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               error={error}
+              className="[&_input]:h-11"
             />
 
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              iconRight={ArrowRight}
-              disabled={loading}
-              className="w-full"
-            >
-              {loading
-                ? 'Please wait...'
-                : authMode === 'register'
-                ? 'Create Account & Set Up Profile'
-                : 'Sign In to UniHive'}
-            </Button>
+            <div className="pt-2">
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                iconRight={ArrowRight}
+                disabled={loading}
+                className="w-full h-11"
+              >
+                {loading
+                  ? 'Please wait...'
+                  : authMode === 'register'
+                  ? 'Create Account & Set Up Profile'
+                  : 'Sign In to UniHive'}
+              </Button>
+            </div>
           </form>
         </Card>
       </div>
