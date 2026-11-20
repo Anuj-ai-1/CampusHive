@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+﻿import React, { useRef, useEffect } from 'react';
 import { User, RotateCcw, LogOut, ShieldCheck } from 'lucide-react';
 
 export function ProfileMenu({
@@ -40,7 +40,7 @@ export function ProfileMenu({
       ref={ref}
       role="menu"
       aria-label="Account menu"
-      className="fixed sm:absolute right-3 sm:right-0 top-16 sm:top-auto sm:mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-white border-2 border-[#363636] rounded-2xl shadow-2xl z-50 overflow-hidden"
+      className="fixed sm:absolute right-3 sm:right-0 top-16 sm:top-auto sm:mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-white border-2 border-[#064E3B] rounded-2xl shadow-2xl z-50 overflow-hidden"
     >
       <div className="px-4 py-3 border-b border-slate-200/60 bg-white/50">
         <div className="flex items-center gap-1.5">
@@ -48,7 +48,7 @@ export function ProfileMenu({
             {activePerson.name}
           </p>
           {role === 'admin' && (
-            <ShieldCheck className="w-3.5 h-3.5 text-[#17AAAA]" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#059669]" />
           )}
         </div>
         <p className="text-xs text-slate-500 truncate">{activePerson.email}</p>

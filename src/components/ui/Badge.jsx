@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 export function Badge({
   children,
@@ -7,23 +7,23 @@ export function Badge({
   dot = false,
 }) {
   const variants = {
-    neutral: 'bg-[#EEEEEE] text-[#363636] border-[#363636]/25 font-medium',
-    primary: 'bg-[#17AAAA] text-[#EEEEEE] border-[#17AAAA] font-semibold',
-    success: 'bg-[#17AAAA] text-[#EEEEEE] border-[#17AAAA] font-semibold',
-    warning: 'bg-[#FFA42E] text-[#363636] border-[#FFA42E] font-semibold',
-    error: 'bg-[#F63F3A] text-[#EEEEEE] border-[#F63F3A] font-semibold',
-    danger: 'bg-[#F63F3A] text-[#EEEEEE] border-[#F63F3A] font-semibold',
-    dark: 'bg-[#363636] text-[#EEEEEE] font-semibold border-[#363636]',
+    neutral: 'bg-[#FAF8F5] text-[#064E3B] border-[#064E3B]/25 font-medium',
+    primary: 'bg-[#059669] text-[#FAF8F5] border-[#059669] font-semibold',
+    success: 'bg-[#059669] text-[#FAF8F5] border-[#059669] font-semibold',
+    warning: 'bg-[#F59E0B] text-[#064E3B] border-[#F59E0B] font-semibold',
+    error: 'bg-[#EA580C] text-[#FAF8F5] border-[#EA580C] font-semibold',
+    danger: 'bg-[#EA580C] text-[#FAF8F5] border-[#EA580C] font-semibold',
+    dark: 'bg-[#064E3B] text-[#FAF8F5] font-semibold border-[#064E3B]',
   };
 
   const dotColors = {
-    neutral: 'bg-[#363636]',
-    primary: 'bg-[#EEEEEE]',
-    success: 'bg-[#EEEEEE]',
-    warning: 'bg-[#363636]',
-    error: 'bg-[#EEEEEE]',
-    danger: 'bg-[#EEEEEE]',
-    dark: 'bg-[#FFA42E]',
+    neutral: 'bg-[#064E3B]',
+    primary: 'bg-[#FAF8F5]',
+    success: 'bg-[#FAF8F5]',
+    warning: 'bg-[#064E3B]',
+    error: 'bg-[#FAF8F5]',
+    danger: 'bg-[#FAF8F5]',
+    dark: 'bg-[#F59E0B]',
   };
 
   return (

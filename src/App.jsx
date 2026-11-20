@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+﻿import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   INITIAL_USER_PROFILE,
   ADMIN_PROFILE,
@@ -437,12 +437,12 @@ export default function App() {
 
   if (booting) {
     return (
-      <div className="min-h-screen bg-[#EEEEEE] flex items-center justify-center p-4">
-        <div className="bg-white border-2 border-[#363636] border-t-4 border-t-[#17AAAA] rounded-xl px-6 py-5 text-center shadow-lg">
-          <p className="text-sm font-bold text-[#363636]">
+      <div className="min-h-screen bg-[#FAF8F5] flex items-center justify-center p-4">
+        <div className="bg-white border-2 border-[#064E3B] border-t-4 border-t-[#059669] rounded-xl px-6 py-5 text-center shadow-lg">
+          <p className="text-sm font-bold text-[#064E3B]">
             Connecting to UniHive SQLite Backend...
           </p>
-          <p className="text-xs text-[#17AAAA] mt-1 font-medium">
+          <p className="text-xs text-[#059669] mt-1 font-medium">
             Syncing campus workspace &amp; live session
           </p>
         </div>

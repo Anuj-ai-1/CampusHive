@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 export function Button({
   children,
@@ -13,23 +13,23 @@ export function Button({
   ...props
 }) {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#17AAAA] disabled:opacity-50 disabled:pointer-events-none select-none';
+    'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#059669] disabled:opacity-50 disabled:pointer-events-none select-none';
 
   const variants = {
     primary:
-      'bg-[#17AAAA] text-[#EEEEEE] font-semibold hover:bg-[#363636] active:bg-[#17AAAA] border border-[#17AAAA] hover:border-[#363636]',
+      'bg-[#059669] text-[#FAF8F5] font-semibold hover:bg-[#064E3B] active:bg-[#059669] border border-[#059669] hover:border-[#064E3B]',
     secondary:
-      'bg-[#363636] text-[#EEEEEE] border border-[#363636] hover:bg-[#17AAAA] hover:border-[#17AAAA] active:bg-[#363636]',
+      'bg-[#064E3B] text-[#FAF8F5] border border-[#064E3B] hover:bg-[#059669] hover:border-[#059669] active:bg-[#064E3B]',
     subtle:
-      'bg-[#EEEEEE] text-[#363636] border border-[#363636]/25 hover:bg-[#FFA42E] hover:border-[#FFA42E]',
+      'bg-[#FAF8F5] text-[#064E3B] border border-[#064E3B]/25 hover:bg-[#F59E0B] hover:border-[#F59E0B]',
     ghost:
-      'bg-transparent text-[#363636] hover:text-[#17AAAA] hover:bg-[#EEEEEE]',
+      'bg-transparent text-[#064E3B] hover:text-[#059669] hover:bg-[#FAF8F5]',
     danger:
-      'bg-[#F63F3A] text-[#EEEEEE] font-semibold border border-[#F63F3A] hover:bg-[#363636] hover:border-[#363636]',
+      'bg-[#EA580C] text-[#FAF8F5] font-semibold border border-[#EA580C] hover:bg-[#064E3B] hover:border-[#064E3B]',
     success:
-      'bg-[#17AAAA] text-[#EEEEEE] font-semibold border border-[#17AAAA] hover:bg-[#363636]',
+      'bg-[#059669] text-[#FAF8F5] font-semibold border border-[#059669] hover:bg-[#064E3B]',
     accentSubtle:
-      'bg-[#FFA42E] text-[#363636] font-semibold border border-[#FFA42E] hover:bg-[#F63F3A] hover:text-[#EEEEEE] hover:border-[#F63F3A]',
+      'bg-[#F59E0B] text-[#064E3B] font-semibold border border-[#F59E0B] hover:bg-[#EA580C] hover:text-[#FAF8F5] hover:border-[#EA580C]',
   };
 
   const sizes = {

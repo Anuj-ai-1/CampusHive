@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 export function Textarea({
   label,
@@ -25,7 +25,7 @@ export function Textarea({
         id={id}
         rows={rows}
         required={required}
-        className={`w-full p-3 text-sm glass-input text-slate-900 placeholder-slate-400 rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#17AAAA]/20 ${
+        className={`w-full p-3 text-sm glass-input text-slate-900 placeholder-slate-400 rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 ${
           error ? 'border-red-400 focus:border-red-500' : ''
         }`}
         {...props}

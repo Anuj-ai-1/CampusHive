@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   Users,
   UserCheck,
@@ -41,7 +41,7 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
     <Card
       padding="p-4 sm:p-5"
       interactive
-      className="flex flex-col justify-between h-full border-t-4 border-t-[#17AAAA]"
+      className="flex flex-col justify-between h-full border-t-4 border-t-[#059669]"
     >
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
@@ -56,22 +56,22 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
           onClick={() => onOpenDetails(club)}
           className="text-left group focus:outline-none block w-full"
         >
-          <h3 className="text-base font-bold text-[#363636] group-hover:text-[#17AAAA] transition-colors">
+          <h3 className="text-base font-bold text-[#064E3B] group-hover:text-[#059669] transition-colors">
             {club.name}
           </h3>
-          <p className="text-xs text-[#363636]/75 mt-1.5 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-[#064E3B]/75 mt-1.5 line-clamp-2 leading-relaxed">
             {club.shortDescription}
           </p>
         </button>
 
-        <div className="mt-4 pt-3 border-t border-[#363636]/15 flex items-center justify-between gap-2 text-xs text-[#363636]/80">
+        <div className="mt-4 pt-3 border-t border-[#064E3B]/15 flex items-center justify-between gap-2 text-xs text-[#064E3B]/80">
           <span className="flex items-center gap-1.5 font-medium">
-            <Users className="w-3.5 h-3.5 text-[#17AAAA]" />
+            <Users className="w-3.5 h-3.5 text-[#059669]" />
             {club.memberCount} members
           </span>
           {club.leadName && (
             <span className="flex items-center gap-1 truncate max-w-[55%]">
-              <Crown className="w-3.5 h-3.5 text-[#FFA42E] shrink-0" />
+              <Crown className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
               <span className="truncate font-medium">
                 {club.leadName.split('(')[0].trim()}
               </span>
@@ -80,7 +80,7 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-[#363636]/15 flex items-center justify-between gap-2">
+      <div className="mt-4 pt-3 border-t border-[#064E3B]/15 flex items-center justify-between gap-2">
         <Button
           variant="primary"
           size="sm"

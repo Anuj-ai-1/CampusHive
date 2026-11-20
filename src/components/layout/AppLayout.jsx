@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { Topbar } from './Topbar';
 import { MobileNavigation } from './MobileNavigation';
@@ -21,7 +21,7 @@ export function AppLayout({
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#EEEEEE] text-[#363636] flex flex-col lg:flex-row relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAF8F5] text-[#064E3B] flex flex-col lg:flex-row relative overflow-x-hidden">
       <Sidebar
         activePage={activePage}
         onNavigate={onNavigate}

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Modal } from './Modal';
 import { Button } from './Button';
 
@@ -36,7 +36,7 @@ export function ConfirmDialog({
         </>
       }
     >
-      <p className="text-sm text-[#363636] leading-relaxed">{description}</p>
+      <p className="text-sm text-[#064E3B] leading-relaxed">{description}</p>
     </Modal>
   );
 }

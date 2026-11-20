@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   Home,
   CalendarDays,
@@ -71,16 +71,16 @@ export function MobileNavigation({
           aria-label="Mobile navigation menu"
         >
           <div
-            className="fixed inset-0 bg-[#363636]/75"
+            className="fixed inset-0 bg-[#064E3B]/75"
             onClick={onCloseDrawer}
           />
-          <div className="relative w-72 max-w-[85vw] bg-[#363636] h-full border-r-2 border-[#17AAAA] flex flex-col z-10 shadow-2xl">
-            <div className="h-14 px-4 flex items-center justify-between border-b border-[#EEEEEE]/15">
+          <div className="relative w-72 max-w-[85vw] bg-[#064E3B] h-full border-r-2 border-[#059669] flex flex-col z-10 shadow-2xl">
+            <div className="h-14 px-4 flex items-center justify-between border-b border-[#FAF8F5]/15">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F63F3A] flex items-center justify-center text-[#EEEEEE]">
+                <div className="w-7 h-7 rounded-lg bg-[#EA580C] flex items-center justify-center text-[#FAF8F5]">
                   <Layers className="w-4 h-4" />
                 </div>
-                <span className="text-sm font-bold text-[#EEEEEE]">
+                <span className="text-sm font-bold text-[#FAF8F5]">
                   UniHive × USTU
                 </span>
               </div>
@@ -88,7 +88,7 @@ export function MobileNavigation({
                 type="button"
                 onClick={onCloseDrawer}
                 aria-label="Close navigation drawer"
-                className="p-1.5 text-[#EEEEEE] hover:bg-[#17AAAA] rounded-lg"
+                className="p-1.5 text-[#FAF8F5] hover:bg-[#059669] rounded-lg"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -108,8 +108,8 @@ export function MobileNavigation({
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg transition-colors ${
                       isActive
-                        ? 'bg-[#17AAAA] text-[#EEEEEE]'
-                        : 'text-[#EEEEEE] hover:bg-[#EEEEEE] hover:text-[#363636]'
+                        ? 'bg-[#059669] text-[#FAF8F5]'
+                        : 'text-[#FAF8F5] hover:bg-[#FAF8F5] hover:text-[#064E3B]'
                     }`}
                   >
                     <span className="flex items-center gap-3">
@@ -117,7 +117,7 @@ export function MobileNavigation({
                       <span>{item.label}</span>
                     </span>
                     {item.id === 'admin' && pendingApprovalsCount > 0 && (
-                      <span className="px-1.5 py-0.5 text-[11px] bg-[#F63F3A] text-[#EEEEEE] font-bold rounded-full">
+                      <span className="px-1.5 py-0.5 text-[11px] bg-[#EA580C] text-[#FAF8F5] font-bold rounded-full">
                         {pendingApprovalsCount}
                       </span>
                     )}
@@ -126,14 +126,14 @@ export function MobileNavigation({
               })}
             </div>
 
-            <div className="p-4 border-t border-[#EEEEEE]/15 bg-[#363636]">
+            <div className="p-4 border-t border-[#FAF8F5]/15 bg-[#064E3B]">
               <button
                 type="button"
                 onClick={() => {
                   onLogout();
                   onCloseDrawer();
                 }}
-                className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-[#EEEEEE] bg-[#F63F3A] rounded-lg hover:bg-[#FFA42E] hover:text-[#363636]"
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-[#FAF8F5] bg-[#EA580C] rounded-lg hover:bg-[#F59E0B] hover:text-[#064E3B]"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 Sign Out / Switch Portal
@@ -145,7 +145,7 @@ export function MobileNavigation({
 
       <nav
         aria-label="Mobile quick navigation"
-        className="lg:hidden fixed bottom-0 inset-x-0 h-14 bg-[#363636] border-t-2 border-[#17AAAA] flex items-center justify-around z-30 px-1"
+        className="lg:hidden fixed bottom-0 inset-x-0 h-14 bg-[#064E3B] border-t-2 border-[#059669] flex items-center justify-around z-30 px-1"
       >
         {bottomItems.map((item) => {
           const Icon = item.icon;
@@ -156,7 +156,7 @@ export function MobileNavigation({
               type="button"
               onClick={() => onNavigate(item.id)}
               className={`flex flex-col items-center justify-center flex-1 h-full gap-1 text-[11px] font-semibold transition-colors ${
-                isActive ? 'text-[#FFA42E]' : 'text-[#EEEEEE]/80 hover:text-[#17AAAA]'
+                isActive ? 'text-[#F59E0B]' : 'text-[#FAF8F5]/80 hover:text-[#059669]'
               }`}
             >
               <Icon className="w-4 h-4" />

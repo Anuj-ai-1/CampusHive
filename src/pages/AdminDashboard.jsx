@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   Users,
   CalendarCheck,
@@ -105,18 +105,18 @@ export function AdminDashboard({
       {/* PRIORITY QUEUE: Student Club Creation Requests (Requires Admin Permission) */}
       <section aria-labelledby="club-requests-heading">
         <Card padding="p-5 sm:p-6" className="space-y-4 border-indigo-200">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#363636]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#064E3B]">
             <div>
               <div className="flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-[#17AAAA]" />
+                <Building2 className="w-4 h-4 text-[#059669]" />
                 <h2
                   id="club-requests-heading"
-                  className="text-base font-semibold text-[#363636]"
+                  className="text-base font-semibold text-[#064E3B]"
                 >
                   Student Club Creation Requests (Permission Queue)
                 </h2>
               </div>
-              <p className="text-xs text-[#363636] mt-0.5">
+              <p className="text-xs text-[#064E3B] mt-0.5">
                 Students have proposed the following clubs with assigned Leaders,
                 Vice Leaders, and founding members. Grant permission to make
                 them official.
@@ -135,7 +135,7 @@ export function AdminDashboard({
               className="py-8"
             />
           ) : (
-            <div className="divide-y divide-[#363636]">
+            <div className="divide-y divide-[#064E3B]">
               {pendingClubs.map((club) => (
                 <div
                   key={club.id}
@@ -144,38 +144,38 @@ export function AdminDashboard({
                   <div className="space-y-2 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge variant="primary">{club.category}</Badge>
-                      <span className="text-xs text-[#363636]">
+                      <span className="text-xs text-[#064E3B]">
                         Proposed by{' '}
-                        <strong className="text-[#363636]">
+                        <strong className="text-[#064E3B]">
                           {club.createdByName || 'Anuj Sharma'}
                         </strong>
                       </span>
                       <span className="text-xs text-gray-300">·</span>
-                      <span className="text-xs text-[#363636]">
+                      <span className="text-xs text-[#064E3B]">
                         {club.members?.length || club.memberCount} Founding
                         Members
                       </span>
                     </div>
 
-                    <h3 className="text-base font-semibold text-[#363636]">
+                    <h3 className="text-base font-semibold text-[#064E3B]">
                       {club.name}
                     </h3>
-                    <p className="text-xs text-[#363636] leading-relaxed">
+                    <p className="text-xs text-[#064E3B] leading-relaxed">
                       {club.shortDescription}
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4 pt-1 text-xs">
-                      <span className="inline-flex items-center gap-1.5 text-[#363636]">
-                        <Crown className="w-3.5 h-3.5 text-[#17AAAA]" />
+                      <span className="inline-flex items-center gap-1.5 text-[#064E3B]">
+                        <Crown className="w-3.5 h-3.5 text-[#059669]" />
                         <strong>Leader:</strong> {club.leadName}
                       </span>
-                      <span className="inline-flex items-center gap-1.5 text-[#363636]">
-                        <Award className="w-3.5 h-3.5 text-[#363636]" />
+                      <span className="inline-flex items-center gap-1.5 text-[#064E3B]">
+                        <Award className="w-3.5 h-3.5 text-[#064E3B]" />
                         <strong>Vice Leader:</strong>{' '}
                         {club.viceLeadName || 'Assigned'}
                       </span>
                       {club.secretaryName && (
-                        <span className="text-[#363636]">
+                        <span className="text-[#064E3B]">
                           <strong>Secretary:</strong> {club.secretaryName}
                         </span>
                       )}
@@ -229,10 +229,10 @@ export function AdminDashboard({
         <Card padding="p-5" className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-base font-semibold text-[#363636]">
+              <h2 className="text-base font-semibold text-[#064E3B]">
                 Pending Event Proposals
               </h2>
-              <p className="text-xs text-[#363636] mt-0.5">
+              <p className="text-xs text-[#064E3B] mt-0.5">
                 Approve club event proposals to publish them immediately to the
                 student directory
               </p>
@@ -250,7 +250,7 @@ export function AdminDashboard({
               className="py-8"
             />
           ) : (
-            <div className="divide-y divide-[#363636]">
+            <div className="divide-y divide-[#064E3B]">
               {pendingEvents.map((evt) => (
                 <div
                   key={evt.id}
@@ -259,18 +259,18 @@ export function AdminDashboard({
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <Badge variant="neutral">{evt.category}</Badge>
-                      <span className="text-xs font-medium text-[#17AAAA]">
+                      <span className="text-xs font-medium text-[#059669]">
                         {evt.organizer}
                       </span>
                     </div>
-                    <h3 className="text-sm font-semibold text-[#363636]">
+                    <h3 className="text-sm font-semibold text-[#064E3B]">
                       {evt.title}
                     </h3>
-                    <p className="text-xs text-[#363636]">
+                    <p className="text-xs text-[#064E3B]">
                       {evt.date} · {evt.startTime} · {evt.venue} (Cap:{' '}
                       {evt.capacity})
                     </p>
-                    <p className="text-xs text-[#363636] line-clamp-1">
+                    <p className="text-xs text-[#064E3B] line-clamp-1">
                       {evt.shortDescription}
                     </p>
                   </div>
@@ -304,21 +304,21 @@ export function AdminDashboard({
           <Card padding="p-5" className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MessageSquareText className="w-4 h-4 text-[#17AAAA]" />
-                <h2 className="text-sm font-semibold text-[#363636]">
+                <MessageSquareText className="w-4 h-4 text-[#059669]" />
+                <h2 className="text-sm font-semibold text-[#064E3B]">
                   Feedback Resolution Queue
                 </h2>
               </div>
               <button
                 type="button"
                 onClick={() => onNavigate('feedback')}
-                className="text-xs font-medium text-[#17AAAA] hover:underline"
+                className="text-xs font-medium text-[#059669] hover:underline"
               >
                 All tickets
               </button>
             </div>
 
-            <div className="divide-y divide-[#363636]">
+            <div className="divide-y divide-[#064E3B]">
               {feedbackList.slice(0, 3).map((item) => (
                 <div
                   key={item.id}
@@ -326,7 +326,7 @@ export function AdminDashboard({
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-mono font-semibold text-[#363636]">
+                      <span className="text-[11px] font-mono font-semibold text-[#064E3B]">
                         {item.referenceId}
                       </span>
                       <Badge
@@ -341,7 +341,7 @@ export function AdminDashboard({
                         {item.status}
                       </Badge>
                     </div>
-                    <p className="text-xs font-medium text-[#363636] mt-1 truncate">
+                    <p className="text-xs font-medium text-[#064E3B] mt-1 truncate">
                       {item.subject}
                     </p>
                   </div>
@@ -367,8 +367,8 @@ export function AdminDashboard({
 
           <Card padding="p-5" className="space-y-3">
             <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-[#17AAAA]" />
-              <h2 className="text-sm font-semibold text-[#363636]">
+              <Activity className="w-4 h-4 text-[#059669]" />
+              <h2 className="text-sm font-semibold text-[#064E3B]">
                 Recent Campus Operations Log
               </h2>
             </div>
@@ -377,10 +377,10 @@ export function AdminDashboard({
               {ADMIN_ANALYTICS_DATA.recentAdminLogs.map((log) => (
                 <div
                   key={log.id}
-                  className="text-xs border-l-2 border-[#363636] pl-3 py-0.5"
+                  className="text-xs border-l-2 border-[#064E3B] pl-3 py-0.5"
                 >
-                  <p className="font-medium text-[#363636]">{log.action}</p>
-                  <p className="text-[11px] text-[#363636]">
+                  <p className="font-medium text-[#064E3B]">{log.action}</p>
+                  <p className="text-[11px] text-[#064E3B]">
                     {log.actor} · {log.time}
                   </p>
                 </div>

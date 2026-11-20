@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
@@ -25,18 +25,18 @@ class RootErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#EEEEEE] text-[#363636] flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-white border-2 border-[#363636] border-t-4 border-t-[#F63F3A] rounded-xl p-6 space-y-4 text-center shadow-lg">
-            <h1 className="text-lg font-bold text-[#363636]">
+        <div className="min-h-screen bg-[#FAF8F5] text-[#064E3B] flex items-center justify-center p-4">
+          <div className="max-w-md w-full bg-white border-2 border-[#064E3B] border-t-4 border-t-[#EA580C] rounded-xl p-6 space-y-4 text-center shadow-lg">
+            <h1 className="text-lg font-bold text-[#064E3B]">
               UniHive Session Refreshed
             </h1>
-            <p className="text-xs text-[#363636]/80 leading-relaxed">
+            <p className="text-xs text-[#064E3B]/80 leading-relaxed">
               Cached browser data from an older version conflicted with the latest update. Click below to reset local cache and reload UniHive.
             </p>
             <button
               type="button"
               onClick={this.handleResetAndReload}
-              className="w-full py-2.5 px-4 rounded-lg bg-[#17AAAA] hover:bg-[#363636] text-[#EEEEEE] text-xs font-bold transition-colors"
+              className="w-full py-2.5 px-4 rounded-lg bg-[#059669] hover:bg-[#064E3B] text-[#FAF8F5] text-xs font-bold transition-colors"
             >
               Reset Cache & Launch UniHive
             </button>

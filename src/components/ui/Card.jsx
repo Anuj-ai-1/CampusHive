@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 export function Card({
   children,
@@ -9,9 +9,9 @@ export function Card({
 }) {
   return (
     <div
-      className={`bg-white border border-[#363636]/20 rounded-xl ${padding} ${
+      className={`bg-white border border-[#064E3B]/20 rounded-xl ${padding} ${
         interactive
-          ? 'transition-colors duration-150 hover:border-[#17AAAA] hover:bg-[#EEEEEE]/40'
+          ? 'transition-colors duration-150 hover:border-[#059669] hover:bg-[#FAF8F5]/40'
           : ''
       } ${className}`}
       {...props}

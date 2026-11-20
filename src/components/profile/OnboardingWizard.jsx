@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Sparkles, CheckCircle2, GraduationCap, UserCheck } from 'lucide-react';
 import { Modal } from '../ui/Modal';
 import { Input } from '../ui/Input';
@@ -69,8 +69,8 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
       maxWidth="max-w-xl"
       footer={
         <div className="flex items-center justify-between w-full">
-          <span className="text-xs text-[#363636]/75 flex items-center gap-1">
-            <UserCheck className="w-3.5 h-3.5 text-[#17AAAA]" />
+          <span className="text-xs text-[#064E3B]/75 flex items-center gap-1">
+            <UserCheck className="w-3.5 h-3.5 text-[#059669]" />
             Saved permanently to your account
           </span>
           <Button
@@ -86,16 +86,16 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
       }
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="p-3.5 rounded-xl bg-[#363636] text-[#EEEEEE] flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#FFA42E] text-[#363636] flex items-center justify-center font-bold text-sm shrink-0">
+        <div className="p-3.5 rounded-xl bg-[#064E3B] text-[#FAF8F5] flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-[#F59E0B] text-[#064E3B] flex items-center justify-center font-bold text-sm shrink-0">
             {(form.name || 'ST').slice(0, 2).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <p className="text-xs font-bold text-[#FFA42E] uppercase tracking-wider flex items-center gap-1">
+            <p className="text-xs font-bold text-[#F59E0B] uppercase tracking-wider flex items-center gap-1">
               <GraduationCap className="w-3.5 h-3.5" />
               Welcome to UniHive
             </p>
-            <p className="text-xs text-[#EEEEEE]/85 truncate">
+            <p className="text-xs text-[#FAF8F5]/85 truncate">
               {userProfile?.email}
             </p>
           </div>
@@ -183,7 +183,7 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
 
         <div>
           <label className="block text-xs font-medium text-slate-700 mb-2 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#FFA42E]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
             Pick Your Interests (Used for Club & Event Recommendations)
           </label>
           <div className="flex flex-wrap gap-1.5">
@@ -196,8 +196,8 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
                   onClick={() => toggleInterest(tag)}
                   className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition-colors ${
                     selected
-                      ? 'bg-[#17AAAA] border-[#17AAAA] text-[#EEEEEE]'
-                      : 'bg-[#EEEEEE] border-[#363636]/20 text-[#363636] hover:border-[#17AAAA]'
+                      ? 'bg-[#059669] border-[#059669] text-[#FAF8F5]'
+                      : 'bg-[#FAF8F5] border-[#064E3B]/20 text-[#064E3B] hover:border-[#059669]'
                   }`}
                 >
                   {selected ? '✓ ' : '+ '}

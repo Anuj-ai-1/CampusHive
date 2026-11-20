@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { MessageSquareText, Send, Shield, CheckCircle2 } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { Card } from '../components/ui/Card';
@@ -98,11 +98,11 @@ export function Feedback({
       {/* A. Centered Feedback Form */}
       <div className="max-w-2xl mx-auto">
         <Card padding="p-5 sm:p-6">
-          <div className="mb-5 pb-4 border-b border-[#363636]">
-            <h2 className="text-lg font-semibold text-[#363636]">
+          <div className="mb-5 pb-4 border-b border-[#064E3B]">
+            <h2 className="text-lg font-semibold text-[#064E3B]">
               Share your feedback
             </h2>
-            <p className="text-xs text-[#363636] mt-0.5">
+            <p className="text-xs text-[#064E3B] mt-0.5">
               Your feedback helps us build a better campus experience.
             </p>
           </div>
@@ -156,8 +156,8 @@ export function Feedback({
             />
 
             {category === 'Grievance' && (
-              <div className="flex items-start gap-2.5 p-3 rounded-md bg-[#EEEEEE] border border-[#363636] text-xs text-[#363636]">
-                <Shield className="w-4 h-4 text-[#17AAAA] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 p-3 rounded-md bg-[#FAF8F5] border border-[#064E3B] text-xs text-[#064E3B]">
+                <Shield className="w-4 h-4 text-[#059669] shrink-0 mt-0.5" />
                 <span>
                   Grievance submissions are strictly confidential and routed
                   directly to the Dean of Student Welfare. Private descriptions
@@ -178,17 +178,17 @@ export function Feedback({
       {/* B. Previous Submissions History */}
       <section
         aria-labelledby="submissions-history-heading"
-        className="space-y-4 pt-4 border-t border-[#363636]"
+        className="space-y-4 pt-4 border-t border-[#064E3B]"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2
               id="submissions-history-heading"
-              className="text-base font-semibold text-[#363636]"
+              className="text-base font-semibold text-[#064E3B]"
             >
               Previous Submissions
             </h2>
-            <p className="text-xs text-[#363636] mt-0.5">
+            <p className="text-xs text-[#064E3B] mt-0.5">
               Track reference IDs and official responses from campus administration
             </p>
           </div>
@@ -294,19 +294,19 @@ export function Feedback({
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-[#363636]">
+              <h3 className="text-sm font-semibold text-[#064E3B]">
                 {activeTicket.subject}
               </h3>
-              <p className="text-xs text-[#363636] mt-1.5 leading-relaxed whitespace-pre-line">
+              <p className="text-xs text-[#064E3B] mt-1.5 leading-relaxed whitespace-pre-line">
                 {activeTicket.description}
               </p>
             </div>
 
-            <div className="p-3.5 rounded-lg bg-[#EEEEEE] border border-[#363636]">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-[#363636] mb-1">
+            <div className="p-3.5 rounded-lg bg-[#FAF8F5] border border-[#064E3B]">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-[#064E3B] mb-1">
                 Administration Resolution Log
               </p>
-              <p className="text-xs text-[#363636] leading-relaxed">
+              <p className="text-xs text-[#064E3B] leading-relaxed">
                 {activeTicket.adminResponse ||
                   'Ticket logged and queued for department coordinator review.'}
               </p>

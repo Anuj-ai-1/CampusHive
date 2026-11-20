@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
   Menu,
   Bell,
@@ -50,14 +50,14 @@ export function Topbar({
   };
 
   return (
-    <header className="sticky top-0 z-20 h-14 bg-[#363636] border-b-2 border-[#FFA42E] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-20 h-14 bg-[#064E3B] border-b-2 border-[#F59E0B] px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
       {/* Left: Hamburger + Breadcrumb */}
       <div className="flex items-center gap-2.5 min-w-0">
         <button
           type="button"
           onClick={onOpenMobileDrawer}
           aria-label="Open navigation menu"
-          className="lg:hidden p-1.5 -ml-1 text-[#EEEEEE] hover:bg-[#17AAAA] rounded-lg"
+          className="lg:hidden p-1.5 -ml-1 text-[#FAF8F5] hover:bg-[#059669] rounded-lg"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -66,12 +66,12 @@ export function Topbar({
           <button
             type="button"
             onClick={() => onNavigate(role === 'admin' ? 'admin' : 'home')}
-            className="text-[#EEEEEE]/75 hover:text-[#FFA42E] font-medium hidden sm:inline"
+            className="text-[#FAF8F5]/75 hover:text-[#F59E0B] font-medium hidden sm:inline"
           >
             UniHive
           </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#FFA42E] hidden sm:inline shrink-0" />
-          <span className="font-bold text-[#EEEEEE] truncate text-sm">
+          <ChevronRight className="w-3.5 h-3.5 text-[#F59E0B] hidden sm:inline shrink-0" />
+          <span className="font-bold text-[#FAF8F5] truncate text-sm">
             {PAGE_LABELS[activePage] || 'Dashboard'}
           </span>
         </nav>
@@ -81,7 +81,7 @@ export function Topbar({
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="relative hidden md:block w-56 lg:w-64">
           <Search
-            className="w-3.5 h-3.5 text-[#363636]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+            className="w-3.5 h-3.5 text-[#064E3B]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
             aria-hidden="true"
           />
           <input
@@ -91,7 +91,7 @@ export function Topbar({
             onKeyDown={handleSearchKeyDown}
             placeholder="Search events or clubs..."
             aria-label="Quick search across campus"
-            className="w-full h-8 pl-8 pr-3 text-xs bg-[#EEEEEE] text-[#363636] placeholder-[#363636]/60 border border-[#17AAAA] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFA42E]"
+            className="w-full h-8 pl-8 pr-3 text-xs bg-[#FAF8F5] text-[#064E3B] placeholder-[#064E3B]/60 border border-[#059669] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F59E0B]"
           />
         </div>
 
@@ -105,11 +105,11 @@ export function Topbar({
             }}
             aria-label={`Notifications ${unreadCount > 0 ? `(${unreadCount} unread)` : ''}`}
             aria-expanded={notifOpen}
-            className="relative p-1.5 text-[#EEEEEE] hover:bg-[#17AAAA] rounded-lg transition-all"
+            className="relative p-1.5 text-[#FAF8F5] hover:bg-[#059669] rounded-lg transition-all"
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#F63F3A] border border-[#363636]" />
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#EA580C] border border-[#064E3B]" />
             )}
           </button>
 
@@ -134,14 +134,14 @@ export function Topbar({
             }}
             aria-label="Open user menu"
             aria-expanded={profileOpen}
-            className="flex items-center gap-2 p-1 pr-2 rounded-lg hover:bg-[#EEEEEE]/15 transition-all"
+            className="flex items-center gap-2 p-1 pr-2 rounded-lg hover:bg-[#FAF8F5]/15 transition-all"
           >
-            <div className="w-7 h-7 rounded-full bg-[#FFA42E] flex items-center justify-center text-xs font-bold text-[#363636]">
+            <div className="w-7 h-7 rounded-full bg-[#F59E0B] flex items-center justify-center text-xs font-bold text-[#064E3B]">
               {(activePerson?.shortName || activePerson?.name || 'UH')
                 .slice(0, 2)
                 .toUpperCase()}
             </div>
-            <span className="hidden sm:inline text-xs font-semibold text-[#EEEEEE]">
+            <span className="hidden sm:inline text-xs font-semibold text-[#FAF8F5]">
               {activePerson?.shortName || 'User'}
             </span>
           </button>

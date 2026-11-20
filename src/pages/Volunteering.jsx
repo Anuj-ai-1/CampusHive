@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
   HeartHandshake,
   CheckCircle2,
@@ -41,7 +41,7 @@ export function Volunteering({
         subtitle="Contribute to campus events, manage shift assignments, and track verified service hours."
         actions={
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel-subtle">
-            <Award className="w-4 h-4 text-[#17AAAA]" />
+            <Award className="w-4 h-4 text-[#059669]" />
             <span className="text-xs font-medium text-slate-800">
               Approved Credit: <strong>{approvedHours} hrs</strong>
             </span>
@@ -125,7 +125,7 @@ export function Volunteering({
           <div className="glass-panel rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
               <div className="flex items-center gap-2">
-                <ClipboardList className="w-4 h-4 text-[#17AAAA]" />
+                <ClipboardList className="w-4 h-4 text-[#059669]" />
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-900">
                   To Do
                 </h3>
@@ -152,7 +152,7 @@ export function Volunteering({
                 />
                 <button
                   type="submit"
-                  className="h-8 px-3 rounded-lg bg-[#17AAAA] hover:bg-[#363636] text-[#EEEEEE] text-xs font-bold transition-colors shrink-0"
+                  className="h-8 px-3 rounded-lg bg-[#059669] hover:bg-[#064E3B] text-[#FAF8F5] text-xs font-bold transition-colors shrink-0"
                 >
                   Add
                 </button>

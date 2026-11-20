@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -746,9 +746,9 @@ export function Calendar({
         }
       >
         {/* Single Clean Control Bar */}
-        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#363636] border-l-4 border-l-[#17AAAA]">
+        <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#064E3B] border-l-4 border-l-[#059669]">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#17AAAA] text-xs font-bold text-[#EEEEEE]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#059669] text-xs font-bold text-[#FAF8F5]">
               <Building2 className="w-3.5 h-3.5" />
               {activeBranchMeta.code} · {userDiv}
             </span>
@@ -758,7 +758,7 @@ export function Calendar({
                 aria-label="Select Branch"
                 value={adminBranchFilter}
                 onChange={(e) => setAdminBranchFilter(e.target.value)}
-                className="h-8 px-2.5 rounded-lg bg-[#EEEEEE] text-[#363636] text-xs font-bold border border-[#FFA42E]"
+                className="h-8 px-2.5 rounded-lg bg-[#FAF8F5] text-[#064E3B] text-xs font-bold border border-[#F59E0B]"
               >
                 {BRANCHES_LIST.map((b) => (
                   <option key={b.code} value={b.code}>
@@ -774,7 +774,7 @@ export function Calendar({
               aria-label="Select Semester"
               value={selectedSemester}
               onChange={(e) => setSelectedSemester(e.target.value)}
-              className="h-8 px-3 rounded-lg bg-[#EEEEEE] text-[#363636] text-xs font-bold border border-[#17AAAA]"
+              className="h-8 px-3 rounded-lg bg-[#FAF8F5] text-[#064E3B] text-xs font-bold border border-[#059669]"
             >
               {SEMESTER_METADATA.map((sem) => (
                 <option key={sem.id} value={sem.id}>
@@ -786,7 +786,7 @@ export function Calendar({
             <button
               type="button"
               onClick={handleJumpToToday}
-              className="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-[#FFA42E] hover:bg-[#F63F3A] text-[#363636] hover:text-[#EEEEEE] text-xs font-bold transition-all"
+              className="inline-flex items-center gap-1 h-8 px-3 rounded-lg bg-[#F59E0B] hover:bg-[#EA580C] text-[#064E3B] hover:text-[#FAF8F5] text-xs font-bold transition-all"
             >
               <RotateCcw className="w-3 h-3" />
               Today (Oct 27)
@@ -799,8 +799,8 @@ export function Calendar({
       {viewMode === 'semester' && (
         <div className="space-y-6">
           {/* Semester Executive Summary Banner */}
-          <Card padding="p-5" className="relative overflow-hidden border-t-4 border-t-[#17AAAA]">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#363636]/15">
+          <Card padding="p-5" className="relative overflow-hidden border-t-4 border-t-[#059669]">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#064E3B]/15">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
                   <Badge variant="primary" dot>
@@ -809,22 +809,22 @@ export function Calendar({
                   <Badge variant="warning">{activeSemMeta.label}</Badge>
                   <Badge variant="dark">{activeSemMeta.session}</Badge>
                 </div>
-                <h2 className="text-lg font-bold text-[#363636]">
+                <h2 className="text-lg font-bold text-[#064E3B]">
                   {activeBranchMeta.name} — {activeSemMeta.label} Academic Blueprint
                 </h2>
-                <p className="text-xs text-[#363636]/75 mt-0.5">
+                <p className="text-xs text-[#064E3B]/75 mt-0.5">
                   HOD: {activeBranchMeta.hod} · Division: {userDiv} ·{' '}
                   {activeSemMeta.workingWeeks} Teaching Weeks ({activeSemMeta.instructionDays} Days) ·{' '}
                   {activeSemMeta.totalCredits} Credits
                 </p>
               </div>
 
-              <div className="px-3.5 py-2 rounded-xl bg-[#363636] border-l-4 border-l-[#FFA42E]">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#FFA42E]">
+              <div className="px-3.5 py-2 rounded-xl bg-[#064E3B] border-l-4 border-l-[#F59E0B]">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#F59E0B]">
                   Academic Cycle Progress
                 </p>
-                <p className="text-xs font-bold text-[#EEEEEE] mt-0.5 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#17AAAA]" />
+                <p className="text-xs font-bold text-[#FAF8F5] mt-0.5 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
                   {activeSemMeta.currentWeek}
                 </p>
               </div>
@@ -832,62 +832,62 @@ export function Calendar({
 
             {/* 4 Key Examination & Milestone Windows */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-4">
-              <div className="p-3.5 rounded-xl bg-[#EEEEEE] border-l-4 border-l-[#F63F3A]">
-                <div className="flex items-center justify-between text-xs text-[#F63F3A] mb-1">
+              <div className="p-3.5 rounded-xl bg-[#FAF8F5] border-l-4 border-l-[#EA580C]">
+                <div className="flex items-center justify-between text-xs text-[#EA580C] mb-1">
                   <span className="font-bold uppercase tracking-wider text-[10px]">
                     Mid-Sem Theory (MSE)
                   </span>
-                  <FileCheck className="w-4 h-4 text-[#F63F3A]" />
+                  <FileCheck className="w-4 h-4 text-[#EA580C]" />
                 </div>
-                <p className="text-sm font-bold text-[#363636]">
+                <p className="text-sm font-bold text-[#064E3B]">
                   {activeSemMeta.midSemWindow}
                 </p>
-                <p className="text-[11px] text-[#363636]/75 mt-0.5">
+                <p className="text-[11px] text-[#064E3B]/75 mt-0.5">
                   30 Marks · {activeBranch} Core Papers
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#EEEEEE] border-l-4 border-l-[#FFA42E]">
-                <div className="flex items-center justify-between text-xs text-[#363636] mb-1">
+              <div className="p-3.5 rounded-xl bg-[#FAF8F5] border-l-4 border-l-[#F59E0B]">
+                <div className="flex items-center justify-between text-xs text-[#064E3B] mb-1">
                   <span className="font-bold uppercase tracking-wider text-[10px]">
                     {activeBranch} Practical & Viva
                   </span>
-                  <Layers className="w-4 h-4 text-[#FFA42E]" />
+                  <Layers className="w-4 h-4 text-[#F59E0B]" />
                 </div>
-                <p className="text-sm font-bold text-[#363636]">
+                <p className="text-sm font-bold text-[#064E3B]">
                   {activeSemMeta.vivaWindow}
                 </p>
-                <p className="text-[11px] text-[#363636]/75 mt-0.5">
+                <p className="text-[11px] text-[#064E3B]/75 mt-0.5">
                   Lab Batches ({userProfile?.labBatch || 'Batch A1'})
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#EEEEEE] border-l-4 border-l-[#17AAAA]">
-                <div className="flex items-center justify-between text-xs text-[#17AAAA] mb-1">
+              <div className="p-3.5 rounded-xl bg-[#FAF8F5] border-l-4 border-l-[#059669]">
+                <div className="flex items-center justify-between text-xs text-[#059669] mb-1">
                   <span className="font-bold uppercase tracking-wider text-[10px]">
                     End-Sem Theory (ESE)
                   </span>
-                  <GraduationCap className="w-4 h-4 text-[#17AAAA]" />
+                  <GraduationCap className="w-4 h-4 text-[#059669]" />
                 </div>
-                <p className="text-sm font-bold text-[#363636]">
+                <p className="text-sm font-bold text-[#064E3B]">
                   {activeSemMeta.endSemWindow}
                 </p>
-                <p className="text-[11px] text-[#363636]/75 mt-0.5">
+                <p className="text-[11px] text-[#064E3B]/75 mt-0.5">
                   60 Marks · University Exam
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#EEEEEE] border-l-4 border-l-[#363636]">
-                <div className="flex items-center justify-between text-xs text-[#363636] mb-1">
+              <div className="p-3.5 rounded-xl bg-[#FAF8F5] border-l-4 border-l-[#064E3B]">
+                <div className="flex items-center justify-between text-xs text-[#064E3B] mb-1">
                   <span className="font-bold uppercase tracking-wider text-[10px]">
                     Result Declaration
                   </span>
-                  <Award className="w-4 h-4 text-[#F63F3A]" />
+                  <Award className="w-4 h-4 text-[#EA580C]" />
                 </div>
-                <p className="text-sm font-bold text-[#363636]">
+                <p className="text-sm font-bold text-[#064E3B]">
                   {activeSemMeta.resultDate}
                 </p>
-                <p className="text-[11px] text-[#363636]/75 mt-0.5">
+                <p className="text-[11px] text-[#064E3B]/75 mt-0.5">
                   SGPA / CGPA Grade Card
                 </p>
               </div>
@@ -896,13 +896,13 @@ export function Calendar({
 
           {/* Branch & Semester Subject + Interactive Exam Date Matrix */}
           <Card padding="p-0" className="overflow-hidden">
-            <div className="px-5 py-4 border-b-2 border-[#17AAAA] bg-[#363636] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="px-5 py-4 border-b-2 border-[#059669] bg-[#064E3B] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h3 className="text-sm font-bold text-[#EEEEEE] flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-[#FFA42E]" />
+                <h3 className="text-sm font-bold text-[#FAF8F5] flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-[#F59E0B]" />
                   {activeBranch} {selectedSemester} — Subject Syllabus, Lab Viva & Exam Datesheet
                 </h3>
-                <p className="text-xs text-[#EEEEEE]/80 mt-0.5">
+                <p className="text-xs text-[#FAF8F5]/80 mt-0.5">
                   Click any exam or viva date below to jump directly to that day on the interactive calendar grid.
                 </p>
               </div>
@@ -914,7 +914,7 @@ export function Calendar({
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-[#363636]/20 bg-[#EEEEEE] text-[11px] font-bold uppercase tracking-wider text-[#363636]">
+                  <tr className="border-b border-[#064E3B]/20 bg-[#FAF8F5] text-[11px] font-bold uppercase tracking-wider text-[#064E3B]">
                     <th className="py-3 px-4">Code</th>
                     <th className="py-3 px-4">{activeBranch} Course & Lab Title</th>
                     <th className="py-3 px-4">Category</th>
@@ -925,18 +925,18 @@ export function Calendar({
                     <th className="py-3 px-4">End-Sem Paper</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#363636]/15 text-xs">
+                <tbody className="divide-y divide-[#064E3B]/15 text-xs">
                   {activeCurriculum.map((sub) => (
                     <tr
                       key={sub.code}
-                      className="hover:bg-[#EEEEEE]/70 transition-colors"
+                      className="hover:bg-[#FAF8F5]/70 transition-colors"
                     >
-                      <td className="py-3 px-4 font-mono font-bold text-[#17AAAA]">
+                      <td className="py-3 px-4 font-mono font-bold text-[#059669]">
                         {sub.code}
                       </td>
                       <td className="py-3 px-4">
-                        <p className="font-bold text-[#363636]">{sub.title}</p>
-                        <p className="text-[11px] text-[#363636]/75">{sub.room}</p>
+                        <p className="font-bold text-[#064E3B]">{sub.title}</p>
+                        <p className="text-[11px] text-[#064E3B]/75">{sub.room}</p>
                       </td>
                       <td className="py-3 px-4">
                         <Badge
@@ -951,10 +951,10 @@ export function Calendar({
                           {sub.type}
                         </Badge>
                       </td>
-                      <td className="py-3 px-4 font-bold text-[#363636]">
+                      <td className="py-3 px-4 font-bold text-[#064E3B]">
                         {sub.credits} Cr
                       </td>
-                      <td className="py-3 px-4 text-[#363636]/85 font-medium">
+                      <td className="py-3 px-4 text-[#064E3B]/85 font-medium">
                         {sub.faculty}
                       </td>
                       <td className="py-3 px-4">
@@ -964,7 +964,7 @@ export function Calendar({
                             handlePickDate(sub.midSemDate);
                             setViewMode('month');
                           }}
-                          className="px-2 py-1 rounded-md bg-[#EEEEEE] hover:bg-[#17AAAA] text-[#363636] hover:text-[#EEEEEE] border border-[#363636]/25 font-semibold transition-colors"
+                          className="px-2 py-1 rounded-md bg-[#FAF8F5] hover:bg-[#059669] text-[#064E3B] hover:text-[#FAF8F5] border border-[#064E3B]/25 font-semibold transition-colors"
                           title="Open this date in Month Grid"
                         >
                           {sub.midSemDate}
@@ -978,13 +978,13 @@ export function Calendar({
                               handlePickDate(sub.vivaDate);
                               setViewMode('month');
                             }}
-                            className="px-2 py-1 rounded-md bg-[#FFA42E] hover:bg-[#363636] text-[#363636] hover:text-[#EEEEEE] font-bold transition-colors"
+                            className="px-2 py-1 rounded-md bg-[#F59E0B] hover:bg-[#064E3B] text-[#064E3B] hover:text-[#FAF8F5] font-bold transition-colors"
                             title="Open this date in Month Grid"
                           >
                             {sub.vivaDate}
                           </button>
                         ) : (
-                          <span className="text-[#363636]/75 font-medium">{sub.vivaDate}</span>
+                          <span className="text-[#064E3B]/75 font-medium">{sub.vivaDate}</span>
                         )}
                       </td>
                       <td className="py-3 px-4">
@@ -994,7 +994,7 @@ export function Calendar({
                             handlePickDate(sub.endSemDate);
                             setViewMode('month');
                           }}
-                          className="px-2 py-1 rounded-md bg-[#F63F3A] hover:bg-[#363636] text-[#EEEEEE] font-bold transition-colors"
+                          className="px-2 py-1 rounded-md bg-[#EA580C] hover:bg-[#064E3B] text-[#FAF8F5] font-bold transition-colors"
                           title="Open this date in Month Grid"
                         >
                           {sub.endSemDate}
@@ -1027,8 +1027,8 @@ export function Calendar({
                     onClick={() => setCategoryFilter(cat.id)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                       active
-                        ? 'bg-[#17AAAA] text-[#EEEEEE]'
-                        : 'bg-white text-[#363636] hover:bg-[#FFA42E] border border-[#363636]/20'
+                        ? 'bg-[#059669] text-[#FAF8F5]'
+                        : 'bg-white text-[#064E3B] hover:bg-[#F59E0B] border border-[#064E3B]/20'
                     }`}
                   >
                     {cat.label}
@@ -1067,15 +1067,15 @@ export function Calendar({
                   padding="p-0"
                   className="overflow-hidden"
                 >
-                  <div className="px-5 py-3 bg-[#363636] border-b-2 border-[#FFA42E] flex items-center justify-between">
+                  <div className="px-5 py-3 bg-[#064E3B] border-b-2 border-[#F59E0B] flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <CalendarIcon className="w-4 h-4 text-[#FFA42E]" />
-                      <h3 className="text-sm font-bold text-[#EEEEEE]">
+                      <CalendarIcon className="w-4 h-4 text-[#F59E0B]" />
+                      <h3 className="text-sm font-bold text-[#FAF8F5]">
                         {group.monthLabel}
                       </h3>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-xs font-semibold text-[#17AAAA]">
+                      <span className="text-xs font-semibold text-[#059669]">
                         {group.items.length}{' '}
                         {group.items.length === 1 ? 'Milestone' : 'Milestones'}
                       </span>
@@ -1093,7 +1093,7 @@ export function Calendar({
                     </div>
                   </div>
 
-                  <div className="divide-y divide-[#363636]/15">
+                  <div className="divide-y divide-[#064E3B]/15">
                     {group.items.map((item) => {
                       const dayStart = item.startDate.slice(-2);
                       const dayEnd = item.endDate.slice(-2);
@@ -1111,14 +1111,14 @@ export function Calendar({
                               setSelectedMilestoneModal(item);
                             }
                           }}
-                          className="p-4 sm:p-5 hover:bg-[#EEEEEE]/70 transition-colors flex flex-col lg:flex-row lg:items-center justify-between gap-4 cursor-pointer"
+                          className="p-4 sm:p-5 hover:bg-[#FAF8F5]/70 transition-colors flex flex-col lg:flex-row lg:items-center justify-between gap-4 cursor-pointer"
                         >
                           <div className="flex items-start gap-4">
-                            <div className="w-14 h-14 rounded-xl bg-[#363636] flex flex-col items-center justify-center shrink-0">
-                              <span className="text-[10px] font-bold uppercase text-[#FFA42E] leading-none">
+                            <div className="w-14 h-14 rounded-xl bg-[#064E3B] flex flex-col items-center justify-center shrink-0">
+                              <span className="text-[10px] font-bold uppercase text-[#F59E0B] leading-none">
                                 {item.weekTag}
                               </span>
-                              <span className="text-sm font-bold text-[#EEEEEE] leading-tight mt-1">
+                              <span className="text-sm font-bold text-[#FAF8F5] leading-tight mt-1">
                                 {isMultiDay ? `${dayStart}–${dayEnd}` : dayStart}
                               </span>
                             </div>
@@ -1140,10 +1140,10 @@ export function Calendar({
                                 <span
                                   className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full ${
                                     item.status === 'Completed'
-                                      ? 'bg-[#17AAAA] text-[#EEEEEE]'
+                                      ? 'bg-[#059669] text-[#FAF8F5]'
                                       : item.status === 'Ongoing'
-                                      ? 'bg-[#F63F3A] text-[#EEEEEE]'
-                                      : 'bg-[#FFA42E] text-[#363636]'
+                                      ? 'bg-[#EA580C] text-[#FAF8F5]'
+                                      : 'bg-[#F59E0B] text-[#064E3B]'
                                   }`}
                                 >
                                   {item.status === 'Completed' ? (
@@ -1155,16 +1155,16 @@ export function Calendar({
                                 </span>
                               </div>
 
-                              <h4 className="text-sm font-bold text-[#363636]">
+                              <h4 className="text-sm font-bold text-[#064E3B]">
                                 {item.title}
                               </h4>
-                              <p className="text-xs text-[#363636]/75 leading-relaxed max-w-3xl">
+                              <p className="text-xs text-[#064E3B]/75 leading-relaxed max-w-3xl">
                                 {item.description}
                               </p>
                             </div>
                           </div>
 
-                          <div className="flex flex-col lg:items-end gap-1.5 text-xs text-[#363636]/75 pl-18 lg:pl-0 shrink-0">
+                          <div className="flex flex-col lg:items-end gap-1.5 text-xs text-[#064E3B]/75 pl-18 lg:pl-0 shrink-0">
                             <button
                               type="button"
                               onClick={(e) => {
@@ -1172,19 +1172,19 @@ export function Calendar({
                                 handlePickDate(item.startDate);
                                 setViewMode('month');
                               }}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#363636] hover:bg-[#17AAAA] text-[#EEEEEE] font-bold transition-colors"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#064E3B] hover:bg-[#059669] text-[#FAF8F5] font-bold transition-colors"
                             >
-                              <Clock className="w-3.5 h-3.5 text-[#FFA42E]" />
+                              <Clock className="w-3.5 h-3.5 text-[#F59E0B]" />
                               {isMultiDay
                                 ? `${item.startDate} → ${item.endDate}`
                                 : item.startDate}
                             </button>
                             <span className="flex items-center gap-1.5 font-medium">
-                              <MapPin className="w-3.5 h-3.5 text-[#F63F3A]" />
+                              <MapPin className="w-3.5 h-3.5 text-[#EA580C]" />
                               {item.venue}
                             </span>
                             <span className="flex items-center gap-1.5 text-[11px]">
-                              <UserCheck className="w-3.5 h-3.5 text-[#17AAAA]" />
+                              <UserCheck className="w-3.5 h-3.5 text-[#059669]" />
                               {item.coordinator}
                             </span>
                           </div>
@@ -1204,13 +1204,13 @@ export function Calendar({
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
           {/* Left 8 Columns: Interactive Month Grid */}
           <Card padding="p-0" className="xl:col-span-8 overflow-hidden">
-            <div className="px-5 py-3.5 border-b-2 border-[#17AAAA] bg-[#363636] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="px-5 py-3.5 border-b-2 border-[#059669] bg-[#064E3B] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h2 className="text-base font-bold text-[#EEEEEE] flex items-center gap-2">
-                  <CalendarIcon className="w-4 h-4 text-[#FFA42E]" />
+                <h2 className="text-base font-bold text-[#FAF8F5] flex items-center gap-2">
+                  <CalendarIcon className="w-4 h-4 text-[#F59E0B]" />
                   {monthMeta.label}
                 </h2>
-                <p className="text-xs text-[#EEEEEE]/80">
+                <p className="text-xs text-[#FAF8F5]/80">
                   Click any date cell to inspect or add {activeBranch} {userDiv} classes, exams, and events.
                 </p>
               </div>
@@ -1235,23 +1235,23 @@ export function Calendar({
               </div>
             </div>
 
-            <div className="grid grid-cols-7 border-b border-[#363636]/20 bg-[#EEEEEE] text-center">
+            <div className="grid grid-cols-7 border-b border-[#064E3B]/20 bg-[#FAF8F5] text-center">
               {WEEKDAYS.map((day) => (
                 <div
                   key={day}
-                  className="py-2.5 text-[11px] font-bold uppercase tracking-wider text-[#363636]"
+                  className="py-2.5 text-[11px] font-bold uppercase tracking-wider text-[#064E3B]"
                 >
                   {day}
                 </div>
               ))}
             </div>
 
-            <div className="grid grid-cols-7 divide-x divide-y divide-[#363636]/15">
+            <div className="grid grid-cols-7 divide-x divide-y divide-[#064E3B]/15">
               {monthCells.map((cell) =>
                 cell.blank ? (
                   <div
                     key={cell.key}
-                    className="min-h-[64px] sm:min-h-[116px] bg-[#EEEEEE]/60 p-1 sm:p-1.5"
+                    className="min-h-[64px] sm:min-h-[116px] bg-[#FAF8F5]/60 p-1 sm:p-1.5"
                   />
                 ) : (
                   <div
@@ -1267,25 +1267,25 @@ export function Calendar({
                     }}
                     className={`min-h-[64px] sm:min-h-[116px] p-1 sm:p-2 transition-all cursor-pointer text-left ${
                       selectedDate === cell.dateStr
-                        ? 'bg-[#FFA42E]/20 ring-2 ring-inset ring-[#F63F3A]'
-                        : 'bg-white hover:bg-[#EEEEEE]/70'
+                        ? 'bg-[#F59E0B]/20 ring-2 ring-inset ring-[#EA580C]'
+                        : 'bg-white hover:bg-[#FAF8F5]/70'
                     }`}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-0.5 mb-1">
                       <span
                         className={`text-[11px] sm:text-xs font-bold w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center ${
                           selectedDate === cell.dateStr
-                            ? 'bg-[#F63F3A] text-[#EEEEEE]'
+                            ? 'bg-[#EA580C] text-[#FAF8F5]'
                             : cell.dateStr === '2026-10-27'
-                            ? 'bg-[#17AAAA] text-[#EEEEEE]'
-                            : 'text-[#363636]'
+                            ? 'bg-[#059669] text-[#FAF8F5]'
+                            : 'text-[#064E3B]'
                         }`}
                       >
                         {cell.dayNum}
                       </span>
 
                       {cell.activities.length > 0 && (
-                        <span className="text-[9px] sm:text-[10px] font-bold px-1 sm:px-1.5 py-0.2 rounded-full bg-[#363636] text-[#FFA42E] self-start sm:self-auto">
+                        <span className="text-[9px] sm:text-[10px] font-bold px-1 sm:px-1.5 py-0.2 rounded-full bg-[#064E3B] text-[#F59E0B] self-start sm:self-auto">
                           {cell.activities.length}
                         </span>
                       )}
@@ -1300,11 +1300,11 @@ export function Calendar({
                             className={`w-2 h-2 rounded-full ${
                               act.type === 'semester' ||
                               act.type === 'exam-paper'
-                                ? 'bg-[#F63F3A]'
+                                ? 'bg-[#EA580C]'
                                 : act.type === 'event' ||
                                   act.type === 'volunteer'
-                                ? 'bg-[#FFA42E]'
-                                : 'bg-[#17AAAA]'
+                                ? 'bg-[#F59E0B]'
+                                : 'bg-[#059669]'
                             }`}
                           />
                         ))}
@@ -1323,17 +1323,17 @@ export function Calendar({
                           }}
                           className={`w-full text-left px-1.5 py-0.5 rounded text-[10px] font-semibold truncate ${
                             act.type === 'semester' || act.type === 'exam-paper'
-                              ? 'bg-[#F63F3A] text-[#EEEEEE]'
+                              ? 'bg-[#EA580C] text-[#FAF8F5]'
                               : act.type === 'event' || act.type === 'volunteer'
-                              ? 'bg-[#FFA42E] text-[#363636]'
-                              : 'bg-[#17AAAA] text-[#EEEEEE]'
+                              ? 'bg-[#F59E0B] text-[#064E3B]'
+                              : 'bg-[#059669] text-[#FAF8F5]'
                           }`}
                         >
                           {act.title}
                         </div>
                       ))}
                       {cell.activities.length > 3 && (
-                        <p className="text-[10px] font-bold text-[#F63F3A] pl-1">
+                        <p className="text-[10px] font-bold text-[#EA580C] pl-1">
                           +{cell.activities.length - 3} more
                         </p>
                       )}
@@ -1345,16 +1345,16 @@ export function Calendar({
           </Card>
 
           {/* Right 4 Columns: Selected Date Live Inspector Panel */}
-          <Card padding="p-5" className="xl:col-span-4 space-y-4 sticky top-20 border-t-4 border-t-[#F63F3A]">
-            <div className="flex items-start justify-between gap-2 pb-3 border-b border-[#363636]/15">
+          <Card padding="p-5" className="xl:col-span-4 space-y-4 sticky top-20 border-t-4 border-t-[#EA580C]">
+            <div className="flex items-start justify-between gap-2 pb-3 border-b border-[#064E3B]/15">
               <div>
                 <Badge variant="primary" dot>
                   Selected Date Schedule
                 </Badge>
-                <h3 className="text-base font-bold text-[#363636] mt-1.5">
+                <h3 className="text-base font-bold text-[#064E3B] mt-1.5">
                   {formatReadableDate(selectedDate)}
                 </h3>
-                <p className="text-xs text-[#363636]/75 mt-0.5">
+                <p className="text-xs text-[#064E3B]/75 mt-0.5">
                   {activeBranch} {userDiv} · {selectedSemester}
                 </p>
               </div>
@@ -1370,11 +1370,11 @@ export function Calendar({
 
             {selectedDateActivities.length === 0 ? (
               <div className="py-8 text-center space-y-2">
-                <CalendarIcon className="w-8 h-8 text-[#17AAAA] mx-auto" />
-                <p className="text-sm font-bold text-[#363636]">
+                <CalendarIcon className="w-8 h-8 text-[#059669] mx-auto" />
+                <p className="text-sm font-bold text-[#064E3B]">
                   Weekend / Free Study Day
                 </p>
-                <p className="text-xs text-[#363636]/75">
+                <p className="text-xs text-[#064E3B]/75">
                   No lectures or exams scheduled on {selectedDate}.
                 </p>
               </div>
@@ -1384,7 +1384,7 @@ export function Calendar({
                   <div
                     key={act.id}
                     onClick={() => handleSelectItem(act)}
-                    className="p-3.5 rounded-xl bg-[#EEEEEE] hover:bg-[#FFA42E]/25 border-l-4 border-l-[#17AAAA] transition-colors cursor-pointer space-y-1.5"
+                    className="p-3.5 rounded-xl bg-[#FAF8F5] hover:bg-[#F59E0B]/25 border-l-4 border-l-[#059669] transition-colors cursor-pointer space-y-1.5"
                   >
                     <div className="flex items-center justify-between gap-2">
                       <Badge
@@ -1398,19 +1398,19 @@ export function Calendar({
                       >
                         {act.statusLabel}
                       </Badge>
-                      <span className="text-[11px] font-bold text-[#363636] flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-[#F63F3A]" />
+                      <span className="text-[11px] font-bold text-[#064E3B] flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-[#EA580C]" />
                         {act.time}
                       </span>
                     </div>
-                    <h4 className="text-xs font-bold text-[#363636]">
+                    <h4 className="text-xs font-bold text-[#064E3B]">
                       {act.title}
                     </h4>
                     {act.subtitle && (
-                      <p className="text-[11px] text-[#363636]/75">{act.subtitle}</p>
+                      <p className="text-[11px] text-[#064E3B]/75">{act.subtitle}</p>
                     )}
-                    <p className="text-[11px] text-[#363636]/80 font-medium flex items-center gap-1 pt-0.5">
-                      <MapPin className="w-3 h-3 text-[#17AAAA]" />
+                    <p className="text-[11px] text-[#064E3B]/80 font-medium flex items-center gap-1 pt-0.5">
+                      <MapPin className="w-3 h-3 text-[#059669]" />
                       {act.venue}
                     </p>
                   </div>
@@ -1444,7 +1444,7 @@ export function Calendar({
               >
                 Prev Month
               </Button>
-              <span className="text-xs font-bold text-[#363636] px-2">
+              <span className="text-xs font-bold text-[#064E3B] px-2">
                 {monthMeta.label}
               </span>
               <Button
@@ -1474,27 +1474,27 @@ export function Calendar({
                   padding="p-0"
                   className="overflow-hidden"
                 >
-                  <div className="px-5 py-2.5 bg-[#363636] border-b-2 border-[#17AAAA] flex items-center justify-between">
+                  <div className="px-5 py-2.5 bg-[#064E3B] border-b-2 border-[#059669] flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <span className="px-2 py-0.5 rounded-md bg-[#FFA42E] text-[#363636] text-xs font-bold">
+                      <span className="px-2 py-0.5 rounded-md bg-[#F59E0B] text-[#064E3B] text-xs font-bold">
                         {dayGroup.monthShort} {dayGroup.dayNum}
                       </span>
-                      <h3 className="text-xs font-bold text-[#EEEEEE]">
+                      <h3 className="text-xs font-bold text-[#FAF8F5]">
                         {dayGroup.readableDate}
                       </h3>
                     </div>
-                    <span className="text-[11px] font-semibold text-[#17AAAA]">
+                    <span className="text-[11px] font-semibold text-[#059669]">
                       {dayGroup.activities.length}{' '}
                       {dayGroup.activities.length === 1 ? 'item' : 'items'}
                     </span>
                   </div>
 
-                  <div className="divide-y divide-[#363636]/15">
+                  <div className="divide-y divide-[#064E3B]/15">
                     {dayGroup.activities.map((item) => (
                       <div
                         key={item.id}
                         onClick={() => handleSelectItem(item)}
-                        className="p-4 hover:bg-[#EEEEEE] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer"
+                        className="p-4 hover:bg-[#FAF8F5] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer"
                       >
                         <div className="space-y-1">
                           <div className="flex flex-wrap items-center gap-2">
@@ -1510,27 +1510,27 @@ export function Calendar({
                             >
                               {item.statusLabel}
                             </Badge>
-                            <span className="text-xs font-semibold text-[#363636]/75">
+                            <span className="text-xs font-semibold text-[#064E3B]/75">
                               {item.category}
                             </span>
                           </div>
-                          <h4 className="text-sm font-bold text-[#363636]">
+                          <h4 className="text-sm font-bold text-[#064E3B]">
                             {item.title}
                           </h4>
                           {item.subtitle && (
-                            <p className="text-xs text-[#363636]/75">
+                            <p className="text-xs text-[#064E3B]/75">
                               {item.subtitle}
                             </p>
                           )}
                         </div>
 
-                        <div className="flex flex-col sm:items-end gap-1 text-xs text-[#363636]/75">
-                          <span className="flex items-center gap-1.5 font-bold text-[#363636]">
-                            <Clock className="w-3.5 h-3.5 text-[#F63F3A]" />
+                        <div className="flex flex-col sm:items-end gap-1 text-xs text-[#064E3B]/75">
+                          <span className="flex items-center gap-1.5 font-bold text-[#064E3B]">
+                            <Clock className="w-3.5 h-3.5 text-[#EA580C]" />
                             {item.time}
                           </span>
                           <span className="flex items-center gap-1.5">
-                            <MapPin className="w-3.5 h-3.5 text-[#17AAAA]" />
+                            <MapPin className="w-3.5 h-3.5 text-[#059669]" />
                             {item.venue}
                           </span>
                         </div>
@@ -1592,13 +1592,13 @@ export function Calendar({
               </Badge>
             </div>
 
-            <p className="text-sm text-[#363636] leading-relaxed">
+            <p className="text-sm text-[#064E3B] leading-relaxed">
               {selectedMilestoneModal.description}
             </p>
 
-            <div className="p-3.5 rounded-xl bg-[#EEEEEE] border border-[#363636]/20 text-xs space-y-2 text-[#363636]">
+            <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#064E3B]/20 text-xs space-y-2 text-[#064E3B]">
               <p className="flex items-center justify-between">
-                <span className="text-[#363636]/75">Schedule Window:</span>
+                <span className="text-[#064E3B]/75">Schedule Window:</span>
                 <span className="font-bold">
                   {selectedMilestoneModal.startDate ===
                   selectedMilestoneModal.endDate
@@ -1607,20 +1607,20 @@ export function Calendar({
                 </span>
               </p>
               <p className="flex items-center justify-between">
-                <span className="text-[#363636]/75">Venue / Portal:</span>
+                <span className="text-[#064E3B]/75">Venue / Portal:</span>
                 <span className="font-bold">
                   {selectedMilestoneModal.venue}
                 </span>
               </p>
               <p className="flex items-center justify-between">
-                <span className="text-[#363636]/75">Coordinator / Authority:</span>
+                <span className="text-[#064E3B]/75">Coordinator / Authority:</span>
                 <span className="font-bold">
                   {selectedMilestoneModal.coordinator}
                 </span>
               </p>
               <p className="flex items-center justify-between">
-                <span className="text-[#363636]/75">Current Status:</span>
-                <span className="font-bold text-[#17AAAA]">
+                <span className="text-[#064E3B]/75">Current Status:</span>
+                <span className="font-bold text-[#059669]">
                   {selectedMilestoneModal.status}
                 </span>
               </p>
@@ -1783,10 +1783,10 @@ export function Calendar({
             <Badge variant="success" dot>
               Approved Volunteer Shift ({selectedShiftModal.serviceHours} hrs)
             </Badge>
-            <p className="text-sm text-[#363636] leading-relaxed">
+            <p className="text-sm text-[#064E3B] leading-relaxed">
               {selectedShiftModal.responsibilities}
             </p>
-            <div className="p-3.5 rounded-xl glass-panel-subtle text-xs space-y-1.5 text-[#363636]">
+            <div className="p-3.5 rounded-xl glass-panel-subtle text-xs space-y-1.5 text-[#064E3B]">
               <p>
                 <strong>Date:</strong> {selectedShiftModal.date}
               </p>

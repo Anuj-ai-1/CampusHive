@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Search, X } from 'lucide-react';
 
 export function SearchInput({
@@ -20,7 +20,7 @@ export function SearchInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={ariaLabel}
-        className="w-full h-9 pl-9 pr-8 text-sm glass-input text-slate-900 placeholder-slate-400 rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#17AAAA]/20"
+        className="w-full h-9 pl-9 pr-8 text-sm glass-input text-slate-900 placeholder-slate-400 rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#059669]/20"
       />
       {value && (
         <button

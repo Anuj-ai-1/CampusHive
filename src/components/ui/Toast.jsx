@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
 
 export function Toast({ toasts, onDismiss }) {
@@ -20,24 +20,24 @@ export function Toast({ toasts, onDismiss }) {
 
         const iconColor =
           t.type === 'error'
-            ? 'text-[#F63F3A]'
+            ? 'text-[#EA580C]'
             : t.type === 'info'
-            ? 'text-[#FFA42E]'
-            : 'text-[#17AAAA]';
+            ? 'text-[#F59E0B]'
+            : 'text-[#059669]';
 
         return (
           <div
             key={t.id}
-            className="pointer-events-auto flex items-start gap-3 p-3.5 bg-[#363636] border-2 border-[#17AAAA] rounded-xl shadow-2xl"
+            className="pointer-events-auto flex items-start gap-3 p-3.5 bg-[#064E3B] border-2 border-[#059669] rounded-xl shadow-2xl"
           >
             <Icon
               className={`w-4 h-4 mt-0.5 shrink-0 ${iconColor}`}
               aria-hidden="true"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-[#EEEEEE]">{t.title}</p>
+              <p className="text-xs font-bold text-[#FAF8F5]">{t.title}</p>
               {t.description && (
-                <p className="text-xs text-[#EEEEEE]/80 mt-0.5 leading-snug">
+                <p className="text-xs text-[#FAF8F5]/80 mt-0.5 leading-snug">
                   {t.description}
                 </p>
               )}
@@ -46,7 +46,7 @@ export function Toast({ toasts, onDismiss }) {
               type="button"
               onClick={() => onDismiss(t.id)}
               aria-label="Dismiss notification"
-              className="text-[#EEEEEE]/70 hover:text-[#F63F3A] p-0.5 rounded"
+              className="text-[#FAF8F5]/70 hover:text-[#EA580C] p-0.5 rounded"
             >
               <X className="w-3.5 h-3.5" />
             </button>
