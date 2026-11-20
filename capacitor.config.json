@@ -1,0 +1,12 @@
+{
+  "appId": "com.ustu.unihive",
+  "appName": "UniHive",
+  "webDir": "dist",
+  "server": {
+    "url": "https://unihive-campushive.onrender.com",
+    "cleartext": false
+  },
+  "android": {
+    "backgroundColor": "#1C1917"
+  }
+}

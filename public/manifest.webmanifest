@@ -1,0 +1,25 @@
+{
+  "name": "UniHive — Campus Operating System",
+  "short_name": "UniHive",
+  "description": "Universal SkillTech University × UniHive — Classes, Events, OD Attendance, Members-Only Club Chats & Semester Calendar.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAFAF9",
+  "theme_color": "#1C1917",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

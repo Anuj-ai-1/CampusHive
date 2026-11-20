@@ -1,9 +1,10 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import {
   Menu,
   Bell,
   Search,
   ChevronRight,
+  Download,
 } from 'lucide-react';
 import { NotificationPopover } from './NotificationPopover';
 import { ProfileMenu } from './ProfileMenu';
@@ -37,6 +38,23 @@ export function Topbar({
 }) {
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    setInstallPrompt(null);
+  };
 
   const unreadCount = (notifications || []).filter((n) => n.unread).length;
   const activePerson = role === 'admin' ? adminProfile : userProfile;
@@ -77,8 +95,18 @@ export function Topbar({
         </nav>
       </div>
 
-      {/* Right: Quick Search, Notifications, Profile */}
+      {/* Right: Install App, Quick Search, Notifications, Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
+        {installPrompt && (
+          <button
+            type="button"
+            onClick={handleInstallApp}
+            className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg bg-[#0D9488] hover:bg-[#CA8A04] text-[#FAFAF9] hover:text-[#1C1917] text-xs font-bold transition-colors"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Install App</span>
+          </button>
+        )}
         <div className="relative hidden md:block w-56 lg:w-64">
           <Search
             className="w-3.5 h-3.5 text-[#1C1917]/70 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
