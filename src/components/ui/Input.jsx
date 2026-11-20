@@ -23,7 +23,7 @@ export function Input({
       <input
         id={id}
         required={required}
-        className={`w-full h-9 px-3 text-sm glass-input text-slate-900 placeholder-slate-400 rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#059669]/20 ${
+        className={`w-full h-9 px-3 text-sm glass-input text-slate-900 placeholder-slate-400 rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/20 ${
           error ? 'border-red-400 focus:border-red-500' : ''
         }`}
         {...props}

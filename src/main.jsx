@@ -25,18 +25,18 @@ class RootErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#FAF8F5] text-[#064E3B] flex items-center justify-center p-4">
-          <div className="max-w-md w-full bg-white border-2 border-[#064E3B] border-t-4 border-t-[#EA580C] rounded-xl p-6 space-y-4 text-center shadow-lg">
-            <h1 className="text-lg font-bold text-[#064E3B]">
+        <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex items-center justify-center p-4">
+          <div className="max-w-md w-full bg-white border-2 border-[#0F172A] border-t-4 border-t-[#E11D48] rounded-xl p-6 space-y-4 text-center shadow-lg">
+            <h1 className="text-lg font-bold text-[#0F172A]">
               UniHive Session Refreshed
             </h1>
-            <p className="text-xs text-[#064E3B]/80 leading-relaxed">
+            <p className="text-xs text-[#0F172A]/80 leading-relaxed">
               Cached browser data from an older version conflicted with the latest update. Click below to reset local cache and reload UniHive.
             </p>
             <button
               type="button"
               onClick={this.handleResetAndReload}
-              className="w-full py-2.5 px-4 rounded-lg bg-[#059669] hover:bg-[#064E3B] text-[#FAF8F5] text-xs font-bold transition-colors"
+              className="w-full py-2.5 px-4 rounded-lg bg-[#4F46E5] hover:bg-[#0F172A] text-[#F8FAFC] text-xs font-bold transition-colors"
             >
               Reset Cache & Launch UniHive
             </button>

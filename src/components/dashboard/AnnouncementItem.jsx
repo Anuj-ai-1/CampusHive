@@ -30,7 +30,7 @@ export function AnnouncementItem({ announcement, onSelect }) {
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2 mb-1">
           {announcement.pinned && (
-            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#059669]">
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#4F46E5]">
               <Pin className="w-3 h-3" />
               Pinned
             </span>
@@ -48,7 +48,7 @@ export function AnnouncementItem({ announcement, onSelect }) {
           </span>
         </div>
 
-        <h3 className="text-sm font-semibold text-slate-900 group-hover:text-[#059669] transition-colors">
+        <h3 className="text-sm font-semibold text-slate-900 group-hover:text-[#4F46E5] transition-colors">
           {announcement.title}
         </h3>
         <p className="text-xs text-slate-500 mt-1 line-clamp-1 leading-relaxed">

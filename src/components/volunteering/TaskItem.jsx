@@ -29,8 +29,8 @@ export function TaskItem({ task, onToggleTask }) {
           onClick={() => onToggleTask(task.id)}
           className={`mt-0.5 w-4 h-4 rounded flex items-center justify-center border transition-colors shrink-0 ${
             task.completed
-              ? 'bg-[#059669] border-[#059669] text-white'
-              : 'bg-white/80 border-slate-300 hover:border-[#059669]'
+              ? 'bg-[#4F46E5] border-[#4F46E5] text-white'
+              : 'bg-white/80 border-slate-300 hover:border-[#4F46E5]'
           }`}
         >
           {task.completed && <Check className="w-3 h-3 stroke-[3]" />}
@@ -63,7 +63,7 @@ export function TaskItem({ task, onToggleTask }) {
             <button
               type="button"
               onClick={() => onToggleTask(task.id)}
-              className="inline-flex items-center gap-1 font-medium text-[#059669] hover:text-[#EA580C]"
+              className="inline-flex items-center gap-1 font-medium text-[#4F46E5] hover:text-[#E11D48]"
             >
               {task.completed ? (
                 <>

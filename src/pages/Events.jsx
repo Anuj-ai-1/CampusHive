@@ -365,9 +365,9 @@ export function Events({
             {/* Smart Timetable Clash / OD Notice for User's Division */}
             {myDivisionClashMessage && (
               <div className="p-3.5 rounded-xl bg-indigo-50/85 border border-indigo-200/80 flex items-start gap-2.5 text-xs text-slate-900">
-                <AlertTriangle className="w-4 h-4 text-[#059669] shrink-0 mt-0.5" />
+                <AlertTriangle className="w-4 h-4 text-[#4F46E5] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-[#059669]">
+                  <p className="font-semibold text-[#4F46E5]">
                     {userBranch} {userDiv} Timetable Overlap Detected
                   </p>
                   <p className="mt-0.5 text-slate-700">
@@ -386,7 +386,7 @@ export function Events({
               <div>
                 <p className="text-slate-500 font-medium">Date & Time</p>
                 <p className="text-slate-900 font-semibold mt-0.5 flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-[#059669]" />
+                  <Clock className="w-3.5 h-3.5 text-[#4F46E5]" />
                   {activeModalEvent.date} · {activeModalEvent.startTime} (
                   {activeModalEvent.duration})
                 </p>
@@ -394,14 +394,14 @@ export function Events({
               <div>
                 <p className="text-slate-500 font-medium">Venue</p>
                 <p className="text-slate-900 font-semibold mt-0.5 flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#059669]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#4F46E5]" />
                   {activeModalEvent.venue}
                 </p>
               </div>
               <div>
                 <p className="text-slate-500 font-medium">Availability</p>
                 <p className="text-slate-900 font-semibold mt-0.5 flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-[#059669]" />
+                  <Users className="w-3.5 h-3.5 text-[#4F46E5]" />
                   {activeModalEvent.registeredCount} /{' '}
                   {activeModalEvent.capacity} seats filled
                 </p>
@@ -409,7 +409,7 @@ export function Events({
               <div>
                 <p className="text-slate-500 font-medium">Branch Eligibility</p>
                 <p className="text-slate-900 font-semibold mt-0.5 flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#059669]" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#4F46E5]" />
                   {activeModalEvent.targetBranches
                     ? activeModalEvent.targetBranches.join(', ')
                     : activeModalEvent.eligibility}
@@ -421,7 +421,7 @@ export function Events({
             <div className="pt-3 border-t border-slate-200/60 space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <FileCheck2 className="w-4 h-4 text-[#059669]" />
+                  <FileCheck2 className="w-4 h-4 text-[#4F46E5]" />
                   <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-900">
                     Branch & Division OD Attendance Sheet
                   </h4>
@@ -454,7 +454,7 @@ export function Events({
                   <tbody className="divide-y divide-slate-200/50">
                     {filteredOdAttendees.map((att) => (
                       <tr key={att.id}>
-                        <td className="py-2 px-3 font-mono font-semibold text-[#059669]">
+                        <td className="py-2 px-3 font-mono font-semibold text-[#4F46E5]">
                           {att.rollNo}
                         </td>
                         <td className="py-2 px-3 font-medium text-slate-900">

@@ -88,7 +88,7 @@ export function FeedbackTable({ submissions, onSelectSubmission }) {
         {submissions.map((item) => (
           <div key={item.id} className="p-4 space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-mono font-semibold text-[#059669]">
+              <span className="text-xs font-mono font-semibold text-[#4F46E5]">
                 {item.referenceId}
               </span>
               {getStatusBadge(item.status)}

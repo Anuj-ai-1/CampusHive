@@ -142,7 +142,7 @@ export function Profile({
       {/* Profile Header Card */}
       <Card padding="p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-start gap-5">
-          <div className="w-16 h-16 rounded-2xl bg-indigo-50/80 backdrop-blur-md border border-indigo-200/80 shadow-sm flex items-center justify-center text-xl font-bold text-[#059669] shrink-0">
+          <div className="w-16 h-16 rounded-2xl bg-indigo-50/80 backdrop-blur-md border border-indigo-200/80 shadow-sm flex items-center justify-center text-xl font-bold text-[#4F46E5] shrink-0">
             {(userProfile?.shortName || userProfile?.name || 'UH')
               .slice(0, 2)
               .toUpperCase()}
@@ -165,7 +165,7 @@ export function Profile({
 
             <p className="text-xs font-medium text-slate-500 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="inline-flex items-center gap-1">
-                <GraduationCap className="w-3.5 h-3.5 text-[#059669]" />
+                <GraduationCap className="w-3.5 h-3.5 text-[#4F46E5]" />
                 {userProfile.department} · {userProfile.year}
               </span>
               <span className="inline-flex items-center gap-1">
@@ -205,7 +205,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-[#059669]" />
+              <Users className="w-4 h-4 text-[#4F46E5]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Club Memberships ({joinedClubs.length})
               </h3>
@@ -222,7 +222,7 @@ export function Profile({
                   <button
                     type="button"
                     onClick={() => onOpenClubDetails(club)}
-                    className="text-xs font-semibold text-slate-900 hover:text-[#059669] text-left"
+                    className="text-xs font-semibold text-slate-900 hover:text-[#4F46E5] text-left"
                   >
                     {club.name}
                   </button>
@@ -251,7 +251,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <CalendarDays className="w-4 h-4 text-[#059669]" />
+              <CalendarDays className="w-4 h-4 text-[#4F46E5]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Registered Events ({registeredEvents.length})
               </h3>
@@ -268,7 +268,7 @@ export function Profile({
                   <button
                     type="button"
                     onClick={() => onOpenEventDetails(evt)}
-                    className="text-xs font-semibold text-slate-900 hover:text-[#059669] truncate block text-left"
+                    className="text-xs font-semibold text-slate-900 hover:text-[#4F46E5] truncate block text-left"
                   >
                     {evt.title}
                   </button>
@@ -286,7 +286,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <HeartHandshake className="w-4 h-4 text-[#059669]" />
+              <HeartHandshake className="w-4 h-4 text-[#4F46E5]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Volunteering & Completed Tasks
               </h3>
@@ -347,7 +347,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-[#059669]" />
+              <Award className="w-4 h-4 text-[#4F46E5]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Achievements &amp; Certificates
               </h3>

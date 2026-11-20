@@ -9,9 +9,9 @@ export function Card({
 }) {
   return (
     <div
-      className={`bg-white border border-[#064E3B]/20 rounded-xl ${padding} ${
+      className={`bg-white border border-[#0F172A]/20 rounded-xl ${padding} ${
         interactive
-          ? 'transition-colors duration-150 hover:border-[#059669] hover:bg-[#FAF8F5]/40'
+          ? 'transition-colors duration-150 hover:border-[#4F46E5] hover:bg-[#F8FAFC]/40'
           : ''
       } ${className}`}
       {...props}

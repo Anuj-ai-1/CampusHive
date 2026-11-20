@@ -71,16 +71,16 @@ export function MobileNavigation({
           aria-label="Mobile navigation menu"
         >
           <div
-            className="fixed inset-0 bg-[#064E3B]/75"
+            className="fixed inset-0 bg-[#0F172A]/75"
             onClick={onCloseDrawer}
           />
-          <div className="relative w-72 max-w-[85vw] bg-[#064E3B] h-full border-r-2 border-[#059669] flex flex-col z-10 shadow-2xl">
-            <div className="h-14 px-4 flex items-center justify-between border-b border-[#FAF8F5]/15">
+          <div className="relative w-72 max-w-[85vw] bg-[#0F172A] h-full border-r-2 border-[#4F46E5] flex flex-col z-10 shadow-2xl">
+            <div className="h-14 px-4 flex items-center justify-between border-b border-[#F8FAFC]/15">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#EA580C] flex items-center justify-center text-[#FAF8F5]">
+                <div className="w-7 h-7 rounded-lg bg-[#E11D48] flex items-center justify-center text-[#F8FAFC]">
                   <Layers className="w-4 h-4" />
                 </div>
-                <span className="text-sm font-bold text-[#FAF8F5]">
+                <span className="text-sm font-bold text-[#F8FAFC]">
                   UniHive × USTU
                 </span>
               </div>
@@ -88,7 +88,7 @@ export function MobileNavigation({
                 type="button"
                 onClick={onCloseDrawer}
                 aria-label="Close navigation drawer"
-                className="p-1.5 text-[#FAF8F5] hover:bg-[#059669] rounded-lg"
+                className="p-1.5 text-[#F8FAFC] hover:bg-[#4F46E5] rounded-lg"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -108,8 +108,8 @@ export function MobileNavigation({
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2.5 text-xs font-semibold rounded-lg transition-colors ${
                       isActive
-                        ? 'bg-[#059669] text-[#FAF8F5]'
-                        : 'text-[#FAF8F5] hover:bg-[#FAF8F5] hover:text-[#064E3B]'
+                        ? 'bg-[#4F46E5] text-[#F8FAFC]'
+                        : 'text-[#F8FAFC] hover:bg-[#F8FAFC] hover:text-[#0F172A]'
                     }`}
                   >
                     <span className="flex items-center gap-3">
@@ -117,7 +117,7 @@ export function MobileNavigation({
                       <span>{item.label}</span>
                     </span>
                     {item.id === 'admin' && pendingApprovalsCount > 0 && (
-                      <span className="px-1.5 py-0.5 text-[11px] bg-[#EA580C] text-[#FAF8F5] font-bold rounded-full">
+                      <span className="px-1.5 py-0.5 text-[11px] bg-[#E11D48] text-[#F8FAFC] font-bold rounded-full">
                         {pendingApprovalsCount}
                       </span>
                     )}
@@ -126,14 +126,14 @@ export function MobileNavigation({
               })}
             </div>
 
-            <div className="p-4 border-t border-[#FAF8F5]/15 bg-[#064E3B]">
+            <div className="p-4 border-t border-[#F8FAFC]/15 bg-[#0F172A]">
               <button
                 type="button"
                 onClick={() => {
                   onLogout();
                   onCloseDrawer();
                 }}
-                className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-[#FAF8F5] bg-[#EA580C] rounded-lg hover:bg-[#F59E0B] hover:text-[#064E3B]"
+                className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-[#F8FAFC] bg-[#E11D48] rounded-lg hover:bg-[#F59E0B] hover:text-[#0F172A]"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 Sign Out / Switch Portal
@@ -145,7 +145,7 @@ export function MobileNavigation({
 
       <nav
         aria-label="Mobile quick navigation"
-        className="lg:hidden fixed bottom-0 inset-x-0 h-14 bg-[#064E3B] border-t-2 border-[#059669] flex items-center justify-around z-30 px-1"
+        className="lg:hidden fixed bottom-0 inset-x-0 h-14 bg-[#0F172A] border-t-2 border-[#4F46E5] flex items-center justify-around z-30 px-1"
       >
         {bottomItems.map((item) => {
           const Icon = item.icon;
@@ -156,7 +156,7 @@ export function MobileNavigation({
               type="button"
               onClick={() => onNavigate(item.id)}
               className={`flex flex-col items-center justify-center flex-1 h-full gap-1 text-[11px] font-semibold transition-colors ${
-                isActive ? 'text-[#F59E0B]' : 'text-[#FAF8F5]/80 hover:text-[#059669]'
+                isActive ? 'text-[#F59E0B]' : 'text-[#F8FAFC]/80 hover:text-[#4F46E5]'
               }`}
             >
               <Icon className="w-4 h-4" />
