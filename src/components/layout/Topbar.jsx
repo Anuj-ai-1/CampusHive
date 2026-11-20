@@ -136,11 +136,19 @@ export function Topbar({
             aria-expanded={profileOpen}
             className="flex items-center gap-2 p-1 pr-2 rounded-lg hover:bg-[#F8FAFC]/15 transition-all"
           >
-            <div className="w-7 h-7 rounded-full bg-[#F59E0B] flex items-center justify-center text-xs font-bold text-[#0F172A]">
-              {(activePerson?.shortName || activePerson?.name || 'UH')
-                .slice(0, 2)
-                .toUpperCase()}
-            </div>
+            {activePerson?.avatarUrl ? (
+              <img
+                src={activePerson.avatarUrl}
+                alt={activePerson.name || 'User'}
+                className="w-7 h-7 rounded-full object-cover border border-[#F59E0B]"
+              />
+            ) : (
+              <div className="w-7 h-7 rounded-full bg-[#F59E0B] flex items-center justify-center text-xs font-bold text-[#0F172A]">
+                {(activePerson?.shortName || activePerson?.name || 'UH')
+                  .slice(0, 2)
+                  .toUpperCase()}
+              </div>
+            )}
             <span className="hidden sm:inline text-xs font-semibold text-[#F8FAFC]">
               {activePerson?.shortName || 'User'}
             </span>

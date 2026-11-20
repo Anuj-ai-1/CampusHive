@@ -61,6 +61,7 @@ export function initSchema() {
       interests_json TEXT DEFAULT '[]',
       achievements_json TEXT DEFAULT '[]',
       role_title TEXT,
+      avatar_url TEXT,
       profile_completed INTEGER DEFAULT 1,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP
     );
@@ -247,6 +248,13 @@ export function initSchema() {
       created_at TEXT DEFAULT CURRENT_TIMESTAMP
     );
   `);
+
+  // Safe schema migration for existing SQLite databases
+  try {
+    db.exec('ALTER TABLE users ADD COLUMN avatar_url TEXT;');
+  } catch {
+    // Column already exists
+  }
 }
 
 function getDefaultClubMessages(club) {
@@ -776,6 +784,7 @@ export function serializeUser(row) {
     interests: JSON.parse(row.interests_json || '[]'),
     achievements: JSON.parse(row.achievements_json || '[]'),
     roleTitle: row.role_title,
+    avatarUrl: row.avatar_url || '',
     profileCompleted: row.profile_completed !== 0,
   };
 }

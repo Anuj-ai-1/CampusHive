@@ -22,7 +22,7 @@ import {
 export const app = express();
 
 app.use(cors());
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '5mb' }));
 
 // Health check endpoint (verifies SQLite + API availability)
 app.get('/api/health', (req, res) => {
@@ -203,6 +203,7 @@ app.put('/api/profile', requireAuth, (req, res) => {
     location,
     interests,
     achievements,
+    avatarUrl,
   } = req.body || {};
 
   const targetUserId = req.user.role === 'student' ? req.user.id : 'usr-student-01';
@@ -218,7 +219,7 @@ app.put('/api/profile', requireAuth, (req, res) => {
     UPDATE users SET
       name = ?, short_name = ?, branch_code = ?, division = ?, lab_batch = ?,
       roll_no = ?, department = ?, year = ?, year_short = ?, phone = ?, gpa = ?,
-      bio = ?, location = ?, interests_json = ?, achievements_json = ?, profile_completed = 1
+      bio = ?, location = ?, interests_json = ?, achievements_json = ?, avatar_url = ?, profile_completed = 1
     WHERE id = ?
   `).run(
     nextName,
@@ -236,6 +237,7 @@ app.put('/api/profile', requireAuth, (req, res) => {
     location !== undefined ? location : existing.location,
     Array.isArray(interests) ? JSON.stringify(interests) : existing.interests_json,
     Array.isArray(achievements) ? JSON.stringify(achievements) : existing.achievements_json,
+    avatarUrl !== undefined ? avatarUrl : existing.avatar_url,
     targetUserId
   );
 

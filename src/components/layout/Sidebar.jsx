@@ -122,11 +122,19 @@ export function Sidebar({
       {/* User Footer + Logout to Login Screen */}
       <div className="p-3 border-t border-[#F8FAFC]/15 bg-[#0F172A] space-y-2">
         <div className="flex items-center gap-2.5 px-1.5 py-1">
-          <div className="w-8 h-8 rounded-full bg-[#F59E0B] flex items-center justify-center text-xs font-bold text-[#0F172A] shrink-0">
-            {(currentPerson?.shortName || currentPerson?.name || 'UH')
-              .slice(0, 2)
-              .toUpperCase()}
-          </div>
+          {currentPerson?.avatarUrl ? (
+            <img
+              src={currentPerson.avatarUrl}
+              alt={currentPerson.name || 'User'}
+              className="w-8 h-8 rounded-full object-cover border border-[#F59E0B] shrink-0"
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-[#F59E0B] flex items-center justify-center text-xs font-bold text-[#0F172A] shrink-0">
+              {(currentPerson?.shortName || currentPerson?.name || 'UH')
+                .slice(0, 2)
+                .toUpperCase()}
+            </div>
+          )}
           <div className="min-w-0 flex-1">
             <p className="text-xs font-semibold text-[#F8FAFC] truncate">
               {currentPerson?.name || 'UniHive User'}

@@ -9,6 +9,8 @@ import {
   Mail,
   MapPin,
   GraduationCap,
+  Camera,
+  Trash2,
 } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { Card } from '../components/ui/Card';
@@ -48,6 +50,7 @@ export function Profile({
     gpa: userProfile?.gpa || '',
     bio: userProfile?.bio || '',
     location: userProfile?.location || '',
+    avatarUrl: userProfile?.avatarUrl || '',
     interestsText: (userProfile?.interests || []).join(', '),
   });
 
@@ -69,9 +72,32 @@ export function Profile({
       gpa: userProfile?.gpa || '',
       bio: userProfile?.bio || '',
       location: userProfile?.location || '',
+      avatarUrl: userProfile?.avatarUrl || '',
       interestsText: (userProfile?.interests || []).join(', '),
     });
     setEditModalOpen(true);
+  };
+
+  const handleAvatarFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const maxSide = 256;
+        const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const compressed = canvas.toDataURL('image/jpeg', 0.85);
+        setFormState((prev) => ({ ...prev, avatarUrl: compressed }));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSaveProfile = (e) => {
@@ -97,6 +123,7 @@ export function Profile({
       gpa: formState.gpa.trim() || userProfile.gpa,
       bio: formState.bio.trim(),
       location: formState.location.trim(),
+      avatarUrl: formState.avatarUrl,
       interests:
         parsedInterests.length > 0 ? parsedInterests : userProfile.interests,
     });
@@ -142,11 +169,19 @@ export function Profile({
       {/* Profile Header Card */}
       <Card padding="p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-start gap-5">
-          <div className="w-16 h-16 rounded-2xl bg-indigo-50/80 backdrop-blur-md border border-indigo-200/80 shadow-sm flex items-center justify-center text-xl font-bold text-[#4F46E5] shrink-0">
-            {(userProfile?.shortName || userProfile?.name || 'UH')
-              .slice(0, 2)
-              .toUpperCase()}
-          </div>
+          {userProfile?.avatarUrl ? (
+            <img
+              src={userProfile.avatarUrl}
+              alt={userProfile.name}
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-[#4F46E5] shadow-sm shrink-0"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-2xl bg-indigo-50/80 backdrop-blur-md border border-indigo-200/80 shadow-sm flex items-center justify-center text-xl font-bold text-[#4F46E5] shrink-0">
+              {(userProfile?.shortName || userProfile?.name || 'UH')
+                .slice(0, 2)
+                .toUpperCase()}
+            </div>
+          )}
 
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -471,6 +506,48 @@ export function Profile({
         }
       >
         <form onSubmit={handleSaveProfile} className="space-y-3.5">
+          {/* Profile Picture Uploader */}
+          <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#0F172A]/15 flex items-center gap-4">
+            {formState.avatarUrl ? (
+              <img
+                src={formState.avatarUrl}
+                alt="Profile preview"
+                className="w-14 h-14 rounded-2xl object-cover border-2 border-[#4F46E5] shrink-0"
+              />
+            ) : (
+              <div className="w-14 h-14 rounded-2xl bg-[#0F172A] text-[#F59E0B] flex items-center justify-center text-base font-bold shrink-0">
+                {(formState.name || 'UH').slice(0, 2).toUpperCase()}
+              </div>
+            )}
+            <div className="flex-1 min-w-0 space-y-1.5">
+              <p className="text-xs font-bold text-[#0F172A]">
+                Profile Picture
+              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#4F46E5] hover:bg-[#0F172A] text-[#F8FAFC] text-xs font-semibold cursor-pointer transition-colors">
+                  <Camera className="w-3.5 h-3.5" />
+                  <span>{formState.avatarUrl ? 'Change Photo' : 'Upload Photo'}</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarFileChange}
+                    className="hidden"
+                  />
+                </label>
+                {formState.avatarUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setFormState((prev) => ({ ...prev, avatarUrl: '' }))}
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#E11D48]/10 hover:bg-[#E11D48] text-[#E11D48] hover:text-[#F8FAFC] text-xs font-semibold transition-colors"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    Remove
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
           <Input
             id="prof-name"
             label="Display Name"
