@@ -4,6 +4,7 @@ import {
   ArrowRight,
   UserPlus,
   LogIn,
+  ShieldCheck,
 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
@@ -12,7 +13,7 @@ import { Button } from '../components/ui/Button';
 import { api } from '../services/api';
 
 export function Login({ onAuthSuccess }) {
-  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register' | 'admin'
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [regName, setRegName] = useState('');
@@ -56,6 +57,10 @@ export function Login({ onAuthSuccess }) {
     setLoading(true);
     try {
       const res = await api.login(email.trim(), password);
+      if (authMode === 'admin' && res.role !== 'admin') {
+        setError('This account does not have Administrator privileges.');
+        return;
+      }
       onAuthSuccess(res);
     } catch (err) {
       setError(err.message || 'Invalid email or password.');
@@ -84,16 +89,16 @@ export function Login({ onAuthSuccess }) {
           padding="px-6 py-9 sm:px-9 sm:py-11"
           className="mt-8 border-t-4 border-t-[#0D9488] shadow-lg min-h-[410px] flex flex-col justify-center"
         >
-          {/* Mode Toggle: Sign In vs Create Account */}
+          {/* Mode Toggle: Student Sign In vs Create Account vs Admin Portal */}
           <div className="flex items-center justify-center mb-7 pb-5 border-b border-[#1C1917]/15">
-            <div className="inline-flex rounded-lg bg-[#FAFAF9] p-1 border border-[#1C1917]/20">
+            <div className="inline-flex flex-wrap justify-center rounded-lg bg-[#FAFAF9] p-1 border border-[#1C1917]/20 gap-0.5">
               <button
                 type="button"
                 onClick={() => {
                   setAuthMode('login');
                   setError('');
                 }}
-                className={`px-4 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
+                className={`px-3.5 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'login'
                     ? 'bg-[#1C1917] text-[#FAFAF9]'
                     : 'text-[#1C1917]/75 hover:text-[#1C1917]'
@@ -108,7 +113,7 @@ export function Login({ onAuthSuccess }) {
                   setAuthMode('register');
                   setError('');
                 }}
-                className={`px-4 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
+                className={`px-3.5 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'register'
                     ? 'bg-[#0D9488] text-[#FAFAF9]'
                     : 'text-[#1C1917]/75 hover:text-[#1C1917]'
@@ -117,10 +122,38 @@ export function Login({ onAuthSuccess }) {
                 <UserPlus className="w-3.5 h-3.5" />
                 Create Account
               </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode('admin');
+                  setError('');
+                }}
+                className={`px-3.5 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
+                  authMode === 'admin'
+                    ? 'bg-[#EA580C] text-[#FAFAF9]'
+                    : 'text-[#1C1917]/75 hover:text-[#1C1917]'
+                }`}
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                Admin Portal
+              </button>
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {authMode === 'admin' && (
+              <div className="p-3 rounded-xl bg-[#1C1917] text-[#FAFAF9] border-l-4 border-l-[#EA580C] flex items-center gap-2.5">
+                <ShieldCheck className="w-4 h-4 text-[#EA580C] shrink-0" />
+                <div>
+                  <p className="text-xs font-bold text-[#FAFAF9]">
+                    University Administration Portal
+                  </p>
+                  <p className="text-[11px] text-[#CA8A04]">
+                    Sign in with Pro-VC / Admin credentials to manage approvals &amp; tickets.
+                  </p>
+                </div>
+              </div>
+            )}
             {authMode === 'register' && (
               <>
                 <Input
@@ -155,12 +188,12 @@ export function Login({ onAuthSuccess }) {
 
             <Input
               id="login-email"
-              label="Institutional Email"
+              label={authMode === 'admin' ? 'Administrator Email' : 'Institutional Email'}
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@ustu.edu.in"
+              placeholder={authMode === 'admin' ? 'pro.vc@ustu.edu.in' : 'name@ustu.edu.in'}
               className="[&_input]:h-11"
             />
 
@@ -179,7 +212,7 @@ export function Login({ onAuthSuccess }) {
             <div className="pt-2">
               <Button
                 type="submit"
-                variant="primary"
+                variant={authMode === 'admin' ? 'danger' : 'primary'}
                 size="lg"
                 iconRight={ArrowRight}
                 disabled={loading}
@@ -189,6 +222,8 @@ export function Login({ onAuthSuccess }) {
                   ? 'Please wait...'
                   : authMode === 'register'
                   ? 'Create Account & Set Up Profile'
+                  : authMode === 'admin'
+                  ? 'Sign In to Admin Portal'
                   : 'Sign In to UniHive'}
               </Button>
             </div>
