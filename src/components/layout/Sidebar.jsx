@@ -54,23 +54,23 @@ export function Sidebar({
   return (
     <aside
       aria-label="Primary Sidebar"
-      className="hidden lg:flex lg:flex-col lg:w-[240px] lg:fixed lg:inset-y-0 bg-[#0F172A] border-r-2 border-[#4F46E5] select-none z-30"
+      className="hidden lg:flex lg:flex-col lg:w-[240px] lg:fixed lg:inset-y-0 bg-[#1C1917] border-r-2 border-[#0D9488] select-none z-30"
     >
       {/* Brand identity */}
-      <div className="h-14 px-4 flex items-center justify-between border-b border-[#F8FAFC]/15 bg-[#0F172A]">
+      <div className="h-14 px-4 flex items-center justify-between border-b border-[#FAFAF9]/15 bg-[#1C1917]">
         <button
           type="button"
           onClick={() => onNavigate(role === 'admin' ? 'admin' : 'home')}
           className="flex items-center gap-2.5 text-left focus:outline-none group"
         >
-          <div className="w-7 h-7 rounded-lg bg-[#E11D48] flex items-center justify-center text-[#F8FAFC]">
+          <div className="w-7 h-7 rounded-lg bg-[#EA580C] flex items-center justify-center text-[#FAFAF9]">
             <Layers className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-sm font-bold tracking-tight text-[#F8FAFC] leading-none">
+            <div className="text-sm font-bold tracking-tight text-[#FAFAF9] leading-none">
               UniHive × USTU
             </div>
-            <div className="text-[11px] text-[#F59E0B] font-medium mt-0.5 truncate max-w-[145px]">
+            <div className="text-[11px] text-[#CA8A04] font-medium mt-0.5 truncate max-w-[145px]">
               {role === 'admin' ? 'USTU Pro-VC Admin' : 'USTU Student Portal'}
             </div>
           </div>
@@ -80,7 +80,7 @@ export function Sidebar({
       {/* Main navigation */}
       <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4">
         <div>
-          <p className="px-2.5 mb-2 text-[11px] font-bold uppercase tracking-wider text-[#F59E0B]">
+          <p className="px-2.5 mb-2 text-[11px] font-bold uppercase tracking-wider text-[#CA8A04]">
             {role === 'admin' ? 'Admin Menu' : 'Menu'}
           </p>
           <nav className="space-y-1" aria-label="Workspace navigation">
@@ -95,20 +95,20 @@ export function Sidebar({
                   aria-current={isActive ? 'page' : undefined}
                   className={`w-full flex items-center justify-between px-3 py-2.5 text-[13px] font-semibold rounded-lg transition-all duration-150 ${
                     isActive
-                      ? 'bg-[#4F46E5] text-[#F8FAFC] border border-[#4F46E5]'
-                      : 'text-[#F8FAFC]/80 hover:text-[#0F172A] hover:bg-[#F8FAFC] border border-transparent'
+                      ? 'bg-[#0D9488] text-[#FAFAF9] border border-[#0D9488]'
+                      : 'text-[#FAFAF9]/80 hover:text-[#1C1917] hover:bg-[#FAFAF9] border border-transparent'
                   }`}
                 >
                   <span className="flex items-center gap-2.5 truncate">
                     <Icon
                       className={`w-4 h-4 shrink-0 ${
-                        isActive ? 'text-[#F8FAFC]' : 'text-[#4F46E5]'
+                        isActive ? 'text-[#FAFAF9]' : 'text-[#0D9488]'
                       }`}
                     />
                     <span className="truncate">{item.label}</span>
                   </span>
                   {item.badge > 0 && (
-                    <span className="px-1.5 py-0.5 text-[10px] font-bold bg-[#E11D48] text-[#F8FAFC] rounded-full">
+                    <span className="px-1.5 py-0.5 text-[10px] font-bold bg-[#EA580C] text-[#FAFAF9] rounded-full">
                       {item.badge}
                     </span>
                   )}
@@ -120,26 +120,26 @@ export function Sidebar({
       </div>
 
       {/* User Footer + Logout to Login Screen */}
-      <div className="p-3 border-t border-[#F8FAFC]/15 bg-[#0F172A] space-y-2">
+      <div className="p-3 border-t border-[#FAFAF9]/15 bg-[#1C1917] space-y-2">
         <div className="flex items-center gap-2.5 px-1.5 py-1">
           {currentPerson?.avatarUrl ? (
             <img
               src={currentPerson.avatarUrl}
               alt={currentPerson.name || 'User'}
-              className="w-8 h-8 rounded-full object-cover border border-[#F59E0B] shrink-0"
+              className="w-8 h-8 rounded-full object-cover border border-[#CA8A04] shrink-0"
             />
           ) : (
-            <div className="w-8 h-8 rounded-full bg-[#F59E0B] flex items-center justify-center text-xs font-bold text-[#0F172A] shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#CA8A04] flex items-center justify-center text-xs font-bold text-[#1C1917] shrink-0">
               {(currentPerson?.shortName || currentPerson?.name || 'UH')
                 .slice(0, 2)
                 .toUpperCase()}
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-[#F8FAFC] truncate">
+            <p className="text-xs font-semibold text-[#FAFAF9] truncate">
               {currentPerson?.name || 'UniHive User'}
             </p>
-            <p className="text-[11px] text-[#4F46E5] font-medium truncate">
+            <p className="text-[11px] text-[#0D9488] font-medium truncate">
               {role === 'admin'
                 ? 'Pro-Vice Chancellor (USTU)'
                 : `${userProfile?.branchCode || 'CSE'} · ${
@@ -152,7 +152,7 @@ export function Sidebar({
         <button
           type="button"
           onClick={onLogout}
-          className="w-full flex items-center justify-center gap-2 py-1.5 px-3 text-xs font-semibold text-[#F8FAFC] bg-[#E11D48] hover:bg-[#F59E0B] hover:text-[#0F172A] rounded-lg transition-all"
+          className="w-full flex items-center justify-center gap-2 py-1.5 px-3 text-xs font-semibold text-[#FAFAF9] bg-[#EA580C] hover:bg-[#CA8A04] hover:text-[#1C1917] rounded-lg transition-all"
         >
           <LogOut className="w-3.5 h-3.5" />
           Sign Out / Switch Portal

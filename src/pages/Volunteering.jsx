@@ -41,7 +41,7 @@ export function Volunteering({
         subtitle="Contribute to campus events, manage shift assignments, and track verified service hours."
         actions={
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel-subtle">
-            <Award className="w-4 h-4 text-[#4F46E5]" />
+            <Award className="w-4 h-4 text-[#0D9488]" />
             <span className="text-xs font-medium text-slate-800">
               Approved Credit: <strong>{approvedHours} hrs</strong>
             </span>
@@ -125,7 +125,7 @@ export function Volunteering({
           <div className="glass-panel rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
               <div className="flex items-center gap-2">
-                <ClipboardList className="w-4 h-4 text-[#4F46E5]" />
+                <ClipboardList className="w-4 h-4 text-[#0D9488]" />
                 <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-900">
                   To Do
                 </h3>
@@ -152,7 +152,7 @@ export function Volunteering({
                 />
                 <button
                   type="submit"
-                  className="h-8 px-3 rounded-lg bg-[#4F46E5] hover:bg-[#0F172A] text-[#F8FAFC] text-xs font-bold transition-colors shrink-0"
+                  className="h-8 px-3 rounded-lg bg-[#0D9488] hover:bg-[#1C1917] text-[#FAFAF9] text-xs font-bold transition-colors shrink-0"
                 >
                   Add
                 </button>

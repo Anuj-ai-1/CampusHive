@@ -173,10 +173,10 @@ export function Profile({
             <img
               src={userProfile.avatarUrl}
               alt={userProfile.name}
-              className="w-16 h-16 rounded-2xl object-cover border-2 border-[#4F46E5] shadow-sm shrink-0"
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-[#0D9488] shadow-sm shrink-0"
             />
           ) : (
-            <div className="w-16 h-16 rounded-2xl bg-indigo-50/80 backdrop-blur-md border border-indigo-200/80 shadow-sm flex items-center justify-center text-xl font-bold text-[#4F46E5] shrink-0">
+            <div className="w-16 h-16 rounded-2xl bg-indigo-50/80 backdrop-blur-md border border-indigo-200/80 shadow-sm flex items-center justify-center text-xl font-bold text-[#0D9488] shrink-0">
               {(userProfile?.shortName || userProfile?.name || 'UH')
                 .slice(0, 2)
                 .toUpperCase()}
@@ -200,7 +200,7 @@ export function Profile({
 
             <p className="text-xs font-medium text-slate-500 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="inline-flex items-center gap-1">
-                <GraduationCap className="w-3.5 h-3.5 text-[#4F46E5]" />
+                <GraduationCap className="w-3.5 h-3.5 text-[#0D9488]" />
                 {userProfile.department} · {userProfile.year}
               </span>
               <span className="inline-flex items-center gap-1">
@@ -240,7 +240,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-[#4F46E5]" />
+              <Users className="w-4 h-4 text-[#0D9488]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Club Memberships ({joinedClubs.length})
               </h3>
@@ -257,7 +257,7 @@ export function Profile({
                   <button
                     type="button"
                     onClick={() => onOpenClubDetails(club)}
-                    className="text-xs font-semibold text-slate-900 hover:text-[#4F46E5] text-left"
+                    className="text-xs font-semibold text-slate-900 hover:text-[#0D9488] text-left"
                   >
                     {club.name}
                   </button>
@@ -286,7 +286,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <CalendarDays className="w-4 h-4 text-[#4F46E5]" />
+              <CalendarDays className="w-4 h-4 text-[#0D9488]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Registered Events ({registeredEvents.length})
               </h3>
@@ -303,7 +303,7 @@ export function Profile({
                   <button
                     type="button"
                     onClick={() => onOpenEventDetails(evt)}
-                    className="text-xs font-semibold text-slate-900 hover:text-[#4F46E5] truncate block text-left"
+                    className="text-xs font-semibold text-slate-900 hover:text-[#0D9488] truncate block text-left"
                   >
                     {evt.title}
                   </button>
@@ -321,7 +321,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <HeartHandshake className="w-4 h-4 text-[#4F46E5]" />
+              <HeartHandshake className="w-4 h-4 text-[#0D9488]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Volunteering & Completed Tasks
               </h3>
@@ -382,7 +382,7 @@ export function Profile({
         <Card padding="p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-[#4F46E5]" />
+              <Award className="w-4 h-4 text-[#0D9488]" />
               <h3 className="text-sm font-semibold text-slate-900">
                 Achievements &amp; Certificates
               </h3>
@@ -507,24 +507,24 @@ export function Profile({
       >
         <form onSubmit={handleSaveProfile} className="space-y-3.5">
           {/* Profile Picture Uploader */}
-          <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#0F172A]/15 flex items-center gap-4">
+          <div className="p-3.5 rounded-xl bg-[#FAFAF9] border border-[#1C1917]/15 flex items-center gap-4">
             {formState.avatarUrl ? (
               <img
                 src={formState.avatarUrl}
                 alt="Profile preview"
-                className="w-14 h-14 rounded-2xl object-cover border-2 border-[#4F46E5] shrink-0"
+                className="w-14 h-14 rounded-2xl object-cover border-2 border-[#0D9488] shrink-0"
               />
             ) : (
-              <div className="w-14 h-14 rounded-2xl bg-[#0F172A] text-[#F59E0B] flex items-center justify-center text-base font-bold shrink-0">
+              <div className="w-14 h-14 rounded-2xl bg-[#1C1917] text-[#CA8A04] flex items-center justify-center text-base font-bold shrink-0">
                 {(formState.name || 'UH').slice(0, 2).toUpperCase()}
               </div>
             )}
             <div className="flex-1 min-w-0 space-y-1.5">
-              <p className="text-xs font-bold text-[#0F172A]">
+              <p className="text-xs font-bold text-[#1C1917]">
                 Profile Picture
               </p>
               <div className="flex flex-wrap items-center gap-2">
-                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#4F46E5] hover:bg-[#0F172A] text-[#F8FAFC] text-xs font-semibold cursor-pointer transition-colors">
+                <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0D9488] hover:bg-[#1C1917] text-[#FAFAF9] text-xs font-semibold cursor-pointer transition-colors">
                   <Camera className="w-3.5 h-3.5" />
                   <span>{formState.avatarUrl ? 'Change Photo' : 'Upload Photo'}</span>
                   <input
@@ -538,7 +538,7 @@ export function Profile({
                   <button
                     type="button"
                     onClick={() => setFormState((prev) => ({ ...prev, avatarUrl: '' }))}
-                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#E11D48]/10 hover:bg-[#E11D48] text-[#E11D48] hover:text-[#F8FAFC] text-xs font-semibold transition-colors"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#EA580C]/10 hover:bg-[#EA580C] text-[#EA580C] hover:text-[#FAFAF9] text-xs font-semibold transition-colors"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     Remove

@@ -28,18 +28,18 @@ export function VolunteerRoleCard({ role, onApply }) {
     <Card padding="p-4 sm:p-5" interactive className="flex flex-col justify-between">
       <div>
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-          <span className="text-xs font-medium text-[#4F46E5]">
+          <span className="text-xs font-medium text-[#0D9488]">
             {role.eventTitle}
           </span>
           {getStatusBadge()}
         </div>
 
-        <h3 className="text-base font-semibold text-[#0F172A]">{role.title}</h3>
-        <p className="text-xs text-[#0F172A] mt-1.5 leading-relaxed">
+        <h3 className="text-base font-semibold text-[#1C1917]">{role.title}</h3>
+        <p className="text-xs text-[#1C1917] mt-1.5 leading-relaxed">
           {role.responsibilities}
         </p>
 
-        <div className="mt-4 pt-3 border-t border-[#0F172A] grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#0F172A]">
+        <div className="mt-4 pt-3 border-t border-[#1C1917] grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#1C1917]">
           <div className="flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 shrink-0" />
             <span>{role.date}</span>
@@ -61,8 +61,8 @@ export function VolunteerRoleCard({ role, onApply }) {
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-[#0F172A] flex items-center justify-between">
-        <span className="text-[11px] font-medium text-[#0F172A]">
+      <div className="mt-4 pt-3 border-t border-[#1C1917] flex items-center justify-between">
+        <span className="text-[11px] font-medium text-[#1C1917]">
           Official Service Certificate Eligible
         </span>
 

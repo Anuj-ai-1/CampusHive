@@ -25,26 +25,26 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-2.5 sm:p-4 bg-[#0F172A]/80 overflow-y-auto"
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-2.5 sm:p-4 bg-[#1C1917]/80 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
       onClick={onClose}
     >
       <div
-        className={`w-full ${maxWidth} bg-white border-2 border-[#0F172A] rounded-xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col`}
+        className={`w-full ${maxWidth} bg-white border-2 border-[#1C1917] rounded-xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4 border-b-2 border-[#4F46E5] bg-[#0F172A] shrink-0">
+        <div className="flex items-start justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4 border-b-2 border-[#0D9488] bg-[#1C1917] shrink-0">
           <div className="min-w-0">
             <h2
               id="modal-title"
-              className="text-sm sm:text-base font-bold text-[#F8FAFC] break-words"
+              className="text-sm sm:text-base font-bold text-[#FAFAF9] break-words"
             >
               {title}
             </h2>
             {subtitle && (
-              <p className="text-[11px] sm:text-xs text-[#F59E0B] font-medium mt-0.5 break-words">
+              <p className="text-[11px] sm:text-xs text-[#CA8A04] font-medium mt-0.5 break-words">
                 {subtitle}
               </p>
             )}
@@ -53,18 +53,18 @@ export function Modal({
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="p-1.5 text-[#F8FAFC] hover:bg-[#E11D48] rounded-lg transition-colors shrink-0"
+            className="p-1.5 text-[#FAFAF9] hover:bg-[#EA580C] rounded-lg transition-colors shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="px-4 py-3.5 sm:px-5 sm:py-4 overflow-y-auto flex-1 text-sm text-[#0F172A]">
+        <div className="px-4 py-3.5 sm:px-5 sm:py-4 overflow-y-auto flex-1 text-sm text-[#1C1917]">
           {children}
         </div>
 
         {footer && (
-          <div className="flex flex-wrap items-center justify-end gap-2 px-4 py-3 sm:px-5 sm:py-3.5 bg-[#F8FAFC] border-t border-[#0F172A]/15 shrink-0">
+          <div className="flex flex-wrap items-center justify-end gap-2 px-4 py-3 sm:px-5 sm:py-3.5 bg-[#FAFAF9] border-t border-[#1C1917]/15 shrink-0">
             {footer}
           </div>
         )}

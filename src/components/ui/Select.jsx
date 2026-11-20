@@ -25,7 +25,7 @@ export function Select({
         <select
           id={id}
           required={required}
-          className={`w-full h-9 pl-3 pr-8 text-sm glass-input text-slate-900 rounded-lg appearance-none transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/20 ${
+          className={`w-full h-9 pl-3 pr-8 text-sm glass-input text-slate-900 rounded-lg appearance-none transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#0D9488]/20 ${
             error ? 'border-red-400' : ''
           }`}
           {...props}

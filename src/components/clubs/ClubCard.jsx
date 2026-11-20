@@ -42,7 +42,7 @@ export function ClubCard({ club, role = 'student', onJoinClub, onOpenDetails, on
     <Card
       padding="p-4 sm:p-5"
       interactive
-      className="flex flex-col justify-between h-full border-t-4 border-t-[#4F46E5]"
+      className="flex flex-col justify-between h-full border-t-4 border-t-[#0D9488]"
     >
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
@@ -57,22 +57,22 @@ export function ClubCard({ club, role = 'student', onJoinClub, onOpenDetails, on
           onClick={() => onOpenDetails(club)}
           className="text-left group focus:outline-none block w-full"
         >
-          <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#4F46E5] transition-colors">
+          <h3 className="text-base font-bold text-[#1C1917] group-hover:text-[#0D9488] transition-colors">
             {club.name}
           </h3>
-          <p className="text-xs text-[#0F172A]/75 mt-1.5 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-[#1C1917]/75 mt-1.5 line-clamp-2 leading-relaxed">
             {club.shortDescription}
           </p>
         </button>
 
-        <div className="mt-4 pt-3 border-t border-[#0F172A]/15 flex items-center justify-between gap-2 text-xs text-[#0F172A]/80">
+        <div className="mt-4 pt-3 border-t border-[#1C1917]/15 flex items-center justify-between gap-2 text-xs text-[#1C1917]/80">
           <span className="flex items-center gap-1.5 font-medium">
-            <Users className="w-3.5 h-3.5 text-[#4F46E5]" />
+            <Users className="w-3.5 h-3.5 text-[#0D9488]" />
             {club.memberCount} members
           </span>
           {club.leadName && (
             <span className="flex items-center gap-1 truncate max-w-[55%]">
-              <Crown className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
+              <Crown className="w-3.5 h-3.5 text-[#CA8A04] shrink-0" />
               <span className="truncate font-medium">
                 {club.leadName.split('(')[0].trim()}
               </span>
@@ -81,7 +81,7 @@ export function ClubCard({ club, role = 'student', onJoinClub, onOpenDetails, on
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-[#0F172A]/15 flex items-center justify-between gap-2">
+      <div className="mt-4 pt-3 border-t border-[#1C1917]/15 flex items-center justify-between gap-2">
         {canChat ? (
           <Button
             variant="primary"

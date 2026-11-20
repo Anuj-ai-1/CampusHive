@@ -21,7 +21,7 @@ export function AppLayout({
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col lg:flex-row relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAFAF9] text-[#1C1917] flex flex-col lg:flex-row relative overflow-x-hidden">
       <Sidebar
         activePage={activePage}
         onNavigate={onNavigate}

@@ -17,10 +17,10 @@ export function AdminCharts({ registrationsTrend, categoryParticipation }) {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <Card padding="p-5">
         <div className="mb-4">
-          <h3 className="text-sm font-bold text-[#0F172A]">
+          <h3 className="text-sm font-bold text-[#1C1917]">
             Event Registrations & Attendance Over Time
           </h3>
-          <p className="text-xs text-[#0F172A]/75 mt-0.5">
+          <p className="text-xs text-[#1C1917]/75 mt-0.5">
             Weekly student sign-ups vs. verified check-ins across campus venues
           </p>
         </div>
@@ -32,31 +32,31 @@ export function AdminCharts({ registrationsTrend, categoryParticipation }) {
             >
               <defs>
                 <linearGradient id="regFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.35} />
-                  <stop offset="95%" stopColor="#4F46E5" stopOpacity={0.02} />
+                  <stop offset="5%" stopColor="#0D9488" stopOpacity={0.35} />
+                  <stop offset="95%" stopColor="#0D9488" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="rgba(15, 23, 42, 0.14)"
+                stroke="rgba(28, 25, 23, 0.14)"
                 vertical={false}
               />
               <XAxis
                 dataKey="week"
-                tick={{ fontSize: 11, fill: '#0F172A' }}
-                axisLine={{ stroke: 'rgba(15, 23, 42, 0.25)' }}
+                tick={{ fontSize: 11, fill: '#1C1917' }}
+                axisLine={{ stroke: 'rgba(28, 25, 23, 0.25)' }}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 11, fill: '#0F172A' }}
+                tick={{ fontSize: 11, fill: '#1C1917' }}
                 axisLine={false}
                 tickLine={false}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0F172A',
-                  borderColor: '#4F46E5',
-                  color: '#F8FAFC',
+                  backgroundColor: '#1C1917',
+                  borderColor: '#0D9488',
+                  color: '#FAFAF9',
                   borderRadius: '10px',
                   fontSize: '12px',
                 }}
@@ -65,7 +65,7 @@ export function AdminCharts({ registrationsTrend, categoryParticipation }) {
                 type="monotone"
                 dataKey="registrations"
                 name="Registrations"
-                stroke="#4F46E5"
+                stroke="#0D9488"
                 strokeWidth={2.5}
                 fillOpacity={1}
                 fill="url(#regFill)"
@@ -74,7 +74,7 @@ export function AdminCharts({ registrationsTrend, categoryParticipation }) {
                 type="monotone"
                 dataKey="attendance"
                 name="Verified Attendance"
-                stroke="#E11D48"
+                stroke="#EA580C"
                 strokeWidth={2}
                 strokeDasharray="4 4"
                 fill="transparent"
@@ -86,10 +86,10 @@ export function AdminCharts({ registrationsTrend, categoryParticipation }) {
 
       <Card padding="p-5">
         <div className="mb-4">
-          <h3 className="text-sm font-bold text-[#0F172A]">
+          <h3 className="text-sm font-bold text-[#1C1917]">
             Participation by Event Category
           </h3>
-          <p className="text-xs text-[#0F172A]/75 mt-0.5">
+          <p className="text-xs text-[#1C1917]/75 mt-0.5">
             Distribution of active student registrations across campus tracks
           </p>
         </div>
@@ -101,25 +101,25 @@ export function AdminCharts({ registrationsTrend, categoryParticipation }) {
             >
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="rgba(15, 23, 42, 0.14)"
+                stroke="rgba(28, 25, 23, 0.14)"
                 vertical={false}
               />
               <XAxis
                 dataKey="category"
-                tick={{ fontSize: 11, fill: '#0F172A' }}
-                axisLine={{ stroke: 'rgba(15, 23, 42, 0.25)' }}
+                tick={{ fontSize: 11, fill: '#1C1917' }}
+                axisLine={{ stroke: 'rgba(28, 25, 23, 0.25)' }}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 11, fill: '#0F172A' }}
+                tick={{ fontSize: 11, fill: '#1C1917' }}
                 axisLine={false}
                 tickLine={false}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0F172A',
-                  borderColor: '#F59E0B',
-                  color: '#F8FAFC',
+                  backgroundColor: '#1C1917',
+                  borderColor: '#CA8A04',
+                  color: '#FAFAF9',
                   borderRadius: '10px',
                   fontSize: '12px',
                 }}
@@ -127,7 +127,7 @@ export function AdminCharts({ registrationsTrend, categoryParticipation }) {
               <Bar
                 dataKey="count"
                 name="Participants"
-                fill="#F59E0B"
+                fill="#CA8A04"
                 radius={[6, 6, 0, 0]}
                 barSize={32}
               />

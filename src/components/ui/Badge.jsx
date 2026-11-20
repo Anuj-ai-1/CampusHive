@@ -7,23 +7,23 @@ export function Badge({
   dot = false,
 }) {
   const variants = {
-    neutral: 'bg-[#F8FAFC] text-[#0F172A] border-[#0F172A]/25 font-medium',
-    primary: 'bg-[#4F46E5] text-[#F8FAFC] border-[#4F46E5] font-semibold',
-    success: 'bg-[#4F46E5] text-[#F8FAFC] border-[#4F46E5] font-semibold',
-    warning: 'bg-[#F59E0B] text-[#0F172A] border-[#F59E0B] font-semibold',
-    error: 'bg-[#E11D48] text-[#F8FAFC] border-[#E11D48] font-semibold',
-    danger: 'bg-[#E11D48] text-[#F8FAFC] border-[#E11D48] font-semibold',
-    dark: 'bg-[#0F172A] text-[#F8FAFC] font-semibold border-[#0F172A]',
+    neutral: 'bg-[#FAFAF9] text-[#1C1917] border-[#1C1917]/25 font-medium',
+    primary: 'bg-[#0D9488] text-[#FAFAF9] border-[#0D9488] font-semibold',
+    success: 'bg-[#0D9488] text-[#FAFAF9] border-[#0D9488] font-semibold',
+    warning: 'bg-[#CA8A04] text-[#1C1917] border-[#CA8A04] font-semibold',
+    error: 'bg-[#EA580C] text-[#FAFAF9] border-[#EA580C] font-semibold',
+    danger: 'bg-[#EA580C] text-[#FAFAF9] border-[#EA580C] font-semibold',
+    dark: 'bg-[#1C1917] text-[#FAFAF9] font-semibold border-[#1C1917]',
   };
 
   const dotColors = {
-    neutral: 'bg-[#0F172A]',
-    primary: 'bg-[#F8FAFC]',
-    success: 'bg-[#F8FAFC]',
-    warning: 'bg-[#0F172A]',
-    error: 'bg-[#F8FAFC]',
-    danger: 'bg-[#F8FAFC]',
-    dark: 'bg-[#F59E0B]',
+    neutral: 'bg-[#1C1917]',
+    primary: 'bg-[#FAFAF9]',
+    success: 'bg-[#FAFAF9]',
+    warning: 'bg-[#1C1917]',
+    error: 'bg-[#FAFAF9]',
+    danger: 'bg-[#FAFAF9]',
+    dark: 'bg-[#CA8A04]',
   };
 
   return (

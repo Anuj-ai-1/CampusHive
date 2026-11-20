@@ -65,28 +65,28 @@ export function Login({ onAuthSuccess }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col justify-center py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FAFAF9] text-[#1C1917] flex flex-col justify-center py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         {/* Brand Header */}
         <div className="flex flex-col items-center text-center">
-          <div className="w-14 h-14 rounded-2xl bg-[#E11D48] flex items-center justify-center text-[#F8FAFC] mb-4 shadow-md">
+          <div className="w-14 h-14 rounded-2xl bg-[#EA580C] flex items-center justify-center text-[#FAFAF9] mb-4 shadow-md">
             <Layers className="w-7 h-7" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-[#0F172A]">
+          <h1 className="text-3xl font-bold tracking-tight text-[#1C1917]">
             UniHive
           </h1>
-          <p className="text-xs sm:text-sm font-medium text-[#4F46E5] mt-1.5">
+          <p className="text-xs sm:text-sm font-medium text-[#0D9488] mt-1.5">
             Universal SkillTech University × UniHive
           </p>
         </div>
 
         <Card
           padding="px-6 py-9 sm:px-9 sm:py-11"
-          className="mt-8 border-t-4 border-t-[#4F46E5] shadow-lg min-h-[410px] flex flex-col justify-center"
+          className="mt-8 border-t-4 border-t-[#0D9488] shadow-lg min-h-[410px] flex flex-col justify-center"
         >
           {/* Mode Toggle: Sign In vs Create Account */}
-          <div className="flex items-center justify-center mb-7 pb-5 border-b border-[#0F172A]/15">
-            <div className="inline-flex rounded-lg bg-[#F8FAFC] p-1 border border-[#0F172A]/20">
+          <div className="flex items-center justify-center mb-7 pb-5 border-b border-[#1C1917]/15">
+            <div className="inline-flex rounded-lg bg-[#FAFAF9] p-1 border border-[#1C1917]/20">
               <button
                 type="button"
                 onClick={() => {
@@ -95,8 +95,8 @@ export function Login({ onAuthSuccess }) {
                 }}
                 className={`px-4 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'login'
-                    ? 'bg-[#0F172A] text-[#F8FAFC]'
-                    : 'text-[#0F172A]/75 hover:text-[#0F172A]'
+                    ? 'bg-[#1C1917] text-[#FAFAF9]'
+                    : 'text-[#1C1917]/75 hover:text-[#1C1917]'
                 }`}
               >
                 <LogIn className="w-3.5 h-3.5" />
@@ -110,8 +110,8 @@ export function Login({ onAuthSuccess }) {
                 }}
                 className={`px-4 py-2 text-xs font-bold rounded-md transition-colors inline-flex items-center gap-1.5 ${
                   authMode === 'register'
-                    ? 'bg-[#4F46E5] text-[#F8FAFC]'
-                    : 'text-[#0F172A]/75 hover:text-[#0F172A]'
+                    ? 'bg-[#0D9488] text-[#FAFAF9]'
+                    : 'text-[#1C1917]/75 hover:text-[#1C1917]'
                 }`}
               >
                 <UserPlus className="w-3.5 h-3.5" />

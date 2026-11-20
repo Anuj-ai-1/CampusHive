@@ -115,7 +115,7 @@ export function Home({
       {/* A. Clean, Scannable Welcome Banner */}
       <Card
         padding="p-5 sm:p-6"
-        className="border-t-4 border-t-[#E11D48]"
+        className="border-t-4 border-t-[#EA580C]"
       >
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1">
@@ -125,10 +125,10 @@ export function Home({
               </Badge>
               {userProfile.isCR && <Badge variant="dark">Class Rep</Badge>}
             </div>
-            <h1 className="text-2xl sm:text-[26px] font-bold tracking-tight text-[#0F172A] pt-1">
+            <h1 className="text-2xl sm:text-[26px] font-bold tracking-tight text-[#1C1917] pt-1">
               Welcome back, {userProfile.shortName}
             </h1>
-            <p className="text-xs sm:text-sm text-[#0F172A]/75">
+            <p className="text-xs sm:text-sm text-[#1C1917]/75">
               {userProfile.yearShort || '3rd Year'} · Roll {userProfile.rollNo || 'USTU-CS-3A-08'} · Batch {userProfile.labBatch || 'Batch A1'}
             </p>
           </div>
@@ -199,10 +199,10 @@ export function Home({
         >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <Megaphone className="w-4 h-4 text-[#E11D48]" />
+              <Megaphone className="w-4 h-4 text-[#EA580C]" />
               <h2
                 id="announcements-heading"
-                className="text-base font-bold text-[#0F172A]"
+                className="text-base font-bold text-[#1C1917]"
               >
                 Targeted Announcements
               </h2>
@@ -221,7 +221,7 @@ export function Home({
               <button
                 type="button"
                 onClick={() => setAllAnnouncementsOpen(true)}
-                className="text-xs font-semibold text-[#4F46E5] hover:text-[#E11D48] inline-flex items-center gap-1 shrink-0 ml-1"
+                className="text-xs font-semibold text-[#0D9488] hover:text-[#EA580C] inline-flex items-center gap-1 shrink-0 ml-1"
               >
                 All
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -231,7 +231,7 @@ export function Home({
 
           <Card
             padding="p-0"
-            className="divide-y divide-[#0F172A]/15 overflow-hidden"
+            className="divide-y divide-[#1C1917]/15 overflow-hidden"
           >
             {scopedAnnouncements.slice(0, 4).map((ann) => (
               <AnnouncementItem
@@ -250,10 +250,10 @@ export function Home({
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#4F46E5]" />
+              <Clock className="w-4 h-4 text-[#0D9488]" />
               <h2
                 id="schedule-heading"
-                className="text-base font-bold text-[#0F172A]"
+                className="text-base font-bold text-[#1C1917]"
               >
                 Upcoming Schedule
               </h2>
@@ -261,7 +261,7 @@ export function Home({
             <button
               type="button"
               onClick={() => onNavigate('calendar')}
-              className="text-xs font-semibold text-[#4F46E5] hover:text-[#E11D48]"
+              className="text-xs font-semibold text-[#0D9488] hover:text-[#EA580C]"
             >
               Full agenda & classes
             </button>
@@ -278,7 +278,7 @@ export function Home({
           ) : (
             <Card
               padding="p-0"
-              className="divide-y divide-[#0F172A]/15 overflow-hidden"
+              className="divide-y divide-[#1C1917]/15 overflow-hidden"
             >
               {upcomingSchedule.slice(0, 4).map((item) => (
                 <div
@@ -302,13 +302,13 @@ export function Home({
                       }
                     }
                   }}
-                  className="p-3.5 hover:bg-[#F8FAFC] transition-colors flex items-start gap-3 cursor-pointer"
+                  className="p-3.5 hover:bg-[#FAFAF9] transition-colors flex items-start gap-3 cursor-pointer"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-[#0F172A] flex flex-col items-center justify-center shrink-0">
-                    <span className="text-[10px] font-bold uppercase text-[#F59E0B] leading-none">
+                  <div className="w-11 h-11 rounded-xl bg-[#1C1917] flex flex-col items-center justify-center shrink-0">
+                    <span className="text-[10px] font-bold uppercase text-[#CA8A04] leading-none">
                       {item.monthShort}
                     </span>
-                    <span className="text-sm font-bold text-[#F8FAFC] leading-tight mt-0.5">
+                    <span className="text-sm font-bold text-[#FAFAF9] leading-tight mt-0.5">
                       {item.dayNumber}
                     </span>
                   </div>
@@ -324,15 +324,15 @@ export function Home({
                       >
                         {item.status}
                       </Badge>
-                      <span className="text-[11px] font-semibold text-[#0F172A]/75">
+                      <span className="text-[11px] font-semibold text-[#1C1917]/75">
                         {item.time}
                       </span>
                     </div>
-                    <p className="text-xs font-bold text-[#0F172A] mt-1 truncate">
+                    <p className="text-xs font-bold text-[#1C1917] mt-1 truncate">
                       {item.title}
                     </p>
-                    <p className="text-[11px] text-[#0F172A]/75 mt-0.5 flex items-center gap-1 truncate">
-                      <MapPin className="w-3 h-3 text-[#E11D48] shrink-0" />
+                    <p className="text-[11px] text-[#1C1917]/75 mt-0.5 flex items-center gap-1 truncate">
+                      <MapPin className="w-3 h-3 text-[#EA580C] shrink-0" />
                       <span className="truncate">{item.location}</span>
                     </p>
                   </div>
@@ -348,17 +348,17 @@ export function Home({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#F59E0B]" />
+              <Sparkles className="w-4 h-4 text-[#CA8A04]" />
               <h2
                 id="recommended-heading"
-                className="text-base font-bold text-[#0F172A]"
+                className="text-base font-bold text-[#1C1917]"
               >
                 Recommended for {userBranch} ({userDiv})
               </h2>
             </div>
-            <p className="text-xs text-[#0F172A]/75 mt-0.5">
+            <p className="text-xs text-[#1C1917]/75 mt-0.5">
               Curated based on your branch ({userBranch}) and interests in{' '}
-              <span className="text-[#4F46E5] font-semibold">
+              <span className="text-[#0D9488] font-semibold">
                 {(userProfile?.interests || ['AI & ML', 'Cloud', 'Hackathons'])
                   .slice(0, 3)
                   .join(', ')}
@@ -373,12 +373,12 @@ export function Home({
               key={evt.id}
               padding="p-4"
               interactive
-              className="flex flex-col justify-between border-t-4 border-t-[#E11D48]"
+              className="flex flex-col justify-between border-t-4 border-t-[#EA580C]"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2.5">
                   <Badge variant="danger">Event · {evt.category}</Badge>
-                  <span className="text-xs font-bold text-[#0F172A]">
+                  <span className="text-xs font-bold text-[#1C1917]">
                     {evt.monthShort} {evt.dayNumber}
                   </span>
                 </div>
@@ -387,17 +387,17 @@ export function Home({
                   onClick={() => onOpenEventDetails(evt)}
                   className="text-left block w-full group"
                 >
-                  <h3 className="text-sm font-bold text-[#0F172A] group-hover:text-[#4F46E5] line-clamp-1">
+                  <h3 className="text-sm font-bold text-[#1C1917] group-hover:text-[#0D9488] line-clamp-1">
                     {evt.title}
                   </h3>
-                  <p className="text-xs text-[#0F172A]/75 mt-1 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-[#1C1917]/75 mt-1 line-clamp-2 leading-relaxed">
                     {evt.shortDescription}
                   </p>
                 </button>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#0F172A]/15 flex items-center justify-between gap-2">
-                <span className="text-[11px] text-[#0F172A]/75 truncate">
+              <div className="mt-4 pt-3 border-t border-[#1C1917]/15 flex items-center justify-between gap-2">
+                <span className="text-[11px] text-[#1C1917]/75 truncate">
                   {evt.venue}
                 </span>
                 {evt.isRegistered ? (
@@ -422,12 +422,12 @@ export function Home({
               key={club.id}
               padding="p-4"
               interactive
-              className="flex flex-col justify-between border-t-4 border-t-[#F59E0B]"
+              className="flex flex-col justify-between border-t-4 border-t-[#CA8A04]"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2.5">
                   <Badge variant="warning">Club · {club.category}</Badge>
-                  <span className="text-xs font-medium text-[#0F172A]/75">
+                  <span className="text-xs font-medium text-[#1C1917]/75">
                     {club.memberCount} members
                   </span>
                 </div>
@@ -436,17 +436,17 @@ export function Home({
                   onClick={() => onOpenClubDetails(club)}
                   className="text-left block w-full group"
                 >
-                  <h3 className="text-sm font-bold text-[#0F172A] group-hover:text-[#4F46E5] line-clamp-1">
+                  <h3 className="text-sm font-bold text-[#1C1917] group-hover:text-[#0D9488] line-clamp-1">
                     {club.name}
                   </h3>
-                  <p className="text-xs text-[#0F172A]/75 mt-1 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-[#1C1917]/75 mt-1 line-clamp-2 leading-relaxed">
                     {club.shortDescription}
                   </p>
                 </button>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#0F172A]/15 flex items-center justify-between gap-2">
-                <span className="text-[11px] text-[#0F172A]/75">
+              <div className="mt-4 pt-3 border-t border-[#1C1917]/15 flex items-center justify-between gap-2">
+                <span className="text-[11px] text-[#1C1917]/75">
                   {club.requiresApproval ? 'Approval required' : 'Open to join'}
                 </span>
                 {club.membershipState === 'Joined' ? (
@@ -504,7 +504,7 @@ export function Home({
                   </Badge>
                 )}
             </div>
-            <p className="text-sm text-[#0F172A] leading-relaxed">
+            <p className="text-sm text-[#1C1917] leading-relaxed">
               {selectedAnnouncement.content}
             </p>
           </div>
@@ -528,7 +528,7 @@ export function Home({
           </Button>
         }
       >
-        <div className="divide-y divide-[#0F172A]/15 -mx-5 -my-4">
+        <div className="divide-y divide-[#1C1917]/15 -mx-5 -my-4">
           {announcements.map((ann) => (
             <div key={ann.id} className="p-5 space-y-1.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -542,18 +542,18 @@ export function Home({
                     </Badge>
                   )}
                   <Badge variant="primary">{ann.category}</Badge>
-                  <span className="text-xs font-bold text-[#0F172A]">
+                  <span className="text-xs font-bold text-[#1C1917]">
                     {ann.source}
                   </span>
                 </div>
-                <span className="text-xs text-[#0F172A]/75">
+                <span className="text-xs text-[#1C1917]/75">
                   {ann.date} ({ann.relativeTime})
                 </span>
               </div>
-              <h3 className="text-sm font-bold text-[#0F172A] pt-1">
+              <h3 className="text-sm font-bold text-[#1C1917] pt-1">
                 {ann.title}
               </h3>
-              <p className="text-xs text-[#0F172A]/80 leading-relaxed">
+              <p className="text-xs text-[#1C1917]/80 leading-relaxed">
                 {ann.content}
               </p>
             </div>

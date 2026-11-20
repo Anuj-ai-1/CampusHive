@@ -20,24 +20,24 @@ export function Toast({ toasts, onDismiss }) {
 
         const iconColor =
           t.type === 'error'
-            ? 'text-[#E11D48]'
+            ? 'text-[#EA580C]'
             : t.type === 'info'
-            ? 'text-[#F59E0B]'
-            : 'text-[#4F46E5]';
+            ? 'text-[#CA8A04]'
+            : 'text-[#0D9488]';
 
         return (
           <div
             key={t.id}
-            className="pointer-events-auto flex items-start gap-3 p-3.5 bg-[#0F172A] border-2 border-[#4F46E5] rounded-xl shadow-2xl"
+            className="pointer-events-auto flex items-start gap-3 p-3.5 bg-[#1C1917] border-2 border-[#0D9488] rounded-xl shadow-2xl"
           >
             <Icon
               className={`w-4 h-4 mt-0.5 shrink-0 ${iconColor}`}
               aria-hidden="true"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-[#F8FAFC]">{t.title}</p>
+              <p className="text-xs font-bold text-[#FAFAF9]">{t.title}</p>
               {t.description && (
-                <p className="text-xs text-[#F8FAFC]/80 mt-0.5 leading-snug">
+                <p className="text-xs text-[#FAFAF9]/80 mt-0.5 leading-snug">
                   {t.description}
                 </p>
               )}
@@ -46,7 +46,7 @@ export function Toast({ toasts, onDismiss }) {
               type="button"
               onClick={() => onDismiss(t.id)}
               aria-label="Dismiss notification"
-              className="text-[#F8FAFC]/70 hover:text-[#E11D48] p-0.5 rounded"
+              className="text-[#FAFAF9]/70 hover:text-[#EA580C] p-0.5 rounded"
             >
               <X className="w-3.5 h-3.5" />
             </button>

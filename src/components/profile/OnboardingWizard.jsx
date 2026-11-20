@@ -69,8 +69,8 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
       maxWidth="max-w-xl"
       footer={
         <div className="flex items-center justify-between w-full">
-          <span className="text-xs text-[#0F172A]/75 flex items-center gap-1">
-            <UserCheck className="w-3.5 h-3.5 text-[#4F46E5]" />
+          <span className="text-xs text-[#1C1917]/75 flex items-center gap-1">
+            <UserCheck className="w-3.5 h-3.5 text-[#0D9488]" />
             Saved permanently to your account
           </span>
           <Button
@@ -86,16 +86,16 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
       }
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="p-3.5 rounded-xl bg-[#0F172A] text-[#F8FAFC] flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#F59E0B] text-[#0F172A] flex items-center justify-center font-bold text-sm shrink-0">
+        <div className="p-3.5 rounded-xl bg-[#1C1917] text-[#FAFAF9] flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-[#CA8A04] text-[#1C1917] flex items-center justify-center font-bold text-sm shrink-0">
             {(form.name || 'ST').slice(0, 2).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <p className="text-xs font-bold text-[#F59E0B] uppercase tracking-wider flex items-center gap-1">
+            <p className="text-xs font-bold text-[#CA8A04] uppercase tracking-wider flex items-center gap-1">
               <GraduationCap className="w-3.5 h-3.5" />
               Welcome to UniHive
             </p>
-            <p className="text-xs text-[#F8FAFC]/85 truncate">
+            <p className="text-xs text-[#FAFAF9]/85 truncate">
               {userProfile?.email}
             </p>
           </div>
@@ -183,7 +183,7 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
 
         <div>
           <label className="block text-xs font-medium text-slate-700 mb-2 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#CA8A04]" />
             Pick Your Interests (Used for Club & Event Recommendations)
           </label>
           <div className="flex flex-wrap gap-1.5">
@@ -196,8 +196,8 @@ export function OnboardingWizard({ isOpen, userProfile, onCompleteProfile }) {
                   onClick={() => toggleInterest(tag)}
                   className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition-colors ${
                     selected
-                      ? 'bg-[#4F46E5] border-[#4F46E5] text-[#F8FAFC]'
-                      : 'bg-[#F8FAFC] border-[#0F172A]/20 text-[#0F172A] hover:border-[#4F46E5]'
+                      ? 'bg-[#0D9488] border-[#0D9488] text-[#FAFAF9]'
+                      : 'bg-[#FAFAF9] border-[#1C1917]/20 text-[#1C1917] hover:border-[#0D9488]'
                   }`}
                 >
                   {selected ? '✓ ' : '+ '}

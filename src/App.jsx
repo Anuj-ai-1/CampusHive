@@ -437,12 +437,12 @@ export default function App() {
 
   if (booting) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4">
-        <div className="bg-white border-2 border-[#0F172A] border-t-4 border-t-[#4F46E5] rounded-xl px-6 py-5 text-center shadow-lg">
-          <p className="text-sm font-bold text-[#0F172A]">
+      <div className="min-h-screen bg-[#FAFAF9] flex items-center justify-center p-4">
+        <div className="bg-white border-2 border-[#1C1917] border-t-4 border-t-[#0D9488] rounded-xl px-6 py-5 text-center shadow-lg">
+          <p className="text-sm font-bold text-[#1C1917]">
             Connecting to UniHive SQLite Backend...
           </p>
-          <p className="text-xs text-[#4F46E5] mt-1 font-medium">
+          <p className="text-xs text-[#0D9488] mt-1 font-medium">
             Syncing campus workspace &amp; live session
           </p>
         </div>

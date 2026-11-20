@@ -37,7 +37,7 @@ export function NotificationPopover({
       ref={ref}
       role="dialog"
       aria-label="Notifications"
-      className="fixed sm:absolute inset-x-3 sm:inset-x-auto top-16 sm:top-auto sm:right-0 sm:mt-2 w-auto sm:w-96 bg-white border-2 border-[#0F172A] rounded-2xl shadow-2xl z-50 overflow-hidden"
+      className="fixed sm:absolute inset-x-3 sm:inset-x-auto top-16 sm:top-auto sm:right-0 sm:mt-2 w-auto sm:w-96 bg-white border-2 border-[#1C1917] rounded-2xl shadow-2xl z-50 overflow-hidden"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200/60 bg-white/50">
         <div className="flex items-center gap-2">
@@ -45,7 +45,7 @@ export function NotificationPopover({
             Notifications
           </span>
           {unreadCount > 0 && (
-            <span className="px-2 py-0.5 text-[11px] font-medium bg-indigo-50/80 text-[#4F46E5] rounded-full border border-indigo-200/80">
+            <span className="px-2 py-0.5 text-[11px] font-medium bg-indigo-50/80 text-[#0D9488] rounded-full border border-indigo-200/80">
               {unreadCount} new
             </span>
           )}
@@ -54,7 +54,7 @@ export function NotificationPopover({
           <button
             type="button"
             onClick={onMarkAllRead}
-            className="inline-flex items-center gap-1 text-xs font-medium text-[#4F46E5] hover:text-[#E11D48]"
+            className="inline-flex items-center gap-1 text-xs font-medium text-[#0D9488] hover:text-[#EA580C]"
           >
             <Check className="w-3.5 h-3.5" />
             Mark all read
@@ -83,7 +83,7 @@ export function NotificationPopover({
             >
               <span
                 className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
-                  n.unread ? 'bg-[#4F46E5]' : 'bg-slate-300'
+                  n.unread ? 'bg-[#0D9488]' : 'bg-slate-300'
                 }`}
               />
               <div className="flex-1 min-w-0">

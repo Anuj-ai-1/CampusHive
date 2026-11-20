@@ -36,7 +36,7 @@ export function EventCard({
         <div className="flex items-start justify-between gap-3 mb-3.5">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 shadow-sm flex flex-col items-center justify-center shrink-0">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#4F46E5] leading-none">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#0D9488] leading-none">
                 {event.monthShort}
               </span>
               <span className="text-base font-bold text-slate-900 leading-tight mt-0.5">
@@ -68,7 +68,7 @@ export function EventCard({
           onClick={() => onOpenDetails(event)}
           className="text-left group focus:outline-none block w-full"
         >
-          <h3 className="text-base font-semibold text-slate-900 group-hover:text-[#4F46E5] transition-colors line-clamp-1">
+          <h3 className="text-base font-semibold text-slate-900 group-hover:text-[#0D9488] transition-colors line-clamp-1">
             {event.title}
           </h3>
           <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">

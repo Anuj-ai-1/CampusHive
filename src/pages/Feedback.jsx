@@ -98,11 +98,11 @@ export function Feedback({
       {/* A. Centered Feedback Form */}
       <div className="max-w-2xl mx-auto">
         <Card padding="p-5 sm:p-6">
-          <div className="mb-5 pb-4 border-b border-[#0F172A]">
-            <h2 className="text-lg font-semibold text-[#0F172A]">
+          <div className="mb-5 pb-4 border-b border-[#1C1917]">
+            <h2 className="text-lg font-semibold text-[#1C1917]">
               Share your feedback
             </h2>
-            <p className="text-xs text-[#0F172A] mt-0.5">
+            <p className="text-xs text-[#1C1917] mt-0.5">
               Your feedback helps us build a better campus experience.
             </p>
           </div>
@@ -156,8 +156,8 @@ export function Feedback({
             />
 
             {category === 'Grievance' && (
-              <div className="flex items-start gap-2.5 p-3 rounded-md bg-[#F8FAFC] border border-[#0F172A] text-xs text-[#0F172A]">
-                <Shield className="w-4 h-4 text-[#4F46E5] shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 p-3 rounded-md bg-[#FAFAF9] border border-[#1C1917] text-xs text-[#1C1917]">
+                <Shield className="w-4 h-4 text-[#0D9488] shrink-0 mt-0.5" />
                 <span>
                   Grievance submissions are strictly confidential and routed
                   directly to the Dean of Student Welfare. Private descriptions
@@ -178,17 +178,17 @@ export function Feedback({
       {/* B. Previous Submissions History */}
       <section
         aria-labelledby="submissions-history-heading"
-        className="space-y-4 pt-4 border-t border-[#0F172A]"
+        className="space-y-4 pt-4 border-t border-[#1C1917]"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2
               id="submissions-history-heading"
-              className="text-base font-semibold text-[#0F172A]"
+              className="text-base font-semibold text-[#1C1917]"
             >
               Previous Submissions
             </h2>
-            <p className="text-xs text-[#0F172A] mt-0.5">
+            <p className="text-xs text-[#1C1917] mt-0.5">
               Track reference IDs and official responses from campus administration
             </p>
           </div>
@@ -294,19 +294,19 @@ export function Feedback({
             </div>
 
             <div>
-              <h3 className="text-sm font-semibold text-[#0F172A]">
+              <h3 className="text-sm font-semibold text-[#1C1917]">
                 {activeTicket.subject}
               </h3>
-              <p className="text-xs text-[#0F172A] mt-1.5 leading-relaxed whitespace-pre-line">
+              <p className="text-xs text-[#1C1917] mt-1.5 leading-relaxed whitespace-pre-line">
                 {activeTicket.description}
               </p>
             </div>
 
-            <div className="p-3.5 rounded-lg bg-[#F8FAFC] border border-[#0F172A]">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-[#0F172A] mb-1">
+            <div className="p-3.5 rounded-lg bg-[#FAFAF9] border border-[#1C1917]">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-[#1C1917] mb-1">
                 Administration Resolution Log
               </p>
-              <p className="text-xs text-[#0F172A] leading-relaxed">
+              <p className="text-xs text-[#1C1917] leading-relaxed">
                 {activeTicket.adminResponse ||
                   'Ticket logged and queued for department coordinator review.'}
               </p>

@@ -726,7 +726,7 @@ export function Clubs({
         maxWidth="max-w-2xl"
         footer={
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 w-full">
-            <span className="text-xs text-[#0F172A]/75">
+            <span className="text-xs text-[#1C1917]/75">
               Requires Admin permission before public campus listing
             </span>
             <div className="flex items-center justify-end gap-2">
@@ -750,7 +750,7 @@ export function Clubs({
       >
         <form onSubmit={handleCreateClubSubmit} className="space-y-5">
           <div className="space-y-3.5">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#4F46E5]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0D9488]">
               1. Club Identity & Schedule
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -801,14 +801,14 @@ export function Clubs({
             />
           </div>
 
-          <div className="pt-4 border-t border-[#0F172A]/15 space-y-3.5">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#E11D48]">
+          <div className="pt-4 border-t border-[#1C1917]/15 space-y-3.5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#EA580C]">
               2. Assign Leadership Hierarchy (Leader & Vice Leader)
             </h3>
 
-            <div className="p-3.5 rounded-lg bg-[#F8FAFC] border border-[#0F172A]/20 space-y-3">
+            <div className="p-3.5 rounded-lg bg-[#FAFAF9] border border-[#1C1917]/20 space-y-3">
               <div>
-                <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
+                <label className="block text-xs font-bold text-[#1C1917] mb-1.5">
                   Who should be the Club Leader / President?
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2.5">
@@ -823,8 +823,8 @@ export function Clubs({
                     }
                     className={`px-3 py-2 text-xs font-semibold rounded-md border text-left flex items-center justify-between ${
                       clubForm.leaderMode === 'self'
-                        ? 'bg-[#4F46E5] border-[#4F46E5] text-[#F8FAFC]'
-                        : 'bg-white border-[#0F172A]/25 text-[#0F172A]'
+                        ? 'bg-[#0D9488] border-[#0D9488] text-[#FAFAF9]'
+                        : 'bg-white border-[#1C1917]/25 text-[#1C1917]'
                     }`}
                   >
                     <span>Assign Myself ({userProfile.shortName})</span>
@@ -843,8 +843,8 @@ export function Clubs({
                     }
                     className={`px-3 py-2 text-xs font-semibold rounded-md border text-left flex items-center justify-between ${
                       clubForm.leaderMode === 'other'
-                        ? 'bg-[#4F46E5] border-[#4F46E5] text-[#F8FAFC]'
-                        : 'bg-white border-[#0F172A]/25 text-[#0F172A]'
+                        ? 'bg-[#0D9488] border-[#0D9488] text-[#FAFAF9]'
+                        : 'bg-white border-[#1C1917]/25 text-[#1C1917]'
                     }`}
                   >
                     <span>Assign Another Student</span>
@@ -893,8 +893,8 @@ export function Clubs({
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#0F172A]/15 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#4F46E5]">
+          <div className="pt-4 border-t border-[#1C1917]/15 space-y-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#0D9488]">
               3. Add Founding Members & Roles
             </h3>
 
@@ -929,14 +929,14 @@ export function Clubs({
             </div>
 
             {clubForm.initialMembers.length > 0 && (
-              <div className="border border-[#0F172A]/20 rounded-md divide-y divide-[#0F172A]/15">
+              <div className="border border-[#1C1917]/20 rounded-md divide-y divide-[#1C1917]/15">
                 {clubForm.initialMembers.map((m) => (
                   <div
                     key={m.id}
-                    className="px-3 py-2 flex items-center justify-between text-xs bg-[#F8FAFC]"
+                    className="px-3 py-2 flex items-center justify-between text-xs bg-[#FAFAF9]"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-[#0F172A]">
+                      <span className="font-bold text-[#1C1917]">
                         {m.name}
                       </span>
                       <Badge variant="warning">{m.role}</Badge>
@@ -944,7 +944,7 @@ export function Clubs({
                     <button
                       type="button"
                       onClick={() => handleRemoveInitialMember(m.id)}
-                      className="text-[#E11D48] hover:text-[#0F172A] p-1"
+                      className="text-[#EA580C] hover:text-[#1C1917] p-1"
                       aria-label={`Remove ${m.name}`}
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -965,13 +965,13 @@ export function Clubs({
 
         return (
         <div
-          className="fixed inset-0 z-50 w-screen h-[100dvh] bg-[#F8FAFC] text-[#0F172A] flex flex-col overflow-hidden"
+          className="fixed inset-0 z-50 w-screen h-[100dvh] bg-[#FAFAF9] text-[#1C1917] flex flex-col overflow-hidden"
           role="dialog"
           aria-modal="true"
           aria-label={`${activeModalClub.name} Workspace`}
         >
           {/* Full-Screen Top Navigation Header */}
-          <header className="px-3 py-2.5 sm:px-6 sm:py-0 sm:h-14 bg-[#0F172A] border-b-2 border-[#F59E0B] flex flex-col md:flex-row md:items-center md:justify-between gap-2 shrink-0">
+          <header className="px-3 py-2.5 sm:px-6 sm:py-0 sm:h-14 bg-[#1C1917] border-b-2 border-[#CA8A04] flex flex-col md:flex-row md:items-center md:justify-between gap-2 shrink-0">
             <div className="flex items-center justify-between gap-2 min-w-0">
               <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 <Button
@@ -986,7 +986,7 @@ export function Clubs({
 
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h2 className="text-xs sm:text-base font-bold text-[#F8FAFC] truncate">
+                    <h2 className="text-xs sm:text-base font-bold text-[#FAFAF9] truncate">
                       {activeModalClub.name}
                     </h2>
                     <Badge variant="warning" className="hidden sm:inline-flex">
@@ -996,7 +996,7 @@ export function Clubs({
                       {activeModalClub.memberCount} Members
                     </Badge>
                   </div>
-                  <p className="text-[11px] text-[#F59E0B] font-medium truncate hidden sm:block">
+                  <p className="text-[11px] text-[#CA8A04] font-medium truncate hidden sm:block">
                     {activeModalClub.meetingSchedule}
                   </p>
                 </div>
@@ -1018,7 +1018,7 @@ export function Clubs({
                   type="button"
                   onClick={onCloseClubModal}
                   aria-label="Exit Full Screen"
-                  className="p-1.5 rounded-lg bg-[#E11D48] hover:bg-[#F59E0B] text-[#F8FAFC] hover:text-[#0F172A] transition-colors"
+                  className="p-1.5 rounded-lg bg-[#EA580C] hover:bg-[#CA8A04] text-[#FAFAF9] hover:text-[#1C1917] transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1075,7 +1075,7 @@ export function Clubs({
                 type="button"
                 onClick={onCloseClubModal}
                 aria-label="Exit Full Screen"
-                className="hidden md:inline-flex p-2 rounded-lg bg-[#E11D48] hover:bg-[#F59E0B] text-[#F8FAFC] hover:text-[#0F172A] transition-colors"
+                className="hidden md:inline-flex p-2 rounded-lg bg-[#EA580C] hover:bg-[#CA8A04] text-[#FAFAF9] hover:text-[#1C1917] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -1088,7 +1088,7 @@ export function Clubs({
               {/* Mobile Backdrop when Channel/DM Drawer is open */}
               {mobileChannelsOpen && (
                 <div
-                  className="fixed inset-0 z-30 bg-[#0F172A]/75 md:hidden"
+                  className="fixed inset-0 z-30 bg-[#1C1917]/75 md:hidden"
                   onClick={() => setMobileChannelsOpen(false)}
                 />
               )}
@@ -1099,17 +1099,17 @@ export function Clubs({
                   mobileChannelsOpen
                     ? 'fixed inset-y-0 left-0 z-40 flex w-72 max-w-[85vw]'
                     : 'hidden md:flex md:w-64 lg:w-72'
-                } bg-[#0F172A] border-r-2 border-[#4F46E5] flex-col justify-between shrink-0 overflow-y-auto`}
+                } bg-[#1C1917] border-r-2 border-[#0D9488] flex-col justify-between shrink-0 overflow-y-auto`}
               >
                 <div className="p-3.5 space-y-5">
-                  <div className="flex md:hidden items-center justify-between pb-2 border-b border-[#F8FAFC]/15">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#F59E0B]">
+                  <div className="flex md:hidden items-center justify-between pb-2 border-b border-[#FAFAF9]/15">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#CA8A04]">
                       Channels & Direct Messages
                     </span>
                     <button
                       type="button"
                       onClick={() => setMobileChannelsOpen(false)}
-                      className="p-1 rounded bg-[#E11D48] text-[#F8FAFC]"
+                      className="p-1 rounded bg-[#EA580C] text-[#FAFAF9]"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -1119,7 +1119,7 @@ export function Clubs({
                   <div>
                     <label
                       htmlFor="fullscreen-club-switcher"
-                      className="block px-1 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#F59E0B]"
+                      className="block px-1 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#CA8A04]"
                     >
                       Active Club Workspace
                     </label>
@@ -1135,7 +1135,7 @@ export function Clubs({
                           onOpenClubDetails(nextClub);
                         }
                       }}
-                      className="w-full h-9 px-2.5 text-xs font-bold rounded-lg bg-[#F8FAFC] text-[#0F172A] border border-[#4F46E5]"
+                      className="w-full h-9 px-2.5 text-xs font-bold rounded-lg bg-[#FAFAF9] text-[#1C1917] border border-[#0D9488]"
                     >
                       {visibleClubs.map((c) => (
                         <option key={c.id} value={c.id}>
@@ -1147,7 +1147,7 @@ export function Clubs({
 
                   {/* Group Channels */}
                   <div>
-                    <p className="px-2 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#F59E0B]">
+                    <p className="px-2 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#CA8A04]">
                       Club Text Channels
                     </p>
                     <div className="space-y-1">
@@ -1167,8 +1167,8 @@ export function Clubs({
                             }}
                             className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
                               active
-                                ? 'bg-[#4F46E5] text-[#F8FAFC]'
-                                : 'text-[#F8FAFC]/85 hover:bg-[#F8FAFC] hover:text-[#0F172A]'
+                                ? 'bg-[#0D9488] text-[#FAFAF9]'
+                                : 'text-[#FAFAF9]/85 hover:bg-[#FAFAF9] hover:text-[#1C1917]'
                             }`}
                           >
                             <span className="flex items-center gap-2 truncate">
@@ -1179,8 +1179,8 @@ export function Clubs({
                               <span
                                 className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
                                   active
-                                    ? 'bg-[#F59E0B] text-[#0F172A]'
-                                    : 'bg-[#E11D48] text-[#F8FAFC]'
+                                    ? 'bg-[#CA8A04] text-[#1C1917]'
+                                    : 'bg-[#EA580C] text-[#FAFAF9]'
                                 }`}
                               >
                                 {chCount}
@@ -1194,7 +1194,7 @@ export function Clubs({
 
                   {/* Direct Messages (1-on-1 with Club Peers) */}
                   <div>
-                    <p className="px-2 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#F59E0B]">
+                    <p className="px-2 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-[#CA8A04]">
                       Direct Messages (1-on-1)
                     </p>
                     <div className="space-y-1">
@@ -1206,8 +1206,8 @@ export function Clubs({
                             key={peer.id}
                             className={`flex items-center justify-between px-2.5 py-2 rounded-lg text-xs transition-colors ${
                               isDmActive
-                                ? 'bg-[#4F46E5] text-[#F8FAFC]'
-                                : 'hover:bg-[#F8FAFC]/15 text-[#F8FAFC]'
+                                ? 'bg-[#0D9488] text-[#FAFAF9]'
+                                : 'hover:bg-[#FAFAF9]/15 text-[#FAFAF9]'
                             }`}
                           >
                             <button
@@ -1220,20 +1220,20 @@ export function Clubs({
                               className="flex items-center gap-2.5 min-w-0 flex-1 text-left"
                             >
                               <span className="relative shrink-0">
-                                <span className="w-7 h-7 rounded-full bg-[#F59E0B] flex items-center justify-center text-[10px] font-bold text-[#0F172A]">
+                                <span className="w-7 h-7 rounded-full bg-[#CA8A04] flex items-center justify-center text-[10px] font-bold text-[#1C1917]">
                                   {peer.name.slice(0, 2).toUpperCase()}
                                 </span>
-                                <span className="w-2.5 h-2.5 rounded-full bg-[#4F46E5] absolute -bottom-0.5 -right-0.5 border border-[#0F172A]" />
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#0D9488] absolute -bottom-0.5 -right-0.5 border border-[#1C1917]" />
                               </span>
                               <div className="truncate">
-                                <p className="text-xs font-bold text-[#F8FAFC] truncate">
+                                <p className="text-xs font-bold text-[#FAFAF9] truncate">
                                   {peer.name.split('(')[0].trim()}
                                 </p>
                                 <p
                                   className={`text-[10px] truncate ${
                                     isDmActive
-                                      ? 'text-[#F8FAFC]'
-                                      : 'text-[#F59E0B]'
+                                      ? 'text-[#FAFAF9]'
+                                      : 'text-[#CA8A04]'
                                   }`}
                                 >
                                   {peer.role}
@@ -1250,7 +1250,7 @@ export function Clubs({
                                 )
                               }
                               title={`View ${peer.name}'s Profile`}
-                              className="p-1.5 rounded bg-[#E11D48] hover:bg-[#F59E0B] text-[#F8FAFC] hover:text-[#0F172A] transition-colors shrink-0 ml-1"
+                              className="p-1.5 rounded bg-[#EA580C] hover:bg-[#CA8A04] text-[#FAFAF9] hover:text-[#1C1917] transition-colors shrink-0 ml-1"
                             >
                               <Eye className="w-3.5 h-3.5" />
                             </button>
@@ -1262,18 +1262,18 @@ export function Clubs({
                 </div>
 
                 {/* Bottom Current User Bar */}
-                <div className="p-3 bg-[#0F172A] border-t border-[#F8FAFC]/15 flex items-center justify-between gap-2">
+                <div className="p-3 bg-[#1C1917] border-t border-[#FAFAF9]/15 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-8 h-8 rounded-full bg-[#E11D48] flex items-center justify-center text-xs font-bold text-[#F8FAFC] shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-[#EA580C] flex items-center justify-center text-xs font-bold text-[#FAFAF9] shrink-0">
                       {userProfile.shortName.slice(0, 2).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-bold text-[#F8FAFC] truncate">
+                      <p className="text-xs font-bold text-[#FAFAF9] truncate">
                         {role === 'admin'
                           ? 'Dr. Anil Raina (Pro-VC)'
                           : userProfile.name}
                       </p>
-                      <p className="text-[10px] text-[#4F46E5] font-semibold truncate">
+                      <p className="text-[10px] text-[#0D9488] font-semibold truncate">
                         Online · {userProfile.branchCode || 'CSE'}{' '}
                         {userProfile.division || 'Div A'}
                       </p>
@@ -1283,13 +1283,13 @@ export function Clubs({
               </aside>
 
               {/* CENTER MAIN FULL-HEIGHT CHAT STREAM */}
-              <div className="flex-1 flex flex-col bg-[#F8FAFC] min-w-0">
+              <div className="flex-1 flex flex-col bg-[#FAFAF9] min-w-0">
                 {/* Mobile Quick Channel & DM Switcher Bar */}
-                <div className="flex md:hidden items-center gap-1.5 px-3 py-2 bg-[#0F172A] border-b border-[#4F46E5] overflow-x-auto shrink-0">
+                <div className="flex md:hidden items-center gap-1.5 px-3 py-2 bg-[#1C1917] border-b border-[#0D9488] overflow-x-auto shrink-0">
                   <button
                     type="button"
                     onClick={() => setMobileChannelsOpen(true)}
-                    className="px-2.5 py-1 rounded-lg bg-[#F59E0B] text-[#0F172A] text-[11px] font-bold shrink-0 flex items-center gap-1"
+                    className="px-2.5 py-1 rounded-lg bg-[#CA8A04] text-[#1C1917] text-[11px] font-bold shrink-0 flex items-center gap-1"
                   >
                     <Users className="w-3.5 h-3.5" />
                     <span>Channels & DMs</span>
@@ -1306,8 +1306,8 @@ export function Clubs({
                         }}
                         className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold whitespace-nowrap shrink-0 flex items-center gap-1 ${
                           active
-                            ? 'bg-[#4F46E5] text-[#F8FAFC]'
-                            : 'bg-[#F8FAFC]/15 text-[#F8FAFC]'
+                            ? 'bg-[#0D9488] text-[#FAFAF9]'
+                            : 'bg-[#FAFAF9]/15 text-[#FAFAF9]'
                         }`}
                       >
                         <Hash className="w-3 h-3" />
@@ -1318,19 +1318,19 @@ export function Clubs({
                 </div>
 
                 {/* Active Channel / DM Sub-Header */}
-                <div className="h-11 sm:h-12 px-3 sm:px-5 bg-white border-b border-[#0F172A]/20 flex items-center justify-between gap-2 shrink-0">
+                <div className="h-11 sm:h-12 px-3 sm:px-5 bg-white border-b border-[#1C1917]/20 flex items-center justify-between gap-2 shrink-0">
                   <div className="flex items-center gap-2 min-w-0">
                     {isDmChannel ? (
-                      <MessageSquare className="w-4 h-4 text-[#E11D48] shrink-0" />
+                      <MessageSquare className="w-4 h-4 text-[#EA580C] shrink-0" />
                     ) : (
-                      <Hash className="w-4 h-4 text-[#4F46E5] shrink-0" />
+                      <Hash className="w-4 h-4 text-[#0D9488] shrink-0" />
                     )}
-                    <h3 className="text-xs sm:text-sm font-bold text-[#0F172A] truncate">
+                    <h3 className="text-xs sm:text-sm font-bold text-[#1C1917] truncate">
                       {isDmChannel
                         ? `DM: ${activeDmPeerName}`
                         : activeChannelMeta?.label || activeChannel}
                     </h3>
-                    <span className="hidden lg:inline text-xs text-[#0F172A]/75 truncate">
+                    <span className="hidden lg:inline text-xs text-[#1C1917]/75 truncate">
                       —{' '}
                       {isDmChannel
                         ? 'Click View Profile to inspect academic details & skills'
@@ -1358,13 +1358,13 @@ export function Clubs({
 
                 {/* Pinned Message Banner */}
                 {pinnedInChannel.length > 0 && (
-                  <div className="px-3 sm:px-5 py-1.5 sm:py-2 bg-[#F59E0B] border-b border-[#0F172A]/20 flex items-center justify-between gap-2 text-xs shrink-0">
+                  <div className="px-3 sm:px-5 py-1.5 sm:py-2 bg-[#CA8A04] border-b border-[#1C1917]/20 flex items-center justify-between gap-2 text-xs shrink-0">
                     <div className="flex items-center gap-1.5 sm:gap-2 truncate">
-                      <Pin className="w-3.5 h-3.5 text-[#0F172A] shrink-0" />
-                      <span className="font-bold text-[#0F172A] shrink-0">
+                      <Pin className="w-3.5 h-3.5 text-[#1C1917] shrink-0" />
+                      <span className="font-bold text-[#1C1917] shrink-0">
                         Pinned:
                       </span>
-                      <span className="text-[#0F172A] font-medium truncate">
+                      <span className="text-[#1C1917] font-medium truncate">
                         {pinnedInChannel[0].text}
                       </span>
                     </div>
@@ -1375,13 +1375,13 @@ export function Clubs({
                 <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-3">
                   {channelMessages.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center text-center space-y-2 p-4">
-                      <MessageSquare className="w-10 h-10 text-[#4F46E5]" />
-                      <p className="text-sm font-bold text-[#0F172A]">
+                      <MessageSquare className="w-10 h-10 text-[#0D9488]" />
+                      <p className="text-sm font-bold text-[#1C1917]">
                         {isDmChannel
                           ? `Start a 1-on-1 conversation with ${activeDmPeerName}`
                           : `Welcome to #${activeChannel}`}
                       </p>
-                      <p className="text-xs text-[#0F172A]/75 max-w-md">
+                      <p className="text-xs text-[#1C1917]/75 max-w-md">
                         Send the first message below or tap on any member&apos;s
                         name to view their student profile.
                       </p>
@@ -1397,14 +1397,14 @@ export function Clubs({
                           key={msg.id}
                           className={`p-3 sm:p-4 rounded-xl border-2 space-y-2 max-w-4xl ${
                             isMine
-                              ? 'bg-white border-[#4F46E5] ml-auto'
-                              : 'bg-white border-[#0F172A]/20'
+                              ? 'bg-white border-[#0D9488] ml-auto'
+                              : 'bg-white border-[#1C1917]/20'
                           }`}
                         >
                           {msg.replyTo && (
-                            <div className="px-2.5 py-1.5 rounded bg-[#F8FAFC] border-l-4 border-[#E11D48] text-xs text-[#0F172A]/80 truncate">
+                            <div className="px-2.5 py-1.5 rounded bg-[#FAFAF9] border-l-4 border-[#EA580C] text-xs text-[#1C1917]/80 truncate">
                               Replying to{' '}
-                              <strong className="text-[#0F172A]">
+                              <strong className="text-[#1C1917]">
                                 {msg.replyTo.senderName}
                               </strong>
                               : &ldquo;{msg.replyTo.text}&rdquo;
@@ -1421,27 +1421,27 @@ export function Clubs({
                                     msg.senderRole
                                   )
                                 }
-                                className="text-xs sm:text-sm font-bold text-[#0F172A] hover:text-[#4F46E5] hover:underline flex items-center gap-2 text-left min-w-0"
+                                className="text-xs sm:text-sm font-bold text-[#1C1917] hover:text-[#0D9488] hover:underline flex items-center gap-2 text-left min-w-0"
                               >
-                                <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#0F172A] text-[#F59E0B] flex items-center justify-center text-[11px] sm:text-xs font-bold shrink-0">
+                                <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#1C1917] text-[#CA8A04] flex items-center justify-center text-[11px] sm:text-xs font-bold shrink-0">
                                   {msg.senderName.slice(0, 2).toUpperCase()}
                                 </span>
                                 <span className="truncate">{msg.senderName}</span>
                               </button>
                               <Badge variant="primary">{msg.senderRole}</Badge>
                               {msg.pinned && (
-                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#E11D48]">
+                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#EA580C]">
                                   <Pin className="w-3 h-3" />
                                   Pinned
                                 </span>
                               )}
                             </div>
-                            <span className="text-[11px] font-medium text-[#0F172A]/70">
+                            <span className="text-[11px] font-medium text-[#1C1917]/70">
                               {msg.time}
                             </span>
                           </div>
 
-                          <p className="text-xs sm:text-sm text-[#0F172A] leading-relaxed sm:pl-9 break-words">
+                          <p className="text-xs sm:text-sm text-[#1C1917] leading-relaxed sm:pl-9 break-words">
                             {msg.text}
                           </p>
 
@@ -1451,7 +1451,7 @@ export function Clubs({
                                 href={msg.linkUrl}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#0F172A] text-xs font-semibold text-[#F59E0B] hover:text-[#4F46E5] max-w-full"
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#1C1917] text-xs font-semibold text-[#CA8A04] hover:text-[#0D9488] max-w-full"
                               >
                                 <Link2 className="w-3.5 h-3.5 shrink-0" />
                                 <span className="truncate">
@@ -1468,9 +1468,9 @@ export function Clubs({
                                 onClick={() =>
                                   handleReactMessage(msg.id, 'likes')
                                 }
-                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#F8FAFC] hover:bg-[#4F46E5] hover:text-[#F8FAFC] border border-[#0F172A]/20 text-xs font-semibold text-[#0F172A] transition-colors"
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#FAFAF9] hover:bg-[#0D9488] hover:text-[#FAFAF9] border border-[#1C1917]/20 text-xs font-semibold text-[#1C1917] transition-colors"
                               >
-                                <ThumbsUp className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#4F46E5]" />
+                                <ThumbsUp className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#0D9488]" />
                                 <span>{msg.likes || 0}</span>
                               </button>
                               <button
@@ -1478,9 +1478,9 @@ export function Clubs({
                                 onClick={() =>
                                   handleReactMessage(msg.id, 'fires')
                                 }
-                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#F8FAFC] hover:bg-[#F59E0B] border border-[#0F172A]/20 text-xs font-semibold text-[#0F172A] transition-colors"
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#FAFAF9] hover:bg-[#CA8A04] border border-[#1C1917]/20 text-xs font-semibold text-[#1C1917] transition-colors"
                               >
-                                <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#E11D48]" />
+                                <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#EA580C]" />
                                 <span>{msg.fires || 0}</span>
                               </button>
                               <button
@@ -1488,9 +1488,9 @@ export function Clubs({
                                 onClick={() =>
                                   handleReactMessage(msg.id, 'rockets')
                                 }
-                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#F8FAFC] hover:bg-[#E11D48] hover:text-[#F8FAFC] border border-[#0F172A]/20 text-xs font-semibold text-[#0F172A] transition-colors"
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#FAFAF9] hover:bg-[#EA580C] hover:text-[#FAFAF9] border border-[#1C1917]/20 text-xs font-semibold text-[#1C1917] transition-colors"
                               >
-                                <Rocket className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F59E0B]" />
+                                <Rocket className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#CA8A04]" />
                                 <span>{msg.rockets || 0}</span>
                               </button>
                             </div>
@@ -1499,7 +1499,7 @@ export function Clubs({
                               <button
                                 type="button"
                                 onClick={() => setReplyToMsg(msg)}
-                                className="text-[#4F46E5] hover:text-[#0F172A] flex items-center gap-1"
+                                className="text-[#0D9488] hover:text-[#1C1917] flex items-center gap-1"
                               >
                                 <Reply className="w-3.5 h-3.5" />
                                 Reply
@@ -1507,7 +1507,7 @@ export function Clubs({
                               <button
                                 type="button"
                                 onClick={() => handleTogglePinMessage(msg.id)}
-                                className="text-[#F59E0B] hover:text-[#0F172A] flex items-center gap-1"
+                                className="text-[#CA8A04] hover:text-[#1C1917] flex items-center gap-1"
                               >
                                 <Pin className="w-3.5 h-3.5" />
                                 {msg.pinned ? 'Unpin' : 'Pin'}
@@ -1520,7 +1520,7 @@ export function Clubs({
                                     msg.senderRole
                                   )
                                 }
-                                className="text-[#0F172A] hover:text-[#4F46E5] flex items-center gap-1"
+                                className="text-[#1C1917] hover:text-[#0D9488] flex items-center gap-1"
                               >
                                 <Eye className="w-3.5 h-3.5" />
                                 Profile
@@ -1529,7 +1529,7 @@ export function Clubs({
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteMessage(msg.id)}
-                                  className="text-[#E11D48] hover:text-[#0F172A]"
+                                  className="text-[#EA580C] hover:text-[#1C1917]"
                                   title="Delete message"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
@@ -1544,12 +1544,12 @@ export function Clubs({
                 </div>
 
                 {/* Bottom Full-Width Composer */}
-                <div className="p-2.5 sm:p-4 bg-white border-t-2 border-[#4F46E5] space-y-2 shrink-0">
+                <div className="p-2.5 sm:p-4 bg-white border-t-2 border-[#0D9488] space-y-2 shrink-0">
                   {replyToMsg && (
-                    <div className="px-3 py-1.5 rounded-lg bg-[#F8FAFC] border-l-4 border-[#4F46E5] flex items-center justify-between text-xs">
-                      <span className="text-[#0F172A] truncate">
+                    <div className="px-3 py-1.5 rounded-lg bg-[#FAFAF9] border-l-4 border-[#0D9488] flex items-center justify-between text-xs">
+                      <span className="text-[#1C1917] truncate">
                         Replying to{' '}
-                        <strong className="text-[#4F46E5]">
+                        <strong className="text-[#0D9488]">
                           {replyToMsg.senderName}
                         </strong>
                         : {replyToMsg.text}
@@ -1557,7 +1557,7 @@ export function Clubs({
                       <button
                         type="button"
                         onClick={() => setReplyToMsg(null)}
-                        className="text-[#E11D48] hover:text-[#0F172A] ml-2"
+                        className="text-[#EA580C] hover:text-[#1C1917] ml-2"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -1579,7 +1579,7 @@ export function Clubs({
                           setShowLinkInput(false);
                           setAttachmentUrl('');
                         }}
-                        className="text-xs font-semibold text-[#E11D48] hover:text-[#0F172A] px-2 shrink-0"
+                        className="text-xs font-semibold text-[#EA580C] hover:text-[#1C1917] px-2 shrink-0"
                       >
                         Cancel
                       </button>
@@ -1596,8 +1596,8 @@ export function Clubs({
                       title="Attach GitHub / Project Link"
                       className={`h-10 px-2.5 sm:px-3 rounded-lg border text-xs font-semibold flex items-center gap-1.5 shrink-0 transition-colors ${
                         showLinkInput
-                          ? 'bg-[#F59E0B] border-[#F59E0B] text-[#0F172A]'
-                          : 'bg-[#0F172A] border-[#0F172A] text-[#F8FAFC] hover:bg-[#4F46E5] hover:border-[#4F46E5]'
+                          ? 'bg-[#CA8A04] border-[#CA8A04] text-[#1C1917]'
+                          : 'bg-[#1C1917] border-[#1C1917] text-[#FAFAF9] hover:bg-[#0D9488] hover:border-[#0D9488]'
                       }`}
                     >
                       <Link2 className="w-4 h-4" />
@@ -1633,9 +1633,9 @@ export function Clubs({
               </div>
 
               {/* RIGHT SIDEBAR: CLUB LEADERSHIP & ONLINE MEMBERS DIRECTORY */}
-              <aside className="hidden xl:flex xl:w-72 bg-[#0F172A] border-l-2 border-[#F59E0B] flex-col overflow-y-auto shrink-0 p-4 space-y-5">
+              <aside className="hidden xl:flex xl:w-72 bg-[#1C1917] border-l-2 border-[#CA8A04] flex-col overflow-y-auto shrink-0 p-4 space-y-5">
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-wider text-[#F59E0B] mb-2.5">
+                  <h4 className="text-[10px] font-bold uppercase tracking-wider text-[#CA8A04] mb-2.5">
                     Club Executive Officers
                   </h4>
                   <div className="space-y-2">
@@ -1665,15 +1665,15 @@ export function Clubs({
                         onClick={() =>
                           handleInspectStudentProfile(off.name, off.role)
                         }
-                        className="w-full p-2.5 rounded-xl bg-white hover:bg-[#F59E0B] border-l-4 border-l-[#4F46E5] text-left transition-colors group"
+                        className="w-full p-2.5 rounded-xl bg-white hover:bg-[#CA8A04] border-l-4 border-l-[#0D9488] text-left transition-colors group"
                       >
-                        <p className="text-[10px] font-bold uppercase text-[#E11D48] group-hover:text-[#0F172A]">
+                        <p className="text-[10px] font-bold uppercase text-[#EA580C] group-hover:text-[#1C1917]">
                           {off.role}
                         </p>
-                        <p className="text-xs font-bold text-[#0F172A] truncate mt-0.5">
+                        <p className="text-xs font-bold text-[#1C1917] truncate mt-0.5">
                           {off.name}
                         </p>
-                        <p className="text-[10px] font-semibold text-[#4F46E5] group-hover:text-[#0F172A] mt-0.5">
+                        <p className="text-[10px] font-semibold text-[#0D9488] group-hover:text-[#1C1917] mt-0.5">
                           Click to View Profile →
                         </p>
                       </button>
@@ -1681,9 +1681,9 @@ export function Clubs({
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-[#F8FAFC]/15">
+                <div className="pt-3 border-t border-[#FAFAF9]/15">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-[10px] font-bold uppercase tracking-wider text-[#F59E0B]">
+                    <h4 className="text-[10px] font-bold uppercase tracking-wider text-[#CA8A04]">
                       All Club Members ({clubPeersList.length})
                     </h4>
                   </div>
@@ -1695,17 +1695,17 @@ export function Clubs({
                         onClick={() =>
                           handleInspectStudentProfile(m.name, m.role)
                         }
-                        className="w-full p-2 rounded-lg bg-[#F8FAFC]/10 hover:bg-[#4F46E5] flex items-center justify-between text-left transition-colors"
+                        className="w-full p-2 rounded-lg bg-[#FAFAF9]/10 hover:bg-[#0D9488] flex items-center justify-between text-left transition-colors"
                       >
                         <div className="min-w-0 pr-2">
-                          <p className="text-xs font-semibold text-[#F8FAFC] truncate">
+                          <p className="text-xs font-semibold text-[#FAFAF9] truncate">
                             {m.name}
                           </p>
-                          <p className="text-[10px] text-[#F59E0B] truncate">
+                          <p className="text-[10px] text-[#CA8A04] truncate">
                             {m.role}
                           </p>
                         </div>
-                        <Eye className="w-3.5 h-3.5 text-[#F8FAFC] shrink-0" />
+                        <Eye className="w-3.5 h-3.5 text-[#FAFAF9] shrink-0" />
                       </button>
                     ))}
                   </div>
@@ -1714,20 +1714,20 @@ export function Clubs({
             </div>
           ) : (
             /* FULL-SCREEN DETAILS / ROSTER / PROJECTS VIEW */
-            <div className="flex-1 overflow-y-auto p-6 bg-[#F8FAFC]">
+            <div className="flex-1 overflow-y-auto p-6 bg-[#FAFAF9]">
               <div className="max-w-5xl mx-auto space-y-6">
                 {effectiveTab === 'overview' && (
                   <>
                     {!canAccessClubWorkspace && (
-                      <div className="p-5 rounded-xl bg-[#0F172A] text-[#F8FAFC] border-l-4 border-l-[#4F46E5] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="p-5 rounded-xl bg-[#1C1917] text-[#FAFAF9] border-l-4 border-l-[#0D9488] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
-                            <ShieldAlert className="w-4 h-4 text-[#F59E0B]" />
-                            <h3 className="text-sm font-bold text-[#F8FAFC]">
+                            <ShieldAlert className="w-4 h-4 text-[#CA8A04]" />
+                            <h3 className="text-sm font-bold text-[#FAFAF9]">
                               Members-Only Chats &amp; Internal Workspace
                             </h3>
                           </div>
-                          <p className="text-xs text-[#F8FAFC]/80">
+                          <p className="text-xs text-[#FAFAF9]/80">
                             Only joined club members can view or send messages in club channels, DMs, and project sprints.
                           </p>
                         </div>
@@ -1748,56 +1748,56 @@ export function Clubs({
                       </div>
                     )}
 
-                    <div className="p-5 rounded-xl bg-white border border-[#0F172A]/20 space-y-4">
-                      <h3 className="text-base font-bold text-[#0F172A]">
+                    <div className="p-5 rounded-xl bg-white border border-[#1C1917]/20 space-y-4">
+                      <h3 className="text-base font-bold text-[#1C1917]">
                         About {activeModalClub.name}
                       </h3>
-                      <p className="text-sm text-[#0F172A]/85 leading-relaxed">
+                      <p className="text-sm text-[#1C1917]/85 leading-relaxed">
                         {activeModalClub.fullDescription ||
                           activeModalClub.shortDescription}
                       </p>
 
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                        <div className="p-4 rounded-xl bg-[#0F172A] border-l-4 border-l-[#E11D48] text-left">
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center gap-1">
+                        <div className="p-4 rounded-xl bg-[#1C1917] border-l-4 border-l-[#EA580C] text-left">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#CA8A04] flex items-center gap-1">
                             <Crown className="w-3.5 h-3.5" />
                             Leader / President
                           </span>
-                          <p className="text-sm font-bold text-[#F8FAFC] mt-1.5">
+                          <p className="text-sm font-bold text-[#FAFAF9] mt-1.5">
                             {activeModalClub.leadName || 'Unassigned'}
                           </p>
                         </div>
 
-                        <div className="p-4 rounded-xl bg-[#0F172A] border-l-4 border-l-[#F59E0B] text-left">
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center gap-1">
+                        <div className="p-4 rounded-xl bg-[#1C1917] border-l-4 border-l-[#CA8A04] text-left">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#CA8A04] flex items-center gap-1">
                             <Award className="w-3.5 h-3.5" />
                             Vice Leader
                           </span>
-                          <p className="text-sm font-bold text-[#F8FAFC] mt-1.5">
+                          <p className="text-sm font-bold text-[#FAFAF9] mt-1.5">
                             {activeModalClub.viceLeadName || 'Not Assigned'}
                           </p>
                         </div>
 
-                        <div className="p-4 rounded-xl bg-[#0F172A] border-l-4 border-l-[#4F46E5] text-left">
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center gap-1">
+                        <div className="p-4 rounded-xl bg-[#1C1917] border-l-4 border-l-[#0D9488] text-left">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#CA8A04] flex items-center gap-1">
                             <Calendar className="w-3.5 h-3.5" />
                             Secretary
                           </span>
-                          <p className="text-sm font-bold text-[#F8FAFC] mt-1.5">
+                          <p className="text-sm font-bold text-[#FAFAF9] mt-1.5">
                             {activeModalClub.secretaryName || 'Core Team'}
                           </p>
                         </div>
                       </div>
 
                       {activeModalClub.activities && activeModalClub.activities.length > 0 && (
-                        <div className="pt-3 border-t border-[#0F172A]/15">
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#4F46E5] mb-2">
+                        <div className="pt-3 border-t border-[#1C1917]/15">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#0D9488] mb-2">
                             Club Activities &amp; Focus Areas
                           </h4>
                           <ul className="space-y-1.5">
                             {activeModalClub.activities.map((act) => (
-                              <li key={act} className="flex items-center gap-2 text-xs text-[#0F172A]">
-                                <CheckCircle2 className="w-3.5 h-3.5 text-[#4F46E5] shrink-0" />
+                              <li key={act} className="flex items-center gap-2 text-xs text-[#1C1917]">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-[#0D9488] shrink-0" />
                                 <span>{act}</span>
                               </li>
                             ))}
@@ -1808,9 +1808,9 @@ export function Clubs({
 
                     {/* Member Roster & Role Assignment Section (Members & Admin Only) */}
                     {canAccessClubWorkspace && (
-                    <div className="p-5 rounded-xl bg-white border border-[#0F172A]/20 space-y-4">
+                    <div className="p-5 rounded-xl bg-white border border-[#1C1917]/20 space-y-4">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <h4 className="text-sm font-bold text-[#0F172A]">
+                        <h4 className="text-sm font-bold text-[#1C1917]">
                           Club Member Directory (
                           {activeModalClub.members?.length || 0} Active)
                         </h4>
@@ -1820,7 +1820,7 @@ export function Clubs({
                           onChange={(e) =>
                             setRosterBranchFilter(e.target.value)
                           }
-                          className="h-8 px-3 text-xs glass-input rounded-lg text-[#0F172A] font-semibold"
+                          className="h-8 px-3 text-xs glass-input rounded-lg text-[#1C1917] font-semibold"
                         >
                           <option value="ALL">All Branches & Divisions</option>
                           <option value="CSE">CSE</option>
@@ -1833,7 +1833,7 @@ export function Clubs({
 
                       <form
                         onSubmit={handleAddMemberToExistingClub}
-                        className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#0F172A]/20 flex flex-col sm:flex-row items-end gap-2.5"
+                        className="p-3.5 rounded-xl bg-[#FAFAF9] border border-[#1C1917]/20 flex flex-col sm:flex-row items-end gap-2.5"
                       >
                         <div className="w-full sm:flex-1">
                           <Select
@@ -1872,7 +1872,7 @@ export function Clubs({
 
                       {activeModalClub.members &&
                         activeModalClub.members.length > 0 && (
-                          <div className="border border-[#0F172A]/20 rounded-xl divide-y divide-[#0F172A]/15 bg-white">
+                          <div className="border border-[#1C1917]/20 rounded-xl divide-y divide-[#1C1917]/15 bg-white">
                             {activeModalClub.members
                               .filter((member) =>
                                 rosterBranchFilter === 'ALL'
@@ -1886,7 +1886,7 @@ export function Clubs({
                               .map((member) => (
                                 <div
                                   key={member.id}
-                                  className="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs hover:bg-[#F8FAFC] transition-colors"
+                                  className="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs hover:bg-[#FAFAF9] transition-colors"
                                 >
                                   <button
                                     type="button"
@@ -1898,17 +1898,17 @@ export function Clubs({
                                     }
                                     className="flex items-center gap-3 text-left group"
                                   >
-                                    <div className="w-9 h-9 rounded-full bg-[#0F172A] flex items-center justify-center text-xs font-bold text-[#F59E0B] shrink-0">
+                                    <div className="w-9 h-9 rounded-full bg-[#1C1917] flex items-center justify-center text-xs font-bold text-[#CA8A04] shrink-0">
                                       {member.name.slice(0, 2).toUpperCase()}
                                     </div>
                                     <div>
-                                      <p className="font-bold text-sm text-[#0F172A] group-hover:text-[#4F46E5] flex items-center gap-2">
+                                      <p className="font-bold text-sm text-[#1C1917] group-hover:text-[#0D9488] flex items-center gap-2">
                                         <span>{member.name}</span>
-                                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#4F46E5] text-[#F8FAFC]">
+                                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#0D9488] text-[#FAFAF9]">
                                           View Profile
                                         </span>
                                       </p>
-                                      <p className="text-xs text-[#0F172A]/75">
+                                      <p className="text-xs text-[#1C1917]/75">
                                         {member.email}
                                       </p>
                                     </div>
@@ -1936,7 +1936,7 @@ export function Clubs({
                                           e.target.value
                                         )
                                       }
-                                      className="h-8 px-2.5 text-xs glass-input rounded-lg text-[#0F172A] font-semibold focus:outline-none"
+                                      className="h-8 px-2.5 text-xs glass-input rounded-lg text-[#1C1917] font-semibold focus:outline-none"
                                     >
                                       {ROLE_OPTIONS.map((r) => (
                                         <option key={r} value={r}>
@@ -1951,7 +1951,7 @@ export function Clubs({
                                         handleRemoveMemberFromClub(member.id)
                                       }
                                       aria-label={`Remove ${member.name}`}
-                                      className="p-1.5 text-[#E11D48] hover:text-[#0F172A] rounded"
+                                      className="p-1.5 text-[#EA580C] hover:text-[#1C1917] rounded"
                                     >
                                       <Trash2 className="w-4 h-4" />
                                     </button>
@@ -1967,10 +1967,10 @@ export function Clubs({
 
                 {effectiveTab === 'projects' && canAccessClubWorkspace && (
                   <div className="space-y-5">
-                    <div className="p-5 rounded-xl bg-white border border-[#0F172A]/20 space-y-4">
+                    <div className="p-5 rounded-xl bg-white border border-[#1C1917]/20 space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-bold uppercase tracking-wider text-[#4F46E5] flex items-center gap-2">
-                          <FolderGit2 className="w-4 h-4 text-[#E11D48]" />
+                        <h4 className="text-sm font-bold uppercase tracking-wider text-[#0D9488] flex items-center gap-2">
+                          <FolderGit2 className="w-4 h-4 text-[#EA580C]" />
                           Active Club Build Sprints & Repositories (60%
                           Practical Track)
                         </h4>
@@ -1978,12 +1978,12 @@ export function Clubs({
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="p-4 rounded-xl bg-[#F8FAFC] border-l-4 border-l-[#4F46E5] space-y-2">
+                        <div className="p-4 rounded-xl bg-[#FAFAF9] border-l-4 border-l-[#0D9488] space-y-2">
                           <Badge variant="primary">Sprint 01 · Live Build</Badge>
-                          <h5 className="text-sm font-bold text-[#0F172A]">
+                          <h5 className="text-sm font-bold text-[#1C1917]">
                             {activeModalClub.name} — HackUSTU Flagship Prototype
                           </h5>
-                          <p className="text-xs text-[#0F172A]/75">
+                          <p className="text-xs text-[#1C1917]/75">
                             Lead: {activeModalClub.leadName} · Discuss in
                             #project-builds
                           </p>
@@ -2000,14 +2000,14 @@ export function Clubs({
                           </Button>
                         </div>
 
-                        <div className="p-4 rounded-xl bg-[#F8FAFC] border-l-4 border-l-[#F59E0B] space-y-2">
+                        <div className="p-4 rounded-xl bg-[#FAFAF9] border-l-4 border-l-[#CA8A04] space-y-2">
                           <Badge variant="warning">
                             Sprint 02 · Open for Peers
                           </Badge>
-                          <h5 className="text-sm font-bold text-[#0F172A]">
+                          <h5 className="text-sm font-bold text-[#1C1917]">
                             USTU Campus Open-Source Tooling & Documentation
                           </h5>
-                          <p className="text-xs text-[#0F172A]/75">
+                          <p className="text-xs text-[#1C1917]/75">
                             Coord: {activeModalClub.viceLeadName} · Open to all
                             years
                           </p>
@@ -2027,17 +2027,17 @@ export function Clubs({
                     </div>
 
                     {activeModalClub.activities && (
-                      <div className="p-5 rounded-xl bg-white border border-[#0F172A]/20">
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#E11D48] mb-3">
+                      <div className="p-5 rounded-xl bg-white border border-[#1C1917]/20">
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-[#EA580C] mb-3">
                           Core Club Activities & Weekly Cohorts
                         </h4>
                         <ul className="space-y-2.5">
                           {activeModalClub.activities.map((act) => (
                             <li
                               key={act}
-                              className="flex items-center gap-2.5 text-sm text-[#0F172A]"
+                              className="flex items-center gap-2.5 text-sm text-[#1C1917]"
                             >
-                              <CheckCircle2 className="w-4 h-4 text-[#4F46E5] shrink-0" />
+                              <CheckCircle2 className="w-4 h-4 text-[#0D9488] shrink-0" />
                               <span>{act}</span>
                             </li>
                           ))}
@@ -2090,50 +2090,50 @@ export function Clubs({
       >
         {inspectedPeer && (
           <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-[#0F172A] text-[#F8FAFC] flex items-start gap-3.5">
-              <div className="w-12 h-12 rounded-full bg-[#F59E0B] flex items-center justify-center text-base font-bold text-[#0F172A] shrink-0">
+            <div className="p-4 rounded-xl bg-[#1C1917] text-[#FAFAF9] flex items-start gap-3.5">
+              <div className="w-12 h-12 rounded-full bg-[#CA8A04] flex items-center justify-center text-base font-bold text-[#1C1917] shrink-0">
                 {inspectedPeer.studentName.slice(0, 2).toUpperCase()}
               </div>
               <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <h3 className="text-sm font-bold text-[#F8FAFC]">
+                  <h3 className="text-sm font-bold text-[#FAFAF9]">
                     {inspectedPeer.studentName}
                   </h3>
                   <Badge variant="primary">{inspectedPeer.roleInClub}</Badge>
                   {inspectedPeer.isCR && <Badge variant="danger">CR</Badge>}
                 </div>
-                <p className="text-xs text-[#F8FAFC]/85">
+                <p className="text-xs text-[#FAFAF9]/85">
                   Roll No:{' '}
-                  <strong className="text-[#F59E0B]">
+                  <strong className="text-[#CA8A04]">
                     {inspectedPeer.rollNo}
                   </strong>{' '}
                   · {inspectedPeer.branch} {inspectedPeer.division} (
                   {inspectedPeer.batch})
                 </p>
-                <p className="text-xs text-[#4F46E5] flex items-center gap-1">
+                <p className="text-xs text-[#0D9488] flex items-center gap-1">
                   <Mail className="w-3 h-3" />
                   {inspectedPeer.email}
                 </p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-[#0F172A]/20 space-y-2 text-xs">
-              <p className="text-[#0F172A] leading-relaxed">
+            <div className="p-3.5 rounded-xl bg-[#FAFAF9] border border-[#1C1917]/20 space-y-2 text-xs">
+              <p className="text-[#1C1917] leading-relaxed">
                 {inspectedPeer.bio}
               </p>
-              <div className="pt-2 border-t border-[#0F172A]/15 flex items-center justify-between text-[#0F172A]/80">
+              <div className="pt-2 border-t border-[#1C1917]/15 flex items-center justify-between text-[#1C1917]/80">
                 <span className="flex items-center gap-1 font-medium">
-                  <GraduationCap className="w-3.5 h-3.5 text-[#4F46E5]" />
+                  <GraduationCap className="w-3.5 h-3.5 text-[#0D9488]" />
                   {inspectedPeer.track}
                 </span>
-                <span className="font-bold text-[#E11D48]">
+                <span className="font-bold text-[#EA580C]">
                   CGPA: {inspectedPeer.gpa}
                 </span>
               </div>
             </div>
 
             <div>
-              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#4F46E5] mb-2">
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#0D9488] mb-2">
                 Verified Skills & Domain Track
               </h4>
               <div className="flex flex-wrap gap-1.5">
@@ -2146,21 +2146,21 @@ export function Clubs({
             </div>
 
             <div>
-              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#E11D48] mb-2">
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#EA580C] mb-2">
                 Campus Roles & Achievements
               </h4>
-              <ul className="space-y-1.5 text-xs text-[#0F172A] font-medium">
+              <ul className="space-y-1.5 text-xs text-[#1C1917] font-medium">
                 {inspectedPeer.achievements.map((ach) => (
                   <li key={ach} className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#CA8A04] shrink-0" />
                     <span>{ach}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="pt-3 border-t border-[#0F172A]/15 space-y-2">
-              <label className="block text-xs font-bold text-[#0F172A]">
+            <div className="pt-3 border-t border-[#1C1917]/15 space-y-2">
+              <label className="block text-xs font-bold text-[#1C1917]">
                 Quick Note to {inspectedPeer.studentName} (Opens 1-on-1 DM)
               </label>
               <input
