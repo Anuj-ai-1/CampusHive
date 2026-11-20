@@ -608,8 +608,22 @@ app.delete('/api/clubs/:id', requireAuth, requireAdmin, (req, res) => {
   res.json({ status: 'rejected' });
 });
 
+function hasJoinedClubAccess(clubId, user) {
+  if (!user) return false;
+  if (user.role === 'admin') return true;
+  const row = db
+    .prepare(
+      "SELECT id FROM club_memberships WHERE club_id = ? AND user_id = ? AND membership_state = 'Joined'"
+    )
+    .get(clubId, user.id);
+  return Boolean(row);
+}
+
 app.patch('/api/clubs/:id/hierarchy', requireAuth, (req, res) => {
   const clubId = req.params.id;
+  if (!hasJoinedClubAccess(clubId, req.user)) {
+    return res.status(403).json({ error: 'Only joined club members can manage the club roster.' });
+  }
   const club = db.prepare('SELECT * FROM clubs WHERE id = ?').get(clubId);
   if (!club) return res.status(404).json({ error: 'Club not found.' });
 
@@ -656,6 +670,9 @@ app.patch('/api/clubs/:id/hierarchy', requireAuth, (req, res) => {
 // Club Chat Messages
 app.post('/api/clubs/:id/messages', requireAuth, (req, res) => {
   const clubId = req.params.id;
+  if (!hasJoinedClubAccess(clubId, req.user)) {
+    return res.status(403).json({ error: 'Join this club first to view or send messages.' });
+  }
   const { channel = 'general', text, replyTo = null, linkUrl = null, senderRoleOverride } = req.body || {};
   if (!text?.trim()) {
     return res.status(400).json({ error: 'Message text is required.' });
@@ -707,6 +724,9 @@ app.post('/api/clubs/:id/messages', requireAuth, (req, res) => {
 
 app.patch('/api/clubs/:id/messages/:msgId', requireAuth, (req, res) => {
   const { id: clubId, msgId } = req.params;
+  if (!hasJoinedClubAccess(clubId, req.user)) {
+    return res.status(403).json({ error: 'Join this club first to interact with messages.' });
+  }
   const { reactField, togglePin } = req.body || {};
 
   if (reactField && ['likes', 'fires', 'rockets'].includes(reactField)) {
@@ -722,6 +742,9 @@ app.patch('/api/clubs/:id/messages/:msgId', requireAuth, (req, res) => {
 
 app.delete('/api/clubs/:id/messages/:msgId', requireAuth, (req, res) => {
   const { id: clubId, msgId } = req.params;
+  if (!hasJoinedClubAccess(clubId, req.user)) {
+    return res.status(403).json({ error: 'Join this club first to manage messages.' });
+  }
   db.prepare('DELETE FROM club_messages WHERE id = ? AND club_id = ?').run(msgId, clubId);
   broadcastEvent('STATE_SYNC', { entity: 'chat', clubId });
   res.json({ status: 'deleted' });

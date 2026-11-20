@@ -864,22 +864,25 @@ export function getBootstrapData(userId, role) {
         : c.requires_approval
         ? 'Approval Required'
         : 'Open';
-      const cMsgs = msgRows
-        .filter((m) => m.club_id === c.id)
-        .map((m) => ({
-          id: m.id,
-          channel: m.channel,
-          senderName: m.sender_name,
-          senderRole: m.sender_role,
-          time: m.time_label,
-          text: m.text,
-          replyTo: m.reply_to_json ? JSON.parse(m.reply_to_json) : null,
-          linkUrl: m.link_url,
-          pinned: Boolean(m.pinned),
-          likes: m.likes,
-          fires: m.fires,
-          rockets: m.rockets,
-        }));
+      const hasAccess = role === 'admin' || membershipState === 'Joined';
+      const cMsgs = hasAccess
+        ? msgRows
+            .filter((m) => m.club_id === c.id)
+            .map((m) => ({
+              id: m.id,
+              channel: m.channel,
+              senderName: m.sender_name,
+              senderRole: m.sender_role,
+              time: m.time_label,
+              text: m.text,
+              replyTo: m.reply_to_json ? JSON.parse(m.reply_to_json) : null,
+              linkUrl: m.link_url,
+              pinned: Boolean(m.pinned),
+              likes: m.likes,
+              fires: m.fires,
+              rockets: m.rockets,
+            }))
+        : [];
 
       return {
         id: c.id,
@@ -897,12 +900,14 @@ export function getBootstrapData(userId, role) {
         meetingSchedule: c.meeting_schedule,
         membershipState,
         requiresApproval: Boolean(c.requires_approval),
-        members: cMembers.map((m) => ({
-          id: m.id,
-          name: m.name,
-          role: m.role,
-          email: m.email,
-        })),
+        members: hasAccess
+          ? cMembers.map((m) => ({
+              id: m.id,
+              name: m.name,
+              role: m.role,
+              email: m.email,
+            }))
+          : [],
         activities: JSON.parse(c.activities_json || '[]'),
         chatMessages: cMsgs,
       };

@@ -12,11 +12,12 @@ import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 
-export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
+export function ClubCard({ club, role = 'student', onJoinClub, onOpenDetails, onOpenChat }) {
   const isPendingAdminApproval = club.approvalStatus === 'Pending Approval';
   const isJoined = club.membershipState === 'Joined';
   const isPendingMember = club.membershipState === 'Pending Approval';
   const requiresApproval = club.membershipState === 'Approval Required';
+  const canChat = isJoined || role === 'admin';
 
   const getBadgeProps = () => {
     if (isPendingAdminApproval) {
@@ -81,14 +82,24 @@ export function ClubCard({ club, onJoinClub, onOpenDetails, onOpenChat }) {
       </div>
 
       <div className="mt-4 pt-3 border-t border-[#0F172A]/15 flex items-center justify-between gap-2">
-        <Button
-          variant="primary"
-          size="sm"
-          icon={MessageSquare}
-          onClick={() => (onOpenChat ? onOpenChat(club) : onOpenDetails(club))}
-        >
-          Open Chat
-        </Button>
+        {canChat ? (
+          <Button
+            variant="primary"
+            size="sm"
+            icon={MessageSquare}
+            onClick={() => (onOpenChat ? onOpenChat(club) : onOpenDetails(club))}
+          >
+            Open Chat
+          </Button>
+        ) : (
+          <Button
+            variant="subtle"
+            size="sm"
+            onClick={() => onOpenDetails(club)}
+          >
+            View Details
+          </Button>
+        )}
 
         {isPendingAdminApproval ? (
           <Button

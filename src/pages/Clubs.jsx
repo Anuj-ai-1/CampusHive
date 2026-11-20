@@ -701,6 +701,7 @@ export function Clubs({
             <ClubCard
               key={club.id}
               club={club}
+              role={role}
               onJoinClub={onJoinClub}
               onOpenChat={(c) => {
                 setClubWorkspaceTab('chat');
@@ -957,12 +958,17 @@ export function Clubs({
       </Modal>
 
       {/* FULL-SCREEN CLUB CHATROOM & COMMUNITY WORKSPACE */}
-      {activeModalClub && (
+      {activeModalClub && (() => {
+        const canAccessClubWorkspace =
+          role === 'admin' || activeModalClub.membershipState === 'Joined';
+        const effectiveTab = canAccessClubWorkspace ? clubWorkspaceTab : 'overview';
+
+        return (
         <div
           className="fixed inset-0 z-50 w-screen h-[100dvh] bg-[#F8FAFC] text-[#0F172A] flex flex-col overflow-hidden"
           role="dialog"
           aria-modal="true"
-          aria-label={`${activeModalClub.name} Full-Screen Workspace`}
+          aria-label={`${activeModalClub.name} Workspace`}
         >
           {/* Full-Screen Top Navigation Header */}
           <header className="px-3 py-2.5 sm:px-6 sm:py-0 sm:h-14 bg-[#0F172A] border-b-2 border-[#F59E0B] flex flex-col md:flex-row md:items-center md:justify-between gap-2 shrink-0">
@@ -1020,23 +1026,27 @@ export function Clubs({
             </div>
 
             <div className="flex items-center justify-between md:justify-end gap-2 overflow-x-auto">
-              <Tabs
-                tabs={[
-                  {
-                    id: 'chat',
-                    label: 'Chat & DMs',
-                    count: clubMessages.length,
-                  },
-                  {
-                    id: 'overview',
-                    label: 'Roster & Roles',
-                    count: activeModalClub.members?.length || 0,
-                  },
-                  { id: 'projects', label: 'Projects' },
-                ]}
-                activeTab={clubWorkspaceTab}
-                onChange={setClubWorkspaceTab}
-              />
+              {canAccessClubWorkspace ? (
+                <Tabs
+                  tabs={[
+                    {
+                      id: 'chat',
+                      label: 'Chat & DMs',
+                      count: clubMessages.length,
+                    },
+                    {
+                      id: 'overview',
+                      label: 'Roster & Roles',
+                      count: activeModalClub.members?.length || 0,
+                    },
+                    { id: 'projects', label: 'Projects' },
+                  ]}
+                  activeTab={effectiveTab}
+                  onChange={setClubWorkspaceTab}
+                />
+              ) : (
+                <Badge variant="warning">Club Details · Members Only Chat</Badge>
+              )}
 
               {role === 'admin' &&
                 activeModalClub.approvalStatus === 'Pending Approval' && (
@@ -1073,7 +1083,7 @@ export function Clubs({
           </header>
 
           {/* FULL-SCREEN BODY */}
-          {clubWorkspaceTab === 'chat' ? (
+          {effectiveTab === 'chat' && canAccessClubWorkspace ? (
             <div className="flex-1 flex min-h-0 overflow-hidden relative">
               {/* Mobile Backdrop when Channel/DM Drawer is open */}
               {mobileChannelsOpen && (
@@ -1703,11 +1713,41 @@ export function Clubs({
               </aside>
             </div>
           ) : (
-            /* FULL-SCREEN ROSTER OR PROJECTS VIEW */
+            /* FULL-SCREEN DETAILS / ROSTER / PROJECTS VIEW */
             <div className="flex-1 overflow-y-auto p-6 bg-[#F8FAFC]">
               <div className="max-w-5xl mx-auto space-y-6">
-                {clubWorkspaceTab === 'overview' && (
+                {effectiveTab === 'overview' && (
                   <>
+                    {!canAccessClubWorkspace && (
+                      <div className="p-5 rounded-xl bg-[#0F172A] text-[#F8FAFC] border-l-4 border-l-[#4F46E5] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <ShieldAlert className="w-4 h-4 text-[#F59E0B]" />
+                            <h3 className="text-sm font-bold text-[#F8FAFC]">
+                              Members-Only Chats &amp; Internal Workspace
+                            </h3>
+                          </div>
+                          <p className="text-xs text-[#F8FAFC]/80">
+                            Only joined club members can view or send messages in club channels, DMs, and project sprints.
+                          </p>
+                        </div>
+                        {activeModalClub.membershipState === 'Pending Approval' ? (
+                          <Badge variant="warning">Application Pending Approval</Badge>
+                        ) : (
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={() => onJoinClub(activeModalClub.id)}
+                            className="shrink-0"
+                          >
+                            {activeModalClub.requiresApproval
+                              ? 'Apply to Join Club'
+                              : 'Join Club to Unlock Chat'}
+                          </Button>
+                        )}
+                      </div>
+                    )}
+
                     <div className="p-5 rounded-xl bg-white border border-[#0F172A]/20 space-y-4">
                       <h3 className="text-base font-bold text-[#0F172A]">
                         About {activeModalClub.name}
@@ -1718,87 +1758,56 @@ export function Clubs({
                       </p>
 
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleInspectStudentProfile(
-                              activeModalClub.leadName ||
-                                'Rohan Verma (4th Year CSE)',
-                              'Leader / President'
-                            )
-                          }
-                          className="p-4 rounded-xl bg-[#0F172A] hover:bg-[#4F46E5] border-l-4 border-l-[#E11D48] text-left transition-colors"
-                        >
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center justify-between">
-                            <span className="flex items-center gap-1">
-                              <Crown className="w-3.5 h-3.5" />
-                              Leader / President
-                            </span>
-                            <Eye className="w-3.5 h-3.5 text-[#F8FAFC]" />
+                        <div className="p-4 rounded-xl bg-[#0F172A] border-l-4 border-l-[#E11D48] text-left">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center gap-1">
+                            <Crown className="w-3.5 h-3.5" />
+                            Leader / President
                           </span>
                           <p className="text-sm font-bold text-[#F8FAFC] mt-1.5">
                             {activeModalClub.leadName || 'Unassigned'}
                           </p>
-                          <p className="text-xs text-[#F8FAFC]/80 mt-0.5">
-                            View Student Profile →
-                          </p>
-                        </button>
+                        </div>
 
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleInspectStudentProfile(
-                              activeModalClub.viceLeadName ||
-                                'Anuj Sharma (3rd Year CSE)',
-                              'Vice Leader'
-                            )
-                          }
-                          className="p-4 rounded-xl bg-[#0F172A] hover:bg-[#4F46E5] border-l-4 border-l-[#F59E0B] text-left transition-colors"
-                        >
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center justify-between">
-                            <span className="flex items-center gap-1">
-                              <Award className="w-3.5 h-3.5" />
-                              Vice Leader
-                            </span>
-                            <Eye className="w-3.5 h-3.5 text-[#F8FAFC]" />
+                        <div className="p-4 rounded-xl bg-[#0F172A] border-l-4 border-l-[#F59E0B] text-left">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center gap-1">
+                            <Award className="w-3.5 h-3.5" />
+                            Vice Leader
                           </span>
                           <p className="text-sm font-bold text-[#F8FAFC] mt-1.5">
                             {activeModalClub.viceLeadName || 'Not Assigned'}
                           </p>
-                          <p className="text-xs text-[#F8FAFC]/80 mt-0.5">
-                            View Student Profile →
-                          </p>
-                        </button>
+                        </div>
 
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleInspectStudentProfile(
-                              activeModalClub.secretaryName ||
-                                'Sneha Reddy (2nd Year Microsoft AI & ML)',
-                              'Secretary'
-                            )
-                          }
-                          className="p-4 rounded-xl bg-[#0F172A] hover:bg-[#4F46E5] border-l-4 border-l-[#4F46E5] text-left transition-colors"
-                        >
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center justify-between">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="w-3.5 h-3.5" />
-                              Secretary
-                            </span>
-                            <Eye className="w-3.5 h-3.5 text-[#F8FAFC]" />
+                        <div className="p-4 rounded-xl bg-[#0F172A] border-l-4 border-l-[#4F46E5] text-left">
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#F59E0B] flex items-center gap-1">
+                            <Calendar className="w-3.5 h-3.5" />
+                            Secretary
                           </span>
                           <p className="text-sm font-bold text-[#F8FAFC] mt-1.5">
                             {activeModalClub.secretaryName || 'Core Team'}
                           </p>
-                          <p className="text-xs text-[#F8FAFC]/80 mt-0.5">
-                            View Student Profile →
-                          </p>
-                        </button>
+                        </div>
                       </div>
+
+                      {activeModalClub.activities && activeModalClub.activities.length > 0 && (
+                        <div className="pt-3 border-t border-[#0F172A]/15">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#4F46E5] mb-2">
+                            Club Activities &amp; Focus Areas
+                          </h4>
+                          <ul className="space-y-1.5">
+                            {activeModalClub.activities.map((act) => (
+                              <li key={act} className="flex items-center gap-2 text-xs text-[#0F172A]">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-[#4F46E5] shrink-0" />
+                                <span>{act}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Member Roster & Role Assignment Section */}
+                    {/* Member Roster & Role Assignment Section (Members & Admin Only) */}
+                    {canAccessClubWorkspace && (
                     <div className="p-5 rounded-xl bg-white border border-[#0F172A]/20 space-y-4">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <h4 className="text-sm font-bold text-[#0F172A]">
@@ -1952,10 +1961,11 @@ export function Clubs({
                           </div>
                         )}
                     </div>
+                    )}
                   </>
                 )}
 
-                {clubWorkspaceTab === 'projects' && (
+                {effectiveTab === 'projects' && canAccessClubWorkspace && (
                   <div className="space-y-5">
                     <div className="p-5 rounded-xl bg-white border border-[#0F172A]/20 space-y-4">
                       <div className="flex items-center justify-between">
@@ -2040,7 +2050,8 @@ export function Clubs({
             </div>
           )}
         </div>
-      )}
+        );
+      })()}
 
       {/* STUDENT PEER PROFILE VIEWER MODAL (Renders on top of Full-Screen Chat via z-[60]) */}
       <Modal
