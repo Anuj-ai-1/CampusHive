@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "concurrently -n API,WEB -c cyan,green \"node --no-warnings server/index.js\" \"vite\"",
     "dev:api": "node --no-warnings server/index.js",

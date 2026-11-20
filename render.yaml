@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: unihive-campushive
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: HOST=0.0.0.0 npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: NODE_ENV
+        value: production
